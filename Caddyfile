@@ -14,7 +14,13 @@ jiddat3d.com, www.jiddat3d.com {
 		reverse_proxy localhost:8080
 	}
 
-	# Serve static files and cached HTML from pb_public
+	# Serve /static from /app/ui/static
+	handle_path /static/* {
+		root * /app/ui/static
+		file_server
+	}
+
+	# Serve cached HTML from pb_public
 	root * /app/pb_public
 	
 	# Try to serve raw path, then path + .html, then fallback to /home.html, then 404

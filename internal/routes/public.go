@@ -3,7 +3,10 @@ package routes
 import (
 	"strings"
 	"net/http"
+	"os"
+	"path/filepath"
 
+	"jiddat3d/internal/compiler"
 	"jiddat3d/internal/mailer"
 	"github.com/pocketbase/pocketbase/core"
 )
@@ -71,6 +74,67 @@ func RegisterPublicRoutes(app core.App) {
 			go mailer.SendContactNotification(name, contactMethod, subject, message)
 
 			return c.HTML(http.StatusOK, `<div class="p-8 text-center"><h3 class="font-serif text-2xl text-primary mb-2">Message Sent</h3><p class="text-ink-muted">We will get back to you shortly.</p></div>`)
+		})
+		
+		// Serve static assets from ui/static
+		e.Router.GET("/static/{path...}", func(c *core.RequestEvent) error {
+			path := strings.TrimPrefix(c.Request.URL.Path, "/static/")
+			http.ServeFile(c.Response, c.Request, filepath.Join("ui", "static", path))
+			return nil
+		})
+
+		// Catch-all route to serve static/cached templates, mimicking Caddy's try_files
+		e.Router.GET("/{path...}", func(c *core.RequestEvent) error {
+			reqPath := c.Request.URL.Path
+			
+			// Ignore API and Admin UI requests so PocketBase handles them normally
+			if strings.HasPrefix(reqPath, "/api/") || strings.HasPrefix(reqPath, "/_/") {
+				return c.Next()
+			}
+			
+			if reqPath == "/" {
+				reqPath = "/home"
+			}
+			
+			// 1. Try to serve exact path from pb_public
+			if info, err := os.Stat(filepath.Join("pb_public", reqPath)); err == nil && !info.IsDir() {
+				http.ServeFile(c.Response, c.Request, filepath.Join("pb_public", reqPath))
+				return nil
+			}
+			
+			// 2. Try {path}.html
+			if info, err := os.Stat(filepath.Join("pb_public", reqPath+".html")); err == nil && !info.IsDir() {
+				http.ServeFile(c.Response, c.Request, filepath.Join("pb_public", reqPath+".html"))
+				return nil
+			}
+			
+			// 3. Try /cached{path}.html
+			if info, err := os.Stat(filepath.Join("pb_public", "cached", reqPath+".html")); err == nil && !info.IsDir() {
+				http.ServeFile(c.Response, c.Request, filepath.Join("pb_public", "cached", reqPath+".html"))
+				return nil
+			}
+			
+			// 4. Try dynamic render for base templates (home, about, contact, etc.)
+			pageName := strings.TrimPrefix(reqPath, "/")
+			
+			siteSettings, _ := app.FindFirstRecordByFilter("site_settings", "1=1")
+			siteMap := make(map[string]any)
+			if siteSettings != nil {
+				siteMap = siteSettings.PublicExport()
+			}
+			
+			data := compiler.TemplateData{
+				Site: siteMap,
+			}
+			
+			html, err := compiler.RenderTemplate(pageName+".html", data)
+			if err == nil {
+				return c.HTML(http.StatusOK, html)
+			}
+			
+			// Fallback 404
+			html404, _ := compiler.RenderTemplate("404.html", data)
+			return c.HTML(http.StatusNotFound, html404)
 		})
 		
 		return e.Next()
