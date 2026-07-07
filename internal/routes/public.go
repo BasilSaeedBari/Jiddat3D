@@ -83,6 +83,12 @@ func RegisterPublicRoutes(app core.App) {
 			return nil
 		})
 
+		// Serve Service Worker from root
+		e.Router.GET("/sw.js", func(c *core.RequestEvent) error {
+			http.ServeFile(c.Response, c.Request, filepath.Join("ui", "static", "sw.js"))
+			return nil
+		})
+
 		// Catch-all route to serve static/cached templates, mimicking Caddy's try_files
 		e.Router.GET("/{path...}", func(c *core.RequestEvent) error {
 			reqPath := c.Request.URL.Path
