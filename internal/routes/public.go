@@ -132,6 +132,9 @@ func RegisterPublicRoutes(app core.App) {
 				return c.HTML(http.StatusOK, html)
 			}
 			
+			// Log the error!
+			app.Logger().Error("Template render error for " + pageName + ": " + err.Error())
+			
 			// Fallback 404
 			html404, _ := compiler.RenderTemplate("404.html", data)
 			return c.HTML(http.StatusNotFound, html404)
