@@ -1,9 +1,6 @@
 # Build stage
-FROM golang:alpine AS builder
+FROM golang:latest AS builder
 WORKDIR /app
-
-# Install build dependencies
-RUN apk add --no-cache curl unzip
 
 # Download Tailwind CLI
 RUN curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64 \
