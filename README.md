@@ -150,7 +150,45 @@ You can then upload this single binary to your server (alongside the `ui/templat
 
 ---
 
-## 7. Community & Support
+## 7. Deploy via Docker (Production)
+
+For modern production environments (like Portainer or standard Docker engines), the application can be run entirely in a container. This is highly recommended as it encapsulates the environment and makes backups trivial.
+
+### The Docker Image
+Our official Docker image is hosted on the GitHub Container Registry (GHCR):
+`ghcr.io/basilsaeedbari/jiddat3d:latest`
+
+### Sample `docker-compose.yml` (Portainer / Docker)
+Below is the standard configuration to run Jiddat3D behind a reverse proxy (like Nginx Proxy Manager, Traefik, or Caddy). It mounts a local `pb_data` directory to persist the SQLite database and uploaded files.
+
+```yaml
+version: '3.8'
+
+services:
+  jiddat3d:
+    image: ghcr.io/basilsaeedbari/jiddat3d:latest
+    container_name: jiddat3d_web
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      # Persist the PocketBase SQLite database and file uploads
+      - ./pb_data:/app/pb_data
+    environment:
+      # Optional: set environment variables if your Go app requires them
+      - TZ=Asia/Karachi
+```
+
+### Deployment Steps
+1. Create a new stack in Portainer (or create a `docker-compose.yml` on your server).
+2. Paste the configuration above.
+3. Deploy the stack. 
+4. The website will be available internally at `http://YOUR_SERVER_IP:8090`.
+5. Point your Reverse Proxy (e.g., Nginx Proxy Manager) to route your domain (e.g., `jiddat3d.com`) to `YOUR_SERVER_IP:8090`.
+
+---
+
+## 8. Community & Support
 
 Jiddat3D thrives on its community. If you need help with a build, firmware modding, or just want to share your creations, join us:
 
