@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"mime"
 
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
@@ -13,6 +14,11 @@ import (
 )
 
 func main() {
+	// Explicitly register MIME types in case the host OS (like Alpine) is missing /etc/mime.types
+	mime.AddExtensionType(".css", "text/css; charset=utf-8")
+	mime.AddExtensionType(".js", "application/javascript")
+	mime.AddExtensionType(".svg", "image/svg+xml")
+
 	app := pocketbase.New()
 
 	// Register migration commands if not building in strict mode
