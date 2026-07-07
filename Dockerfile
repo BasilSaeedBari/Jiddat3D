@@ -28,7 +28,7 @@ FROM alpine:3.19
 WORKDIR /app
 
 # Install runtime dependencies (cwebp for image processing, ca-certificates for TLS)
-RUN apk add --no-cache cwebp ca-certificates tzdata
+RUN apk add --no-cache libwebp-tools ca-certificates tzdata
 
 COPY --from=builder /jiddat3d /app/jiddat3d
 COPY --from=builder /app/ui /app/ui

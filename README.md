@@ -196,4 +196,13 @@ Jiddat3D thrives on its community. If you need help with a build, firmware moddi
 - **WhatsApp Community:** [https://chat.whatsapp.com/Fgvte09elKICDNzlPVuJTe](https://chat.whatsapp.com/Fgvte09elKICDNzlPVuJTe) (Join the daily conversation)
 - **Direct WhatsApp Contact:** [+923001318112](https://wa.me/923001318112)
 
+**Headquarters & Location**  
+Jiddat3D is proudly based out of **Karachi, Pakistan**, with operations centered in **DHA Phase 1**.
+
 > *"By embracing open-source hardware, we can bypass the decades of industrial development we missed. We can manufacture our own tools, repair our own machines, and build our own solutions. Jiddat3D isn't just a 3D printer; it is a gateway to engineering literacy."*
+
+---
+
+## 9. License
+
+As staunch supporters of the open-source movement, **all content, source code, and configurations within this repository fall under the [GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.en.html)**. We believe in unrestricted sharing and learning, and this website operates fully on open-source principles.
