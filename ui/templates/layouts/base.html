@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{ if .Title }}{{ .Title }} | Jiddat3D{{ else }}Jiddat3D | Build Something Amazing{{ end }}</title>
+	<meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}Affordable, repairable manufacturing tools — designed, assembled, and supported from right here in Pakistan.{{ end }}">
+	
+	<!-- Fonts (Preconnect and load) -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+	
+	<!-- Styles -->
+	<link rel="stylesheet" href="/static/css/output.css">
+	
+	<!-- Inline Preloader Style & Logic -->
+	<style>
+		#preloader {
+			position: fixed;
+			inset: 0;
+			z-index: 9999;
+			background: var(--color-bg, #FFFFFF);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: opacity 0.4s ease, visibility 0.4s ease;
+		}
+		.preloader-glow {
+			filter: drop-shadow(0 0 16px var(--color-primary-light, #9B5DE5));
+			animation: pulseGlow 1.5s infinite alternate;
+			max-width: 150px;
+		}
+		@keyframes pulseGlow {
+			0% { filter: drop-shadow(0 0 8px #9B5DE5); transform: scale(1); }
+			100% { filter: drop-shadow(0 0 24px #9B5DE5); transform: scale(1.05); }
+		}
+		body.loaded #preloader {
+			opacity: 0;
+			visibility: hidden;
+		}
+	</style>
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			const finishLoad = () => document.body.classList.add('loaded');
+			window.addEventListener("load", finishLoad);
+			// Fallback if images take too long
+			setTimeout(finishLoad, 1500);
+		});
+	</script>
+	
+	<!-- JS Libraries -->
+	<script src="/static/js/htmx.min.js" defer></script>
+	<script src="/static/js/alpine.min.js" defer></script>
+	<script src="/static/js/scroll-reveal.js" defer></script>
+	<script src="/static/js/sw-register.js" defer></script>
+</head>
+<body class="font-sans text-ink bg-bg antialiased flex flex-col min-h-screen">
+	<!-- Preloader -->
+	<div id="preloader">
+		<img src="/static/img/logo/JiddatBrightTrasnparent.png" alt="Jiddat3D Loading..." class="preloader-glow">
+	</div>
+
+	{{ template "nav" . }}
+
+	<main class="flex-grow">
+		{{ template "content" . }}
+	</main>
+
+	{{ template "footer" . }}
+
+</body>
+</html>

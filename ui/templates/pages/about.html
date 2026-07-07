@@ -1,0 +1,89 @@
+{{ define "content" }}
+<section class="py-24 bg-bg">
+	<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+		<h1 class="font-serif text-h1 font-semibold text-ink mb-12 text-center reveal-on-scroll">The Movement</h1>
+		
+		<div class="prose prose-lg prose-ink max-w-none reveal-on-scroll">
+			<blockquote class="border-l-4 border-primary pl-6 italic text-xl text-ink-muted mb-12">
+				{{ .Site.manifesto_intro }}
+			</blockquote>
+
+			<h2 class="font-serif text-h2 text-ink mt-12 mb-6">Sovereignty Through Manufacturing</h2>
+			<p>For decades, building physical things in Pakistan has meant importing them instead. When a machine breaks, we hunt for imported parts. When an engineer dreams up a new hardware product, they hit a wall of customs friction and the quiet belief that complex things simply aren't built here.</p>
+			<p>Jiddat3D exists to dismantle that boundary. We're not just a hardware company — we're building the tools that let Pakistan manufacture its own future.</p>
+
+			<h2 class="font-serif text-h2 text-ink mt-16 mb-8">Our Pillars</h2>
+			<div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16 not-prose">
+				<div class="p-6 border border-border rounded-lg bg-bg-subtle">
+					<h3 class="font-bold text-primary mb-2">Community</h3>
+					<p class="text-ink-muted text-sm">A growing peer network for troubleshooting, sharing designs, and building in the open.</p>
+				</div>
+				<div class="p-6 border border-border rounded-lg bg-bg-subtle">
+					<h3 class="font-bold text-accent-gold mb-2">Products</h3>
+					<p class="text-ink-muted text-sm">Durable, repairable machines built for local realities.</p>
+				</div>
+				<div class="p-6 border border-border rounded-lg bg-bg-subtle">
+					<h3 class="font-bold text-accent-teal mb-2">Documentation</h3>
+					<p class="text-ink-muted text-sm">Transparent manuals, guides, and open resources.</p>
+				</div>
+				<div class="p-6 border border-border rounded-lg bg-bg-subtle">
+					<h3 class="font-bold text-accent-terracotta mb-2">Manufacturing</h3>
+					<p class="text-ink-muted text-sm">Building toward locally sourced supply chains.</p>
+				</div>
+			</div>
+
+			<h2 class="font-serif text-h2 text-ink mt-12 mb-6">Engineering Principles</h2>
+			<ul class="space-y-4 not-prose">
+				<li class="flex items-start gap-3">
+					<svg class="w-6 h-6 text-primary shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+					<div>
+						<strong class="block text-ink">Right to Repair</strong>
+						<span class="text-ink-muted text-sm">Every machine can be disassembled and fixed with basic hand tools, no proprietary lock-in.</span>
+					</div>
+				</li>
+				<li class="flex items-start gap-3">
+					<svg class="w-6 h-6 text-primary shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+					<div>
+						<strong class="block text-ink">Built for Local Realities</strong>
+						<span class="text-ink-muted text-sm">Designed around Pakistan's actual electrical, logistical, and supply-chain conditions, not assumptions imported from elsewhere.</span>
+					</div>
+				</li>
+				<li class="flex items-start gap-3">
+					<svg class="w-6 h-6 text-primary shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+					<div>
+						<strong class="block text-ink">Open Where It Matters</strong>
+						<span class="text-ink-muted text-sm">Firmware and documentation lean open-source rather than walled-garden.</span>
+					</div>
+				</li>
+			</ul>
+
+			<h2 class="font-serif text-h2 text-ink mt-16 mb-8 text-center">Future Horizons</h2>
+			<p class="text-center text-ink-muted italic mb-8">We're not attaching fixed dates or promised kits to this journey — creation comes first, and the roadmap grows as we do.</p>
+			
+			<div class="flex flex-col md:flex-row items-center justify-between gap-4 not-prose border-t border-b border-border py-8">
+				<div class="text-center flex-1">
+					<span class="text-xs tracking-widest text-primary uppercase font-bold block mb-2">Today</span>
+					<p class="text-sm text-ink font-medium">Desktop 3D printing for individual creators</p>
+				</div>
+				<svg class="w-6 h-6 text-border hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+				<div class="text-center flex-1">
+					<span class="text-xs tracking-widest text-accent-gold uppercase font-bold block mb-2">Tomorrow</span>
+					<p class="text-sm text-ink font-medium">Expanding tools for makers and small workshops</p>
+				</div>
+				<svg class="w-6 h-6 text-border hidden md:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+				<div class="text-center flex-1">
+					<span class="text-xs tracking-widest text-accent-teal uppercase font-bold block mb-2">Someday</span>
+					<p class="text-sm text-ink font-medium">A full local manufacturing ecosystem</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="mt-16 text-center">
+			<a href="/projects" class="inline-flex items-center gap-2 text-primary font-semibold hover:text-primary-light transition-colors">
+				See what people are building 
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+			</a>
+		</div>
+	</div>
+</section>
+{{ end }}

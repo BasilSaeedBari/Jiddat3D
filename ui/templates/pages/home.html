@@ -1,0 +1,114 @@
+{{ define "content" }}
+<!-- Hero Section -->
+<section class="relative overflow-hidden min-h-[80vh] flex items-center bg-gradient-to-br from-bg via-bg-subtle to-primary-light/10">
+	<!-- Background lattice motif (optional, subtle) -->
+	<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: url('data:image/svg+xml;utf8,<svg width=\"20\" height=\"20\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M10 0l10 10-10 10L0 10z\" fill=\"%235B2A86\"/></svg>');"></div>
+	
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-24 md:py-32 flex flex-col items-center text-center">
+		<h1 class="font-serif text-hero font-semibold text-ink leading-tight mb-6 tracking-tight max-w-4xl reveal-on-scroll">
+			{{ .Site.hero_headline }}
+		</h1>
+		<p class="text-lg md:text-xl text-ink-muted mb-10 max-w-2xl leading-relaxed reveal-on-scroll" style="transition-delay: 100ms;">
+			{{ .Site.hero_subheadline }}
+		</p>
+		<div class="flex flex-col sm:flex-row gap-4 reveal-on-scroll" style="transition-delay: 200ms;">
+			<a href="/products" class="px-8 py-4 bg-primary text-white rounded-md font-medium text-lg shadow-lg hover:bg-primary-light hover:shadow-glow transition-all duration-300">
+				Explore Printers
+			</a>
+			<a href="/learn" class="px-8 py-4 bg-white text-primary border border-border rounded-md font-medium text-lg hover:border-primary hover:text-primary-light transition-colors duration-300">
+				Start Learning
+			</a>
+		</div>
+	</div>
+	
+	<!-- Divider Motif -->
+	<div class="absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center justify-center w-full max-w-md opacity-30">
+		<div class="h-px bg-primary flex-grow"></div>
+		<svg class="w-6 h-6 text-primary mx-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+		<div class="h-px bg-primary flex-grow"></div>
+	</div>
+</section>
+
+<!-- Three Pillars -->
+<section class="py-24 bg-bg">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+			<!-- Pillar 1 -->
+			<a href="/learn" class="group p-8 rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 bg-white reveal-on-scroll flex flex-col h-full">
+				<div class="w-12 h-12 rounded-full bg-accent-teal/10 flex items-center justify-center text-accent-teal mb-6 group-hover:scale-110 transition-transform">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+				</div>
+				<h3 class="font-serif text-2xl font-semibold mb-3 text-ink group-hover:text-primary transition-colors">Learn</h3>
+				<p class="text-ink-muted leading-relaxed flex-grow">Free guides, videos, and honest lessons on 3D printing — from your first layer to your hundredth failed print.</p>
+			</a>
+			<!-- Pillar 2 -->
+			<a href="/products" class="group p-8 rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 bg-white reveal-on-scroll flex flex-col h-full" style="transition-delay: 100ms;">
+				<div class="w-12 h-12 rounded-full bg-accent-gold/10 flex items-center justify-center text-accent-gold mb-6 group-hover:scale-110 transition-transform">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+				</div>
+				<h3 class="font-serif text-2xl font-semibold mb-3 text-ink group-hover:text-primary transition-colors">Build</h3>
+				<p class="text-ink-muted leading-relaxed flex-grow">Affordable, repairable printers and parts, priced for the Pakistani maker, not the import market.</p>
+			</a>
+			<!-- Pillar 3 -->
+			<a href="/projects" class="group p-8 rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 bg-white reveal-on-scroll flex flex-col h-full" style="transition-delay: 200ms;">
+				<div class="w-12 h-12 rounded-full bg-accent-terracotta/10 flex items-center justify-center text-accent-terracotta mb-6 group-hover:scale-110 transition-transform">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+				</div>
+				<h3 class="font-serif text-2xl font-semibold mb-3 text-ink group-hover:text-primary transition-colors">Create</h3>
+				<p class="text-ink-muted leading-relaxed flex-grow">Real projects from real people — students, repair techs, artists, and tinkerers building things nobody imported for them.</p>
+			</a>
+		</div>
+	</div>
+</section>
+
+<!-- Statement Band -->
+<section class="py-24 bg-primary text-white text-center px-4 relative overflow-hidden">
+	<div class="absolute inset-0 bg-primary-dark/20 pointer-events-none"></div>
+	<div class="max-w-4xl mx-auto relative z-10 reveal-on-scroll">
+		<h2 class="font-serif text-h2 font-semibold leading-tight mb-8">For too long, building things in Pakistan meant importing them instead.</h2>
+		<p class="text-xl md:text-2xl text-white/80 leading-relaxed font-light">
+			Jiddat3D exists to change that — one machine, one maker, one workshop at a time.
+		</p>
+	</div>
+</section>
+
+<!-- Impact / Social Proof Band -->
+<section class="py-20 bg-bg-subtle border-y border-border">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-border">
+			<div class="px-4 reveal-on-scroll">
+				<p class="text-4xl md:text-5xl font-bold text-accent-gold mb-2 font-serif">{{ .Site.impact_stat_1_value }}</p>
+				<p class="text-sm md:text-base text-ink-muted font-medium">{{ .Site.impact_stat_1_label }}</p>
+			</div>
+			<div class="px-4 reveal-on-scroll" style="transition-delay: 100ms;">
+				<p class="text-4xl md:text-5xl font-bold text-accent-teal mb-2 font-serif">{{ .Site.impact_stat_2_value }}</p>
+				<p class="text-sm md:text-base text-ink-muted font-medium">{{ .Site.impact_stat_2_label }}</p>
+			</div>
+			<div class="px-4 reveal-on-scroll" style="transition-delay: 200ms;">
+				<p class="text-4xl md:text-5xl font-bold text-primary mb-2 font-serif">{{ .Site.impact_stat_3_value }}</p>
+				<p class="text-sm md:text-base text-ink-muted font-medium">{{ .Site.impact_stat_3_label }}</p>
+			</div>
+			<div class="px-4 reveal-on-scroll" style="transition-delay: 300ms;">
+				<p class="text-4xl md:text-5xl font-bold text-accent-terracotta mb-2 font-serif">{{ .Site.impact_stat_4_value }}</p>
+				<p class="text-sm md:text-base text-ink-muted font-medium">{{ .Site.impact_stat_4_label }}</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Final CTA Band -->
+<section class="py-32 bg-bg text-center">
+	<div class="max-w-3xl mx-auto px-4 reveal-on-scroll">
+		<h2 class="font-serif text-h2 font-semibold text-ink mb-6">Ready to build something?</h2>
+		<p class="text-ink-muted mb-10 text-lg">Join a community of makers or get your own machine today.</p>
+		<div class="flex flex-col sm:flex-row gap-4 justify-center">
+			<a href="/products" class="px-8 py-4 bg-accent-gold text-ink rounded-md font-medium text-lg shadow-md hover:bg-white hover:text-primary transition-colors duration-300">
+				Browse Products
+			</a>
+			<a href="/community" class="px-8 py-4 bg-white text-ink border border-border rounded-md font-medium text-lg hover:border-primary hover:text-primary transition-colors duration-300">
+				Join the Community
+			</a>
+		</div>
+	</div>
+</section>
+{{ end }}

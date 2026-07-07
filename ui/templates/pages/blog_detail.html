@@ -1,0 +1,32 @@
+{{ define "content" }}
+<article class="py-16 bg-bg">
+	<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+		<a href="/blog" class="inline-flex items-center gap-2 text-primary hover:text-primary-light font-medium text-sm mb-12 transition-colors">
+			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+			Back to Blog
+		</a>
+
+		<header class="mb-12">
+			<span class="inline-block px-3 py-1 bg-accent-gold/10 text-accent-gold text-xs font-bold uppercase tracking-widest rounded-full mb-6">Build Log</span>
+			<h1 class="font-serif text-h1 font-semibold text-ink leading-tight mb-4">{{ .Record.title }}</h1>
+			
+			<div class="flex items-center gap-4 text-sm text-ink-muted border-b border-border pb-6">
+				<span class="font-medium">By {{ if .Record.author_name }}{{ .Record.author_name }}{{ else }}Jiddat3D Team{{ end }}</span>
+				<span>&bull;</span>
+				<span>{{ .Record.published_at }}</span>
+			</div>
+		</header>
+
+		{{ if .Record.hero_image }}
+		<div class="mb-12 rounded-xl overflow-hidden border border-border">
+			<img src="/api/files/content/{{ .Record.id }}/{{ .Record.hero_image }}" alt="{{ .Record.title }}" class="w-full h-auto object-cover">
+		</div>
+		{{ end }}
+
+		<!-- Markdown Content Body -->
+		<div class="prose prose-lg prose-ink max-w-none mb-24">
+			{{ .Body }}
+		</div>
+	</div>
+</article>
+{{ end }}

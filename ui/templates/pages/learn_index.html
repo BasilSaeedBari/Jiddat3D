@@ -1,0 +1,22 @@
+{{ define "content" }}
+<section class="py-24 bg-bg">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<h1 class="font-serif text-h1 font-semibold text-ink mb-12">Learn</h1>
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+			{{ range .List }}
+			<a href="/learn/{{ .slug }}" class="group block border border-border rounded-xl overflow-hidden hover:border-primary/50 hover:shadow-lg transition-all bg-white">
+				<div class="h-48 bg-bg-subtle relative overflow-hidden">
+					<img src="/api/files/content/{{ .id }}/{{ .hero_image }}" alt="{{ .title }}" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">
+				</div>
+				<div class="p-6">
+					<h3 class="font-serif font-semibold text-xl text-ink mb-2 group-hover:text-primary transition-colors">{{ .title }}</h3>
+					<p class="text-ink-muted line-clamp-2 text-sm">{{ .excerpt }}</p>
+				</div>
+			</a>
+			{{ else }}
+			<p class="text-ink-muted">More guides coming soon.</p>
+			{{ end }}
+		</div>
+	</div>
+</section>
+{{ end }}

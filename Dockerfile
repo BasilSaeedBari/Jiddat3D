@@ -1,0 +1,41 @@
+# Build stage
+FROM golang:1.22-alpine AS builder
+WORKDIR /app
+
+# Install build dependencies
+RUN apk add --no-cache curl unzip
+
+# Download Tailwind CLI
+RUN curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-linux-x64 \
+    && chmod +x tailwindcss-linux-x64 \
+    && mv tailwindcss-linux-x64 tailwindcss
+
+# Cache Go modules
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build CSS
+RUN ./tailwindcss -i ui/static/css/input.css -o ui/static/css/output.css --minify
+
+# Build Go binary
+RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /jiddat3d ./cmd/jiddat
+
+# Final stage
+FROM alpine:3.19
+WORKDIR /app
+
+# Install runtime dependencies (cwebp for image processing, ca-certificates for TLS)
+RUN apk add --no-cache cwebp ca-certificates tzdata
+
+COPY --from=builder /jiddat3d /app/jiddat3d
+COPY --from=builder /app/ui /app/ui
+
+# PocketBase data volume
+VOLUME /app/pb_data
+
+EXPOSE 8080
+
+CMD ["/app/jiddat3d", "serve", "--http=0.0.0.0:8080"]

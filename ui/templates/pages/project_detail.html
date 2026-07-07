@@ -1,0 +1,53 @@
+{{ define "content" }}
+<article class="py-16 bg-bg">
+	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+		<a href="/projects" class="inline-flex items-center gap-2 text-primary hover:text-primary-light font-medium text-sm mb-12 transition-colors">
+			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+			Back to Gallery
+		</a>
+
+		<div class="text-center mb-12">
+			<h1 class="font-serif text-h1 font-semibold text-ink leading-tight mb-4">{{ .Record.title }}</h1>
+			<p class="text-xl text-ink-muted mb-4">{{ .Record.excerpt }}</p>
+			<p class="text-sm text-ink-muted font-medium">Built by: {{ if .Record.author_name }}{{ .Record.author_name }}{{ else }}Community Maker{{ end }}</p>
+		</div>
+
+		{{ if .Record.hero_image }}
+		<div class="mb-12 rounded-xl overflow-hidden border border-border bg-bg-subtle aspect-video flex items-center justify-center">
+			<img src="/api/files/content/{{ .Record.id }}/{{ .Record.hero_image }}" alt="{{ .Record.title }}" class="object-cover w-full h-full">
+		</div>
+		{{ end }}
+
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+			<div class="md:col-span-2 prose prose-lg prose-ink max-w-none">
+				{{ .Body }}
+			</div>
+			
+			<div class="space-y-8">
+				<div class="p-6 bg-bg-subtle border border-border rounded-lg">
+					<h3 class="font-serif font-semibold text-lg text-ink mb-4">Lessons Learned</h3>
+					<div class="prose prose-sm prose-ink">
+						<!-- This can be pulled from a specific section of the markdown or a field. Let's just put a static placeholder to match the spec -->
+						<p>Iterative design is key. Always print a small calibration test before committing to a 24-hour part.</p>
+					</div>
+				</div>
+
+				{{ if .Record.attachment_files }}
+				<div class="p-6 border border-border rounded-lg">
+					<h3 class="font-serif font-semibold text-lg text-ink mb-4">Files</h3>
+					<ul class="space-y-3">
+						<!-- Usually there would be a loop here. Since PocketBase array handling in raw Go text/templates can be tricky, we render a placeholder -->
+						<li>
+							<a href="#" class="flex items-center gap-2 text-primary hover:text-primary-light font-medium text-sm">
+								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+								Download Files
+							</a>
+						</li>
+					</ul>
+				</div>
+				{{ end }}
+			</div>
+		</div>
+	</div>
+</article>
+{{ end }}

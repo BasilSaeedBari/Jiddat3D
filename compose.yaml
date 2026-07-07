@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    image: ghcr.io/basilsaeedbari/jiddat3d:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - jiddat3d_data:/app/pb_data
+    environment:
+      - ENV=production
+
+volumes:
+  jiddat3d_data:

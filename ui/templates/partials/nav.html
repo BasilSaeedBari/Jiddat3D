@@ -1,0 +1,46 @@
+{{ define "nav" }}
+<header class="w-full bg-bg/80 backdrop-blur-md sticky top-0 z-40 border-b border-border transition-colors duration-300" x-data="{ mobileMenuOpen: false }">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="flex justify-between items-center py-4">
+			<!-- Logo -->
+			<a href="/" class="flex items-center gap-2 group outline-none">
+				<img src="/static/img/logo/JiddatBrightTrasnparent.png" alt="Jiddat3D Logo" class="h-10 object-contain group-hover:drop-shadow-glow transition-all duration-300">
+				<!-- <span class="font-serif font-semibold text-primary text-xl tracking-tight hidden sm:block">Jiddat3D</span> -->
+			</a>
+
+			<!-- Desktop Nav -->
+			<nav class="hidden md:flex gap-6 items-center">
+				<a href="/products" class="text-ink hover:text-primary transition-colors font-medium text-sm">Products</a>
+				<a href="/learn" class="text-ink hover:text-primary transition-colors font-medium text-sm">Learn</a>
+				<a href="/projects" class="text-ink hover:text-primary transition-colors font-medium text-sm">Projects</a>
+				<a href="/blog" class="text-ink hover:text-primary transition-colors font-medium text-sm">Blog</a>
+				<a href="/about" class="text-ink hover:text-primary transition-colors font-medium text-sm">About</a>
+				<a href="/community" class="text-ink hover:text-primary transition-colors font-medium text-sm">Community</a>
+				
+				<a href="/contact" class="px-4 py-2 bg-primary text-white rounded-md text-sm font-medium hover:bg-primary-light hover:shadow-glow transition-all duration-300">Contact Us</a>
+			</nav>
+
+			<!-- Mobile menu button -->
+			<div class="md:hidden flex items-center">
+				<button @click="mobileMenuOpen = !mobileMenuOpen" class="text-ink hover:text-primary focus:outline-none p-2">
+					<svg class="w-6 h-6" x-show="!mobileMenuOpen" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+					<svg class="w-6 h-6" x-show="mobileMenuOpen" x-cloak fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Mobile Menu -->
+	<div x-show="mobileMenuOpen" x-cloak x-transition.opacity class="md:hidden absolute top-full left-0 w-full bg-bg border-b border-border shadow-lg">
+		<div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+			<a href="/products" class="block px-3 py-2 text-ink hover:text-primary font-medium">Products</a>
+			<a href="/learn" class="block px-3 py-2 text-ink hover:text-primary font-medium">Learn</a>
+			<a href="/projects" class="block px-3 py-2 text-ink hover:text-primary font-medium">Projects</a>
+			<a href="/blog" class="block px-3 py-2 text-ink hover:text-primary font-medium">Blog</a>
+			<a href="/about" class="block px-3 py-2 text-ink hover:text-primary font-medium">About</a>
+			<a href="/community" class="block px-3 py-2 text-ink hover:text-primary font-medium">Community</a>
+			<a href="/contact" class="block px-3 py-2 mt-4 text-center bg-primary text-white rounded-md font-medium hover:bg-primary-light">Contact Us</a>
+		</div>
+	</div>
+</header>
+{{ end }}

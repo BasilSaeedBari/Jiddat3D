@@ -1,0 +1,7 @@
+pb_data/
+ui/static/css/output.css
+tools/tailwindcss.exe
+*.exe
+.env
+.DS_Store
+.vscode/

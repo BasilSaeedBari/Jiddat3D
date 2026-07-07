@@ -1,0 +1,9 @@
+{{ define "newsletter_form" }}
+<div id="newsletter-form-container">
+	<form hx-post="/api/newsletter/subscribe" hx-target="#newsletter-form-container" hx-swap="outerHTML" class="flex flex-col sm:flex-row gap-2">
+		<input type="email" name="email" placeholder="Your email address" required class="flex-grow px-4 py-2 rounded-md bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-accent-gold/50 focus:border-accent-gold transition-all text-sm">
+		<input type="hidden" name="source" value="footer">
+		<button type="submit" class="px-4 py-2 bg-accent-gold text-ink font-semibold rounded-md hover:bg-white hover:text-primary transition-colors text-sm whitespace-nowrap">Subscribe</button>
+	</form>
+</div>
+{{ end }}
