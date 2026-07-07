@@ -1,7 +1,7 @@
-const CACHE_NAME = 'jiddat3d-cache-v2';
+const CACHE_NAME = 'jiddat3d-cache-v3';
 
 const STATIC_ASSETS = [
-	'/static/css/output.css',
+	'/static/css/output.css?v=3',
 	'/static/js/htmx.min.js',
 	'/static/js/alpine.min.js',
 	'/static/js/scroll-reveal.js',
