@@ -1,6 +1,8 @@
 @echo off
 echo Starting Jiddat3D Dev Server...
 
+cd /d "%~dp0.."
+
 start "Tailwind Watcher" cmd /k ".\tools\tailwindcss.exe -i ui\static\css\input.css -o ui\static\css\output.css --watch"
 start "PocketBase" cmd /k "go run .\cmd\jiddat serve"
 
