@@ -1,150 +1,98 @@
 package pb_migrations
 
 import (
-	"encoding/json"
-	
 	"github.com/pocketbase/pocketbase/core"
 	m "github.com/pocketbase/pocketbase/migrations"
 )
 
-var collectionsJson = `[
-	{
-		"id": "collection_content",
-		"name": "content",
-		"type": "base",
-		"system": false,
-		"schema": [
-			{"id": "title", "name": "title", "type": "text", "required": true, "options": {}},
-			{"id": "slug", "name": "slug", "type": "text", "required": true, "options": {"pattern": "^[a-z0-9-]+$"}},
-			{"id": "type", "name": "type", "type": "select", "required": true, "options": {"values": ["learn", "blog", "project"], "maxSelect": 1}},
-			{"id": "track", "name": "track", "type": "select", "options": {"values": ["getting-started", "designing-making", "going-deeper"], "maxSelect": 1}},
-			{"id": "excerpt", "name": "excerpt", "type": "text", "required": true, "options": {}},
-			{"id": "body", "name": "body", "type": "editor", "required": true, "options": {}},
-			{"id": "hero_image", "name": "hero_image", "type": "file", "required": true, "options": {"maxSelect": 1, "mimeTypes": ["image/jpeg", "image/png", "image/webp"]}},
-			{"id": "gallery_images", "name": "gallery_images", "type": "file", "options": {"maxSelect": 99, "mimeTypes": ["image/jpeg", "image/png", "image/webp"]}},
-			{"id": "attachment_files", "name": "attachment_files", "type": "file", "options": {"maxSelect": 99}},
-			{"id": "author_name", "name": "author_name", "type": "text", "options": {}},
-			{"id": "tags", "name": "tags", "type": "select", "options": {"values": ["hardware", "software", "community", "update"], "maxSelect": 10}},
-			{"id": "has_math", "name": "has_math", "type": "bool", "options": {}},
-			{"id": "featured", "name": "featured", "type": "bool", "options": {}},
-			{"id": "published", "name": "published", "type": "bool", "options": {}},
-			{"id": "published_at", "name": "published_at", "type": "date", "options": {}},
-			{"id": "seo_description", "name": "seo_description", "type": "text", "options": {}}
-		],
-		"listRule": "",
-		"viewRule": "",
-		"createRule": null,
-		"updateRule": null,
-		"deleteRule": null,
-		"indexes": ["CREATE UNIQUE INDEX idx_content_slug ON content (slug)"]
-	},
-	{
-		"id": "collection_products",
-		"name": "products",
-		"type": "base",
-		"system": false,
-		"schema": [
-			{"id": "name", "name": "name", "type": "text", "required": true, "options": {}},
-			{"id": "slug", "name": "slug", "type": "text", "required": true, "options": {"pattern": "^[a-z0-9-]+$"}},
-			{"id": "category", "name": "category", "type": "select", "required": true, "options": {"values": ["3d-printer", "cnc", "laser", "accessory"], "maxSelect": 1}},
-			{"id": "tagline", "name": "tagline", "type": "text", "required": true, "options": {}},
-			{"id": "description", "name": "description", "type": "editor", "options": {}},
-			{"id": "specs", "name": "specs", "type": "json", "options": {}},
-			{"id": "price", "name": "price", "type": "number", "options": {}},
-			{"id": "currency", "name": "currency", "type": "text", "options": {}},
-			{"id": "availability", "name": "availability", "type": "select", "required": true, "options": {"values": ["in-stock", "pre-order", "coming-soon"], "maxSelect": 1}},
-			{"id": "hero_image", "name": "hero_image", "type": "file", "required": true, "options": {"maxSelect": 1, "mimeTypes": ["image/jpeg", "image/png", "image/webp"]}},
-			{"id": "gallery_images", "name": "gallery_images", "type": "file", "options": {"maxSelect": 99, "mimeTypes": ["image/jpeg", "image/png", "image/webp"]}},
-			{"id": "featured", "name": "featured", "type": "bool", "options": {}},
-			{"id": "active", "name": "active", "type": "bool", "options": {}},
-			{"id": "whatsapp_message_template", "name": "whatsapp_message_template", "type": "text", "options": {}}
-		],
-		"listRule": "",
-		"viewRule": "",
-		"createRule": null,
-		"updateRule": null,
-		"deleteRule": null,
-		"indexes": ["CREATE UNIQUE INDEX idx_products_slug ON products (slug)"]
-	},
-	{
-		"id": "collection_subscribers",
-		"name": "subscribers",
-		"type": "base",
-		"system": false,
-		"schema": [
-			{"id": "email", "name": "email", "type": "email", "required": true, "options": {}},
-			{"id": "active", "name": "active", "type": "bool", "options": {}},
-			{"id": "source", "name": "source", "type": "text", "options": {}},
-			{"id": "subscribed_at", "name": "subscribed_at", "type": "date", "options": {}}
-		],
-		"listRule": null,
-		"viewRule": null,
-		"createRule": "",
-		"updateRule": null,
-		"deleteRule": null,
-		"indexes": ["CREATE UNIQUE INDEX idx_subscribers_email ON subscribers (email)"]
-	},
-	{
-		"id": "collection_contact",
-		"name": "contact_submissions",
-		"type": "base",
-		"system": false,
-		"schema": [
-			{"id": "name", "name": "name", "type": "text", "required": true, "options": {}},
-			{"id": "contact_method", "name": "contact_method", "type": "text", "required": true, "options": {}},
-			{"id": "subject", "name": "subject", "type": "select", "options": {"values": ["general", "product-inquiry", "support", "partnership"], "maxSelect": 1}},
-			{"id": "message", "name": "message", "type": "text", "required": true, "options": {}},
-			{"id": "related_product", "name": "related_product", "type": "relation", "options": {"collectionId": "collection_products", "cascadeDelete": false, "maxSelect": 1}},
-			{"id": "status", "name": "status", "type": "select", "options": {"values": ["new", "read", "responded"], "maxSelect": 1}},
-			{"id": "submitted_at", "name": "submitted_at", "type": "date", "options": {}}
-		],
-		"listRule": null,
-		"viewRule": null,
-		"createRule": "",
-		"updateRule": null,
-		"deleteRule": null,
-		"indexes": []
-	},
-	{
-		"id": "collection_settings",
-		"name": "site_settings",
-		"type": "base",
-		"system": false,
-		"schema": [
-			{"id": "hero_headline", "name": "hero_headline", "type": "text", "options": {}},
-			{"id": "hero_subheadline", "name": "hero_subheadline", "type": "text", "options": {}},
-			{"id": "whatsapp_business_number", "name": "whatsapp_business_number", "type": "text", "options": {}},
-			{"id": "instagram_url", "name": "instagram_url", "type": "url", "options": {}},
-			{"id": "facebook_url", "name": "facebook_url", "type": "url", "options": {}},
-			{"id": "youtube_url", "name": "youtube_url", "type": "url", "options": {}},
-			{"id": "discord_url", "name": "discord_url", "type": "url", "options": {}},
-			{"id": "impact_stat_1_label", "name": "impact_stat_1_label", "type": "text", "options": {}},
-			{"id": "impact_stat_1_value", "name": "impact_stat_1_value", "type": "text", "options": {}},
-			{"id": "impact_stat_2_label", "name": "impact_stat_2_label", "type": "text", "options": {}},
-			{"id": "impact_stat_2_value", "name": "impact_stat_2_value", "type": "text", "options": {}},
-			{"id": "impact_stat_3_label", "name": "impact_stat_3_label", "type": "text", "options": {}},
-			{"id": "impact_stat_3_value", "name": "impact_stat_3_value", "type": "text", "options": {}},
-			{"id": "impact_stat_4_label", "name": "impact_stat_4_label", "type": "text", "options": {}},
-			{"id": "impact_stat_4_value", "name": "impact_stat_4_value", "type": "text", "options": {}},
-			{"id": "manifesto_intro", "name": "manifesto_intro", "type": "editor", "options": {}}
-		],
-		"listRule": "",
-		"viewRule": "",
-		"createRule": null,
-		"updateRule": null,
-		"deleteRule": null,
-		"indexes": []
-	}
-]`
-
 func init() {
 	m.Register(func(app core.App) error {
-		var collections []map[string]any
-		if err := json.Unmarshal([]byte(collectionsJson), &collections); err != nil {
-			return err
-		}
+		// 1. Content
+		content := core.NewBaseCollection("content")
+		content.Name = "content"
+		content.Fields.Add(&core.TextField{Name: "title", Required: true})
+		content.Fields.Add(&core.TextField{Name: "slug", Required: true})
+		content.Fields.Add(&core.SelectField{Name: "type", Values: []string{"learn", "blog", "project"}, MaxSelect: 1, Required: true})
+		content.Fields.Add(&core.SelectField{Name: "track", Values: []string{"getting-started", "designing-making", "going-deeper"}, MaxSelect: 1})
+		content.Fields.Add(&core.TextField{Name: "excerpt", Required: true})
+		content.Fields.Add(&core.EditorField{Name: "body", Required: true})
+		content.Fields.Add(&core.FileField{Name: "hero_image", MaxSelect: 1, MimeTypes: []string{"image/jpeg", "image/png", "image/webp"}})
+		content.Fields.Add(&core.FileField{Name: "gallery_images", MaxSelect: 99, MimeTypes: []string{"image/jpeg", "image/png", "image/webp"}})
+		content.Fields.Add(&core.FileField{Name: "attachment_files", MaxSelect: 99})
+		content.Fields.Add(&core.TextField{Name: "author_name"})
+		content.Fields.Add(&core.SelectField{Name: "tags", Values: []string{"hardware", "software", "community", "update"}, MaxSelect: 4})
+		content.Fields.Add(&core.BoolField{Name: "has_math"})
+		content.Fields.Add(&core.BoolField{Name: "featured"})
+		content.Fields.Add(&core.BoolField{Name: "published"})
+		content.Fields.Add(&core.DateField{Name: "published_at"})
+		content.Fields.Add(&core.TextField{Name: "seo_description"})
+		content.AddIndex("idx_content_slug", false, "slug", "")
+		if err := app.Save(content); err != nil { return err }
 
-		return app.ImportCollections(collections, false)
+		// 2. Products
+		products := core.NewBaseCollection("products")
+		products.Name = "products"
+		products.Fields.Add(&core.TextField{Name: "name", Required: true})
+		products.Fields.Add(&core.TextField{Name: "slug", Required: true})
+		products.Fields.Add(&core.SelectField{Name: "category", Values: []string{"3d-printer", "cnc", "laser", "accessory"}, MaxSelect: 1, Required: true})
+		products.Fields.Add(&core.TextField{Name: "tagline", Required: true})
+		products.Fields.Add(&core.EditorField{Name: "description"})
+		products.Fields.Add(&core.JSONField{Name: "specs"})
+		products.Fields.Add(&core.NumberField{Name: "price"})
+		products.Fields.Add(&core.TextField{Name: "currency"})
+		products.Fields.Add(&core.SelectField{Name: "availability", Values: []string{"in-stock", "pre-order", "coming-soon"}, MaxSelect: 1, Required: true})
+		products.Fields.Add(&core.FileField{Name: "hero_image", MaxSelect: 1, MimeTypes: []string{"image/jpeg", "image/png", "image/webp"}})
+		products.Fields.Add(&core.FileField{Name: "gallery_images", MaxSelect: 99, MimeTypes: []string{"image/jpeg", "image/png", "image/webp"}})
+		products.Fields.Add(&core.BoolField{Name: "featured"})
+		products.Fields.Add(&core.BoolField{Name: "active"})
+		products.Fields.Add(&core.TextField{Name: "whatsapp_message_template"})
+		products.AddIndex("idx_products_slug", false, "slug", "")
+		if err := app.Save(products); err != nil { return err }
+
+		// 3. Subscribers
+		subscribers := core.NewBaseCollection("subscribers")
+		subscribers.Name = "subscribers"
+		subscribers.Fields.Add(&core.EmailField{Name: "email", Required: true})
+		subscribers.Fields.Add(&core.BoolField{Name: "active"})
+		subscribers.Fields.Add(&core.TextField{Name: "source"})
+		subscribers.Fields.Add(&core.DateField{Name: "subscribed_at"})
+		subscribers.AddIndex("idx_subscribers_email", true, "email", "")
+		if err := app.Save(subscribers); err != nil { return err }
+
+		// 4. Contact Submissions
+		contact := core.NewBaseCollection("contact_submissions")
+		contact.Name = "contact_submissions"
+		contact.Fields.Add(&core.TextField{Name: "name", Required: true})
+		contact.Fields.Add(&core.TextField{Name: "contact_method", Required: true})
+		contact.Fields.Add(&core.SelectField{Name: "subject", Values: []string{"general", "product-inquiry", "support", "partnership"}, MaxSelect: 1})
+		contact.Fields.Add(&core.TextField{Name: "message", Required: true})
+		contact.Fields.Add(&core.RelationField{Name: "related_product", CollectionId: products.Id, MaxSelect: 1})
+		contact.Fields.Add(&core.SelectField{Name: "status", Values: []string{"new", "read", "responded"}, MaxSelect: 1})
+		contact.Fields.Add(&core.DateField{Name: "submitted_at"})
+		if err := app.Save(contact); err != nil { return err }
+
+		// 5. Site Settings
+		settings := core.NewBaseCollection("site_settings")
+		settings.Name = "site_settings"
+		settings.Fields.Add(&core.TextField{Name: "hero_headline"})
+		settings.Fields.Add(&core.TextField{Name: "hero_subheadline"})
+		settings.Fields.Add(&core.TextField{Name: "whatsapp_business_number"})
+		settings.Fields.Add(&core.URLField{Name: "instagram_url"})
+		settings.Fields.Add(&core.URLField{Name: "facebook_url"})
+		settings.Fields.Add(&core.URLField{Name: "youtube_url"})
+		settings.Fields.Add(&core.URLField{Name: "discord_url"})
+		settings.Fields.Add(&core.TextField{Name: "impact_stat_1_label"})
+		settings.Fields.Add(&core.TextField{Name: "impact_stat_1_value"})
+		settings.Fields.Add(&core.TextField{Name: "impact_stat_2_label"})
+		settings.Fields.Add(&core.TextField{Name: "impact_stat_2_value"})
+		settings.Fields.Add(&core.TextField{Name: "impact_stat_3_label"})
+		settings.Fields.Add(&core.TextField{Name: "impact_stat_3_value"})
+		settings.Fields.Add(&core.TextField{Name: "impact_stat_4_label"})
+		settings.Fields.Add(&core.TextField{Name: "impact_stat_4_value"})
+		settings.Fields.Add(&core.EditorField{Name: "manifesto_intro"})
+		if err := app.Save(settings); err != nil { return err }
+
+		return nil
 	}, func(app core.App) error {
 		return nil
 	})
