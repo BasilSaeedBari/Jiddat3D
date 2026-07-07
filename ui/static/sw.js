@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jiddat3d-cache-v1';
+const CACHE_NAME = 'jiddat3d-cache-v2';
 
 const STATIC_ASSETS = [
 	'/static/css/output.css',
