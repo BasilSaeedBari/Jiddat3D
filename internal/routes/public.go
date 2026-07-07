@@ -137,7 +137,7 @@ func RegisterPublicRoutes(app core.App) {
 					cType = "project"
 				}
 				// Fetch records for the list
-				records, _ := app.FindRecordsByFilter("content", "type = {:type} && published = true", "-created", 100, 0, dbx.Params{"type": cType})
+				records, _ := app.FindRecordsByFilter("content", "type = {:type} && published = true", "-published_at", 100, 0, dbx.Params{"type": cType})
 				for _, r := range records {
 					listData = append(listData, r.PublicExport())
 				}
