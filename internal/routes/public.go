@@ -8,6 +8,7 @@ import (
 
 	"jiddat3d/internal/compiler"
 	"jiddat3d/internal/mailer"
+	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/core"
 )
 
@@ -129,8 +130,53 @@ func RegisterPublicRoutes(app core.App) {
 				siteMap = siteSettings.PublicExport()
 			}
 			
+			var listData []map[string]any
+			if pageName == "blog" || pageName == "projects" || pageName == "learn" {
+				cType := pageName
+				if pageName == "projects" {
+					cType = "project"
+				}
+				// Fetch records for the list
+				records, _ := app.FindRecordsByFilter("content", "type = {:type} && published = true", "-created", 100, 0, dbx.Params{"type": cType})
+				for _, r := range records {
+					listData = append(listData, r.PublicExport())
+				}
+			}
+			
 			data := compiler.TemplateData{
 				Site: siteMap,
+				List: listData,
+			}
+			
+			// Handle Detail Pages dynamically
+			if strings.HasPrefix(reqPath, "/blog/") || strings.HasPrefix(reqPath, "/projects/") || strings.HasPrefix(reqPath, "/learn/") {
+				parts := strings.Split(strings.TrimPrefix(reqPath, "/"), "/")
+				if len(parts) == 2 {
+					cType := parts[0]
+					if cType == "projects" {
+						cType = "project"
+					}
+					slug := parts[1]
+					record, _ := app.FindFirstRecordByFilter("content", "type = {:type} && slug = {:slug} && published = true", dbx.Params{"type": cType, "slug": slug})
+					if record != nil {
+						data.Record = record.PublicExport()
+						if bodyStr, ok := data.Record["body"].(string); ok {
+							rendered, _ := compiler.RenderMarkdown(bodyStr)
+							data.Body = compiler.SafeHTML(rendered)
+						}
+						
+						// Template map: blog -> blog_detail.html
+						tmplName := parts[0] + "_detail.html"
+						if parts[0] == "projects" {
+							tmplName = "project_detail.html"
+						}
+						
+						html, err := compiler.RenderTemplate(tmplName, data)
+						if err == nil {
+							return c.HTML(http.StatusOK, html)
+						}
+					}
+				}
 			}
 			
 			html, err := compiler.RenderTemplate(pageName+".html", data)

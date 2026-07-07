@@ -3,10 +3,23 @@
 	<h1 class="text-h1 font-serif text-primary mb-8 text-center reveal-on-scroll">The Blog</h1>
 	<p class="text-xl text-center text-ink-muted max-w-3xl mx-auto mb-16 reveal-on-scroll">Thoughts, updates, and deep dives into the Pakistani maker ecosystem.</p>
 
-	<!-- Fetch products from DB? In dev without Caddy we don't have PocketBase logic injected here directly unless we modify RenderTemplate. For now, a static fallback is fine or a message -->
+	{{ if .List }}
+	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+		{{ range .List }}
+		<article class="bg-white rounded-2xl border border-border overflow-hidden hover:border-primary/30 hover:shadow-lg transition-all duration-300 reveal-on-scroll flex flex-col">
+			<div class="p-8 flex flex-col h-full">
+				<h3 class="font-serif text-2xl font-semibold mb-3 text-ink group-hover:text-primary transition-colors"><a href="/blog/{{ .slug }}">{{ .title }}</a></h3>
+				<p class="text-ink-muted leading-relaxed flex-grow">{{ .excerpt }}</p>
+				<a href="/blog/{{ .slug }}" class="mt-6 text-primary font-medium hover:text-primary-light inline-flex items-center">Read more <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg></a>
+			</div>
+		</article>
+		{{ end }}
+	</div>
+	{{ else }}
 	<div class="text-center p-12 bg-bg-subtle rounded-xl border border-border">
 		<h3 class="text-2xl font-serif text-ink mb-4">No posts yet</h3>
 		<p class="text-ink-muted">The blog database is currently syncing. Check back soon.</p>
 	</div>
+	{{ end }}
 </div>
 {{ end }}
