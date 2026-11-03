@@ -15,6 +15,8 @@ import (
 
 func RegisterPublicRoutes(app core.App) {
 	app.OnServe().BindFunc(func(e *core.ServeEvent) error {
+		// Wire up instant 3D model slicer and reactive quotation routes
+		RegisterSlicerRoutes(app, e)
 		
 		e.Router.POST("/api/newsletter/subscribe", func(c *core.RequestEvent) error {
 			email := strings.TrimSpace(c.Request.FormValue("email"))

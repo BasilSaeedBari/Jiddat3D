@@ -1,15 +1,16 @@
 version: '3.8'
 
 services:
-  app:
-    image: ghcr.io/basilsaeedbari/jiddat3d:latest
+  jiddat3d:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jiddat3d_app
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8090:8090"
     volumes:
-      - jiddat3d_data:/app/pb_data
+      - ./pb_data:/app/pb_data
     environment:
       - ENV=production
-
-volumes:
-  jiddat3d_data:
+      - TZ=Asia/Karachi

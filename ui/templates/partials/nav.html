@@ -7,8 +7,8 @@
 			<span class="text-[11px] sm:text-xs"><strong>Karachi Engineering Lab</strong> &bull; Specialized In-House 3D Printers &bull; 100% Open Source &bull; Prepaid Builds Only &bull; 6-Month & Edu Warranty</span>
 		</div>
 		<div class="flex items-center gap-4 text-xs">
-			<a href="/find-my-printer" class="text-filament hover:underline font-semibold hidden md:inline-flex items-center gap-1">
-				<span>⚡ 1-Minute Machine Finder</span> &rarr;
+			<a href="/instant-quote" class="text-filament hover:underline font-semibold hidden md:inline-flex items-center gap-1">
+				<span>⚡ Instant 3D Slicer & Quote</span> &rarr;
 			</a>
 			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20discuss%20a%20specialized%203D%20printer%20or%20engineering%20service." target="_blank" rel="noopener noreferrer" class="text-[#25D366] hover:underline font-bold inline-flex items-center gap-1">
 				<span>💬 WhatsApp: <span class="font-numeral">0300-1318112</span></span>
@@ -17,8 +17,8 @@
 	</div>
 </div>
 
-<!-- Main Sticky Header (Flows with Logo Colors) -->
-<header class="w-full bg-[#FCFAF7]/95 dark:bg-[#0E0C13]/95 backdrop-blur-md sticky top-0 z-40 border-b border-[#E8E1D3] dark:border-[#221B2E] transition-all duration-300" x-data="{ mobileMenuOpen: false }">
+<!-- Main Sticky Header with Harmonious Dropdowns -->
+<header class="w-full bg-[#FCFAF7]/95 dark:bg-[#0E0C13]/95 backdrop-blur-md sticky top-0 z-40 border-b border-[#E8E1D3] dark:border-[#221B2E] transition-all duration-300" x-data="{ mobileMenuOpen: false, hardwareOpen: false, learningOpen: false }" @click.outside="hardwareOpen = false; learningOpen = false">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex justify-between items-center h-16">
 			
@@ -33,19 +33,106 @@
 				</div>
 			</a>
 
-			<!-- Desktop Nav (Harmonious Art Nouveau hover styling) -->
-			<nav class="hidden lg:flex items-center gap-5 font-medium text-sm text-parchment-ink dark:text-[#F4F1EA]">
-				<a href="/printers" class="hover:text-filament dark:hover:text-[#D8B4FE] transition-colors py-1">Our Printers</a>
-				<a href="/filament" class="hover:text-filament dark:hover:text-[#D8B4FE] transition-colors py-1">Filament & Parts</a>
-				<a href="/schools" class="hover:text-filament dark:hover:text-[#D8B4FE] transition-colors py-1 flex items-center gap-1.5">
-					<span>Schools & Labs</span>
-					<span class="text-[10px] font-mono bg-[#7E22CE]/10 text-[#7E22CE] dark:text-[#C084FC] px-1.5 py-0.5 rounded-[6px_1px_6px_1px] border border-[#7E22CE]/30">STEAM</span>
-				</a>
-				<a href="/workshops" class="hover:text-filament dark:hover:text-[#D8B4FE] transition-colors py-1">Workshops</a>
-				<a href="/print-service" class="hover:text-filament dark:hover:text-[#D8B4FE] transition-colors py-1">Print Service</a>
+			<!-- Desktop Nav: Categorized into Elegant Dropdowns -->
+			<nav class="hidden lg:flex items-center gap-6 font-medium text-sm text-parchment-ink dark:text-[#F4F1EA]">
+				
+				<!-- Dropdown 1: Hardware & Services -->
+				<div class="relative" @mouseleave="hardwareOpen = false">
+					<button @click="hardwareOpen = !hardwareOpen; learningOpen = false" @mouseenter="hardwareOpen = true" class="flex items-center gap-1.5 py-2 hover:text-filament dark:hover:text-[#D8B4FE] transition-colors focus:outline-none" :class="hardwareOpen ? 'text-filament dark:text-[#D8B4FE]' : ''">
+						<span>Hardware & Services</span>
+						<svg class="w-3.5 h-3.5 transition-transform duration-200" :class="hardwareOpen ? 'rotate-180 text-filament' : 'text-[#8A8175] dark:text-[#7A7387]'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+						</svg>
+					</button>
+
+					<!-- Dropdown Panel -->
+					<div x-show="hardwareOpen" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1 scale-95" x-transition:enter-end="opacity-100 translate-y-0 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0 scale-100" x-transition:leave-end="opacity-0 translate-y-1 scale-95" class="absolute left-0 mt-1 w-80 rounded-[18px_4px_18px_4px] bg-[#FFFFFF] dark:bg-[#14101D] border border-[#E5DEC9] dark:border-[#2D233D] shadow-2xl p-2 space-y-1 z-50">
+						
+						<a href="/printers" class="flex items-start gap-3 p-2.5 rounded-[12px_2px_12px_2px] hover:bg-parchment-subtle dark:hover:bg-[#1D172A] transition-colors group">
+							<span class="text-xl shrink-0 p-1.5 rounded-md bg-filament/10 text-filament">🖨️</span>
+							<div>
+								<div class="font-semibold text-xs text-parchment-ink dark:text-white group-hover:text-filament transition-colors">Our Specialized Printers</div>
+								<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight mt-0.5">Custom CoreXY & Cartesian FDM/FFM built in Karachi</div>
+							</div>
+						</a>
+
+						<a href="/instant-quote" class="flex items-start gap-3 p-2.5 rounded-[12px_2px_12px_2px] hover:bg-parchment-subtle dark:hover:bg-[#1D172A] transition-colors group bg-filament/[0.04] border border-filament/20">
+							<span class="text-xl shrink-0 p-1.5 rounded-md bg-filament/15 text-filament">⚡</span>
+							<div>
+								<div class="font-semibold text-xs text-filament flex items-center gap-1.5">
+									<span>Instant Slicer & Quote</span>
+									<span class="text-[9px] font-mono uppercase bg-filament text-white px-1.5 py-0.2 rounded font-bold">New</span>
+								</div>
+								<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight mt-0.5">Upload 3MF / OBJ / STL for server-side slicing & price</div>
+							</div>
+						</a>
+
+						<a href="/print-service" class="flex items-start gap-3 p-2.5 rounded-[12px_2px_12px_2px] hover:bg-parchment-subtle dark:hover:bg-[#1D172A] transition-colors group">
+							<span class="text-xl shrink-0 p-1.5 rounded-md bg-[#17C3B2]/10 text-[#17C3B2]">📐</span>
+							<div>
+								<div class="font-semibold text-xs text-parchment-ink dark:text-white group-hover:text-filament transition-colors">On-Demand Print Service</div>
+								<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight mt-0.5">Mechanical prototypes, FYP clinic & production batches</div>
+							</div>
+						</a>
+
+						<a href="/filament" class="flex items-start gap-3 p-2.5 rounded-[12px_2px_12px_2px] hover:bg-parchment-subtle dark:hover:bg-[#1D172A] transition-colors group">
+							<span class="text-xl shrink-0 p-1.5 rounded-md bg-[#FFB400]/10 text-[#FFB400]">🧵</span>
+							<div>
+								<div class="font-semibold text-xs text-parchment-ink dark:text-white group-hover:text-filament transition-colors flex items-center gap-1.5">
+									<span>Filament & Spares</span>
+									<span class="text-[9px] font-mono text-[#8A8175] dark:text-[#7A7387]">(In R&D / Spares Stock)</span>
+								</div>
+								<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight mt-0.5">Climate spools in plan, nozzles & belts in stock</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<!-- Dropdown 2: Labs & Learning -->
+				<div class="relative" @mouseleave="learningOpen = false">
+					<button @click="learningOpen = !learningOpen; hardwareOpen = false" @mouseenter="learningOpen = true" class="flex items-center gap-1.5 py-2 hover:text-filament dark:hover:text-[#D8B4FE] transition-colors focus:outline-none" :class="learningOpen ? 'text-filament dark:text-[#D8B4FE]' : ''">
+						<span>Labs & Learning</span>
+						<svg class="w-3.5 h-3.5 transition-transform duration-200" :class="learningOpen ? 'rotate-180 text-filament' : 'text-[#8A8175] dark:text-[#7A7387]'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+						</svg>
+					</button>
+
+					<!-- Dropdown Panel -->
+					<div x-show="learningOpen" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1 scale-95" x-transition:enter-end="opacity-100 translate-y-0 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0 scale-100" x-transition:leave-end="opacity-0 translate-y-1 scale-95" class="absolute left-0 mt-1 w-80 rounded-[18px_4px_18px_4px] bg-[#FFFFFF] dark:bg-[#14101D] border border-[#E5DEC9] dark:border-[#2D233D] shadow-2xl p-2 space-y-1 z-50">
+						
+						<a href="/schools" class="flex items-start gap-3 p-2.5 rounded-[12px_2px_12px_2px] hover:bg-parchment-subtle dark:hover:bg-[#1D172A] transition-colors group">
+							<span class="text-xl shrink-0 p-1.5 rounded-md bg-[#7E22CE]/10 text-[#7E22CE] dark:text-[#C084FC]">🏫</span>
+							<div>
+								<div class="font-semibold text-xs text-parchment-ink dark:text-white group-hover:text-filament transition-colors flex items-center gap-1.5">
+									<span>Schools & University Labs</span>
+									<span class="text-[9px] font-mono bg-[#7E22CE]/10 text-[#7E22CE] dark:text-[#C084FC] px-1 py-0.2 rounded">STEAM</span>
+								</div>
+								<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight mt-0.5">Turn-key educational labs, curriculum & PPRA tenders</div>
+							</div>
+						</a>
+
+						<a href="/workshops" class="flex items-start gap-3 p-2.5 rounded-[12px_2px_12px_2px] hover:bg-parchment-subtle dark:hover:bg-[#1D172A] transition-colors group">
+							<span class="text-xl shrink-0 p-1.5 rounded-md bg-[#3DDC84]/10 text-[#3DDC84]">🛠️</span>
+							<div>
+								<div class="font-semibold text-xs text-parchment-ink dark:text-white group-hover:text-filament transition-colors">Hands-On Workshops</div>
+								<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight mt-0.5">Hardware assembly, Klipper calibration & slicing clinics</div>
+							</div>
+						</a>
+
+						<a href="/learn" class="flex items-start gap-3 p-2.5 rounded-[12px_2px_12px_2px] hover:bg-parchment-subtle dark:hover:bg-[#1D172A] transition-colors group">
+							<span class="text-xl shrink-0 p-1.5 rounded-md bg-[#2B59FF]/10 text-[#2B59FF]">📚</span>
+							<div>
+								<div class="font-semibold text-xs text-parchment-ink dark:text-white group-hover:text-filament transition-colors">Guides & Knowledge</div>
+								<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight mt-0.5">Pakistan maker handbook: UPS sizing, heat & tolerances</div>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<!-- Direct Links -->
 				<a href="/gallery" class="hover:text-filament dark:hover:text-[#D8B4FE] transition-colors py-1">Gallery</a>
-				<a href="/learn" class="hover:text-filament dark:hover:text-[#D8B4FE] transition-colors py-1">Guides</a>
 				<a href="/support" class="text-[#635D54] dark:text-[#9DA3AF] hover:text-parchment-ink dark:hover:text-white transition-colors py-1">Warranty & Claims</a>
+				<a href="/about" class="text-[#635D54] dark:text-[#9DA3AF] hover:text-parchment-ink dark:hover:text-white transition-colors py-1">About Lab</a>
 			</nav>
 
 			<!-- Right Action CTAs & Theme Switcher -->
@@ -62,20 +149,20 @@
 					</svg>
 				</button>
 
-				<!-- Guided Quiz Shortcut -->
-				<a href="/find-my-printer" class="px-3.5 py-2 text-xs font-semibold rounded-nouveau-sm border border-[#E5DEC9] dark:border-[#2A2338] text-parchment-ink dark:text-[#F4F1EA] hover:border-filament hover:text-filament transition-all bg-white dark:bg-[#161220] shadow-sm">
-					Quiz: Machine Finder
+				<!-- Instant Slicer Shortcut Button -->
+				<a href="/instant-quote" class="px-3 py-2 text-xs font-semibold rounded-nouveau-sm border border-filament/40 text-filament hover:bg-filament hover:text-white transition-all bg-white dark:bg-[#161220] shadow-sm flex items-center gap-1.5">
+					<span>⚡ Instant Slicer</span>
 				</a>
 				
 				<!-- WhatsApp Sales Button -->
 				<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20inquire%20about%20your%20custom%203D%20printers%20and%20engineering%20services." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-2 px-3.5 shadow-md flex items-center gap-1.5">
 					<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-					<span>WhatsApp Hotline</span>
+					<span>Hotline</span>
 				</a>
 			</div>
 
 			<!-- Mobile menu toggle & theme toggle -->
-			<div class="flex items-center gap-2 md:hidden">
+			<div class="flex items-center gap-2 lg:hidden">
 				<button onclick="toggleTheme()" class="p-2 text-parchment-ink dark:text-white" aria-label="Toggle Theme">
 					<svg class="w-5 h-5 hidden dark:block text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
 					<svg class="w-5 h-5 block dark:hidden text-[#2B0947]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
@@ -91,39 +178,65 @@
 		</div>
 	</div>
 
-	<!-- Mobile Menu Dropdown -->
-	<div x-show="mobileMenuOpen" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="md:hidden bg-[#FAF7F2] dark:bg-[#130F1C] border-b border-[#E8E1D3] dark:border-[#282236] px-4 pt-3 pb-6 space-y-3">
-		<div class="grid grid-cols-2 gap-2 text-sm">
-			<a href="/printers" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
-				<span class="text-filament">🖨️</span> Our Printers
-			</a>
-			<a href="/filament" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
-				<span class="text-teal">🧵</span> Filament (In R&D)
-			</a>
-			<a href="/schools" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
-				<span class="text-[#7E22CE] dark:text-[#C084FC]">🏫</span> Schools & Labs
-			</a>
-			<a href="/workshops" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
-				<span class="text-accent-green">🛠️</span> Workshops
-			</a>
-			<a href="/print-service" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
-				<span class="text-accent-blue">📐</span> Print Service / FYP
-			</a>
-			<a href="/gallery" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
-				<span class="text-[#C72FEB]">✨</span> Print Gallery
-			</a>
+	<!-- Mobile Menu Drawer (Categorized & Intuitive) -->
+	<div x-show="mobileMenuOpen" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2" class="lg:hidden bg-[#FAF7F2] dark:bg-[#130F1C] border-b border-[#E8E1D3] dark:border-[#282236] px-4 pt-3 pb-6 space-y-4">
+		
+		<!-- Instant Slicer Feature Pill in Mobile -->
+		<a href="/instant-quote" class="p-3 rounded-nouveau-sm bg-filament/10 border border-filament/40 text-filament flex items-center justify-between shadow-sm">
+			<div class="flex items-center gap-2">
+				<span class="text-lg">⚡</span>
+				<div class="text-xs font-semibold">
+					<div>Instant 3D Slicer & Quote</div>
+					<div class="text-[10px] text-[#635D54] dark:text-[#9DA3AF]">Upload 3MF/OBJ/STL for instant server price</div>
+				</div>
+			</div>
+			<span class="text-xs font-bold font-mono">&rarr;</span>
+		</a>
+
+		<!-- Category 1: Hardware & Services -->
+		<div>
+			<div class="text-[10px] font-mono uppercase tracking-widest text-[#8A8175] dark:text-[#7A7387] mb-1.5 px-1 font-bold">Hardware & Fabrication</div>
+			<div class="grid grid-cols-2 gap-2 text-xs">
+				<a href="/printers" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
+					<span class="text-filament">🖨️</span> Our Printers
+				</a>
+				<a href="/print-service" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
+					<span class="text-accent-blue">📐</span> Print Service
+				</a>
+				<a href="/filament" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
+					<span class="text-teal">🧵</span> Filament & Parts
+				</a>
+				<a href="/gallery" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
+					<span class="text-[#C72FEB]">✨</span> Print Gallery
+				</a>
+			</div>
 		</div>
 
-		<div class="pt-2 border-t border-[#E8E1D3] dark:border-[#282236] space-y-2 text-sm text-[#635D54] dark:text-[#9DA3AF]">
+		<!-- Category 2: Labs & Learning -->
+		<div>
+			<div class="text-[10px] font-mono uppercase tracking-widest text-[#8A8175] dark:text-[#7A7387] mb-1.5 px-1 font-bold">Education & Knowledge</div>
+			<div class="grid grid-cols-2 gap-2 text-xs">
+				<a href="/schools" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
+					<span class="text-[#7E22CE] dark:text-[#C084FC]">🏫</span> Schools & Labs
+				</a>
+				<a href="/workshops" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm">
+					<span class="text-accent-green">🛠️</span> Workshops
+				</a>
+				<a href="/learn" class="p-2.5 rounded-nouveau-sm bg-white dark:bg-[#1D172A] border border-[#E5DEC9] dark:border-[#2D233D] hover:border-filament text-parchment-ink dark:text-white flex items-center gap-2 shadow-sm col-span-2">
+					<span class="text-accent-blue">📚</span> Pakistan 3D Printing Handbook
+				</a>
+			</div>
+		</div>
+
+		<div class="pt-2 border-t border-[#E8E1D3] dark:border-[#282236] space-y-1.5 text-xs text-[#635D54] dark:text-[#9DA3AF]">
 			<a href="/find-my-printer" class="block py-1 hover:text-filament">⚡ 1-Minute Machine Finder Quiz</a>
-			<a href="/learn" class="block py-1 hover:text-parchment-ink dark:hover:text-white">📚 Guides & Tutorials (Sovereign Engineering)</a>
 			<a href="/support" class="block py-1 hover:text-parchment-ink dark:hover:text-white">🛡️ 6-Month Working & Edu Warranty</a>
-			<a href="/about" class="block py-1 hover:text-parchment-ink dark:hover:text-white">🏢 About Jiddat3D (Karachi Innovation Lab)</a>
+			<a href="/about" class="block py-1 hover:text-parchment-ink dark:hover:text-white">🏢 About Jiddat3D (Karachi Lab)</a>
 			<a href="/contact" class="block py-1 hover:text-parchment-ink dark:hover:text-white">📬 Contact & Quotations</a>
 		</div>
 
 		<div class="pt-2">
-			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20inquire%20about%20your%20custom%203D%20printers." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-center py-3 text-sm justify-center shadow-md">
+			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20inquire%20about%20your%20custom%203D%20printers." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-center py-3 text-xs justify-center shadow-md">
 				💬 Chat on WhatsApp: <span class="font-numeral">0300-1318112</span>
 			</a>
 		</div>

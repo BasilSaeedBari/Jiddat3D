@@ -1,0 +1,196 @@
+{{ define "content" }}
+<div class="py-16 bg-parchment-bg dark:bg-[#0C0E11] text-parchment-ink dark:text-[#F4F1EA] min-h-screen transition-colors">
+	<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+		
+		<!-- Breadcrumbs -->
+		<nav class="flex items-center gap-2 text-xs text-[#635D54] dark:text-[#9DA3AF] font-mono">
+			<a href="/" class="hover:text-filament">Home</a>
+			<span>/</span>
+			<a href="/printers" class="hover:text-filament">Hardware & Services</a>
+			<span>/</span>
+			<span class="text-parchment-ink dark:text-white font-semibold">Instant 3D Slicer & Quote</span>
+		</nav>
+
+		<!-- Heading -->
+		<div class="border-b border-[#E2D7C7] dark:border-[#28303F] pb-10">
+			<div class="inline-flex items-center gap-2 px-3 py-1 bg-filament/10 border border-filament/30 rounded-[14px_2px_14px_2px] text-filament font-mono text-xs uppercase tracking-wider mb-2">
+				<span>⚡ Server-Side Instant Fabrication Estimator</span>
+			</div>
+			<h1 class="font-display text-4xl sm:text-5xl font-bold text-parchment-ink dark:text-white tracking-tight leading-tight mt-1">
+				Instant 3D Slicer & <span class="squiggle-underline">Live Quotation</span>
+			</h1>
+			<p class="text-base sm:text-lg text-[#635D54] dark:text-[#9DA3AF] mt-3 max-w-3xl leading-relaxed">
+				Upload your <span class="font-mono text-filament font-bold">.3mf</span>, <span class="font-mono text-filament font-bold">.obj</span>, or <span class="font-mono text-filament font-bold">.stl</span> file. Our server slices the toolpath in real-time, applies calibrated production profiles with a transparent <span class="font-numeral font-bold">1.5x</span> safety buffer, and calculates an immediate rupee price with zero guesswork.
+			</p>
+		</div>
+
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+			
+			<!-- Left Column: Preemptive Upload & Dropzone Area -->
+			<div class="lg:col-span-5 space-y-6">
+				
+				<!-- Drag & Drop Reactive HTMX Form -->
+				<form id="slicer-upload-form" 
+					hx-post="/api/instant-slice" 
+					hx-encoding="multipart/form-data" 
+					hx-target="#quote-result" 
+					hx-indicator="#slicing-indicator" 
+					x-data="{ isDragging: false, fileName: '' }"
+					class="nouveau-card p-6 bg-parchment-surface dark:bg-[#14181F] border-2 transition-all space-y-4 shadow-xl"
+					:class="isDragging ? 'border-filament bg-filament/[0.04]' : 'border-[#E5DEC9] dark:border-[#28303F]'">
+					
+					<div class="flex items-center justify-between border-b border-[#E2D7C7] dark:border-[#28303F] pb-3">
+						<span class="text-xs font-mono uppercase tracking-wider text-[#635D54] dark:text-[#9DA3AF] font-bold">Step 1: Upload Model</span>
+						<span class="text-[10px] font-mono text-filament font-bold bg-filament/10 px-2 py-0.5 rounded">Auto-Slicing</span>
+					</div>
+
+					<!-- Interactive Drop Target -->
+					<div 
+						@dragover.prevent="isDragging = true" 
+						@dragleave.prevent="isDragging = false" 
+						@drop.prevent="isDragging = false; if ($event.dataTransfer.files.length) { $refs.fileInput.files = $event.dataTransfer.files; fileName = $event.dataTransfer.files[0].name; htmx.trigger('#slicer-upload-form', 'submit'); }"
+						class="border-2 border-dashed rounded-[16px_4px_16px_4px] p-8 text-center transition-all cursor-pointer hover:border-filament hover:bg-white/40 dark:hover:bg-[#1D172A]/40"
+						:class="isDragging ? 'border-filament bg-filament/10' : 'border-[#E2D7C7] dark:border-[#28303F]'"
+						@click="$refs.fileInput.click()">
+						
+						<input type="file" 
+							name="model" 
+							x-ref="fileInput" 
+							accept=".3mf,.obj,.stl" 
+							class="hidden" 
+							@change="if ($refs.fileInput.files.length) { fileName = $refs.fileInput.files[0].name; htmx.trigger('#slicer-upload-form', 'submit'); }">
+
+						<div class="w-14 h-14 mx-auto rounded-[14px_4px_14px_4px] bg-filament/10 text-filament flex items-center justify-center text-3xl mb-3">
+							📁
+						</div>
+
+						<h3 class="font-display font-bold text-parchment-ink dark:text-white text-base">
+							Drop your 3D model here
+						</h3>
+						<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1 leading-relaxed">
+							Or click to browse from your device.<br>
+							Supports <strong class="text-filament font-mono">.3MF</strong>, <strong class="text-filament font-mono">.OBJ</strong>, or <strong class="text-filament font-mono">.STL</strong>
+						</p>
+
+						<div class="mt-4 pt-3 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-center gap-3 text-[10px] font-mono text-[#8A8175] dark:text-[#656D7D]">
+							<span>Max: 40MB</span>
+							<span>&bull;</span>
+							<span>Instant Server Compute</span>
+						</div>
+					</div>
+
+					<!-- Selected File Indicator (if any) -->
+					<div x-show="fileName" x-cloak class="p-2.5 rounded-[10px_2px_10px_2px] bg-white dark:bg-[#0C0E11] border border-filament/30 flex items-center justify-between text-xs font-mono">
+						<span class="text-parchment-ink dark:text-white truncate max-w-[220px]" x-text="fileName"></span>
+						<span class="text-[10px] text-filament font-bold">Uploading & Slicing...</span>
+					</div>
+
+					<p class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-relaxed italic">
+						* Preemptive execution: your geometry is analyzed and sliced on our Karachi server immediately upon file selection. You don't need to press start.
+					</p>
+				</form>
+
+				<!-- Engine Architecture Card -->
+				<div class="nouveau-card p-6 bg-parchment-surface dark:bg-[#14181F] border border-[#E5DEC9] dark:border-[#28303F] shadow-md space-y-3">
+					<div class="flex items-center gap-2">
+						<span class="text-lg">⚖️</span>
+						<h3 class="font-display font-bold text-sm text-parchment-ink dark:text-white">The LayerInvoice Standard</h3>
+					</div>
+					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
+						We calculate print quotes using our open-source <strong>LayerInvoice</strong> pricing engine. Pricing combines raw filament mass, machine hourly rate (<span class="font-numeral">Rs 250/hr</span>), lab electricity, and a <span class="font-numeral">5%</span> failure safety margin.
+					</p>
+					<div class="pt-2 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-between text-xs font-mono text-filament">
+						<span>Prepaid Bank / Raast Only</span>
+						<a href="/support#warranty" class="hover:underline">View Warranty &rarr;</a>
+					</div>
+				</div>
+
+				<!-- WhatsApp Assistance Callout -->
+				<div class="p-4 rounded-[14px_3px_14px_3px] bg-[#25D366]/10 border border-[#25D366]/30 text-xs text-[#635D54] dark:text-[#9DA3AF] space-y-2">
+					<div class="flex items-center gap-2 text-[#25D366] font-bold">
+						<span>💬 Need custom tolerance advice?</span>
+					</div>
+					<p class="leading-relaxed">
+						If your file is an assembly, architectural model, or requires embedded heat-set inserts, send it directly to our engineers on WhatsApp.
+					</p>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20have%20a%20complex%203D%20model%20to%20review%20before%20printing." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[#25D366] font-mono font-bold hover:underline">
+						<span>Chat on 0300-1318112</span> &rarr;
+					</a>
+				</div>
+
+			</div>
+
+			<!-- Right Column: Slicer Result & Calculation Workspace -->
+			<div class="lg:col-span-7 space-y-6">
+				
+				<!-- Slicing Progress Spinner Indicator (Shown only during upload/slicing) -->
+				<div id="slicing-indicator" class="htmx-indicator">
+					<div class="nouveau-card p-8 bg-parchment-surface dark:bg-[#14181F] border-2 border-filament shadow-2xl text-center space-y-4">
+						<div class="w-12 h-12 mx-auto rounded-full border-4 border-filament/20 border-t-filament animate-spin"></div>
+						<div>
+							<h3 class="font-display font-bold text-lg text-parchment-ink dark:text-white">Slicing 3D Geometry...</h3>
+							<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1">Analyzing triangle facets, computing solid volume, and generating toolpaths with a 1.5x buffer.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Quote Result Target -->
+				<div id="quote-result">
+					
+					<!-- Initial Empty State -->
+					<div class="nouveau-card p-12 bg-parchment-surface dark:bg-[#14181F] border border-[#E5DEC9] dark:border-[#28303F] text-center space-y-5 shadow-lg">
+						<div class="w-16 h-16 mx-auto rounded-[16px_4px_16px_4px] bg-filament/10 text-filament flex items-center justify-center text-3xl">
+							⚡
+						</div>
+						<div class="max-w-md mx-auto space-y-2">
+							<h3 class="font-display font-bold text-xl text-parchment-ink dark:text-white">Your Instant Quote Will Appear Here</h3>
+							<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
+								Drop any <strong>.3MF</strong>, <strong>.OBJ</strong>, or <strong>.STL</strong> file in the box to the left. The moment it uploads, this area will immediately populate with exact dimensions, buffered print hours, required filament mass, and an itemized rupee quote.
+							</p>
+						</div>
+
+						<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto pt-4 text-xs font-mono text-[#635D54] dark:text-[#9DA3AF]">
+							<div class="p-3 rounded-[10px_2px_10px_2px] bg-white/60 dark:bg-[#0C0E11]/60 border border-[#E5DEC9] dark:border-[#28303F]">
+								<span class="block text-filament font-bold">1.5x Timer Buffer</span>
+								<span class="text-[10px]">Guarantees delivery</span>
+							</div>
+							<div class="p-3 rounded-[10px_2px_10px_2px] bg-white/60 dark:bg-[#0C0E11]/60 border border-[#E5DEC9] dark:border-[#28303F]">
+								<span class="block text-[#17C3B2] font-bold">White Basic PLA</span>
+								<span class="text-[10px]">Default Rs 8/g</span>
+							</div>
+							<div class="p-3 rounded-[10px_2px_10px_2px] bg-white/60 dark:bg-[#0C0E11]/60 border border-[#E5DEC9] dark:border-[#28303F]">
+								<span class="block text-[#3DDC84] font-bold">1-Click WhatsApp</span>
+								<span class="text-[10px]">Instant checkout</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- FAQ / Transparency Box -->
+				<div class="nouveau-card p-6 bg-parchment-surface dark:bg-[#14181F] border border-[#E5DEC9] dark:border-[#28303F] space-y-4 shadow-sm">
+					<h3 class="font-display font-bold text-base text-parchment-ink dark:text-white">Why our Instant Slicer is different</h3>
+					
+					<div class="space-y-3 text-xs text-[#635D54] dark:text-[#9DA3AF]">
+						<div>
+							<h4 class="font-bold text-parchment-ink dark:text-white mb-0.5">Why is there a 1.5x buffer timer applied?</h4>
+							<p class="leading-relaxed">3D printing in Pakistan involves real-world variables like summer ambient temperatures and UPS power transitions. We apply a 1.5x buffer so the print time you see is realistic and reliable — never an optimistic under-estimate.</p>
+						</div>
+						<div>
+							<h4 class="font-bold text-parchment-ink dark:text-white mb-0.5">How does the 1.5x weight buffer work?</h4>
+							<p class="leading-relaxed">When printing functional mechanical parts, we account for purge lines, support structures, and wall perimeters (1.5x safety multiplier) so you never get surprised by hidden post-processing surcharges.</p>
+						</div>
+						<div>
+							<h4 class="font-bold text-parchment-ink dark:text-white mb-0.5">How do I place the order once quoted?</h4>
+							<p class="leading-relaxed">Simply click the "Lock In Order on WhatsApp" button. It opens WhatsApp with your exact model dimensions, weight, and price prefilled so our Karachi workshop can immediately dispatch your invoice for prepaid confirmation.</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>
+{{ end }}
