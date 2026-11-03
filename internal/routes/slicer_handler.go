@@ -242,7 +242,7 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 		"Assalam o Alaikum Jiddat3D! I just used your instant server slicer for my model: %s\n"+
 			"• Dimensions: %.1f x %.1f x %.1f mm\n"+
 			"• Filament: %s [%.1fg]\n"+
-			"• Estimated Print Time: %s (with 1.5x buffer)\n"+
+			"• Estimated Print Time: %s\n"+
 			"• Instant Quote: Rs %d (Prepaid)\n"+
 			"I want to proceed with this print!",
 		res.Mesh.Filename,
@@ -339,11 +339,11 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 			
 			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 				
-				<!-- Estimated Print Time with 1.5x Buffer -->
+				<!-- Estimated Print Time -->
 				<div class="p-5 rounded-[14px_3px_14px_3px] bg-white/80 dark:bg-[#0C0E11]/80 border border-[#E5DEC9] dark:border-[#28303F] space-y-1">
 					<div class="flex items-center justify-between">
 						<span class="text-[11px] font-mono uppercase tracking-wider text-[#635D54] dark:text-[#9DA3AF]">Estimated Print Time</span>
-						<span class="text-[9px] font-mono bg-filament/10 text-filament px-1.5 py-0.5 rounded font-bold">1.5x Buffer Applied</span>
+						<span class="text-[9px] font-mono bg-filament/10 text-filament px-1.5 py-0.5 rounded font-bold">Calibrated Speed</span>
 					</div>
 					<div class="text-3xl font-display font-bold text-filament font-numeral">%s</div>
 					<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight pt-1">
@@ -351,11 +351,11 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 					</div>
 				</div>
 
-				<!-- Estimated Filament Weight with 1.5x Buffer -->
+				<!-- Estimated Filament Weight -->
 				<div class="p-5 rounded-[14px_3px_14px_3px] bg-white/80 dark:bg-[#0C0E11]/80 border border-[#E5DEC9] dark:border-[#28303F] space-y-1">
 					<div class="flex items-center justify-between">
 						<span class="text-[11px] font-mono uppercase tracking-wider text-[#635D54] dark:text-[#9DA3AF]">Plastic Required</span>
-						<span class="text-[9px] font-mono bg-[#17C3B2]/10 text-[#17C3B2] px-1.5 py-0.5 rounded font-bold">1.5x Buffer Applied</span>
+						<span class="text-[9px] font-mono bg-[#17C3B2]/10 text-[#17C3B2] px-1.5 py-0.5 rounded font-bold">Density Matched</span>
 					</div>
 					<div class="text-3xl font-display font-bold text-[#17C3B2] font-numeral">%.1fg</div>
 					<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight pt-1">
@@ -418,7 +418,7 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 			<div class="border-t border-[#E2D7C7] dark:border-[#28303F] pt-5 space-y-3">
 				
 				<div class="flex items-center justify-between text-xs text-[#635D54] dark:text-[#9DA3AF]">
-					<span>Raw Filament Cost (%.1fg @ Rs %d/g):</span>
+					<span>Filament Material Cost (%.1fg @ Rs %d/g):</span>
 					<span class="font-mono font-numeral">Rs %d</span>
 				</div>
 				<div class="flex items-center justify-between text-xs text-[#635D54] dark:text-[#9DA3AF]">

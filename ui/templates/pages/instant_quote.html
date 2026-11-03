@@ -20,7 +20,7 @@
 				Instant 3D Slicer & <span class="squiggle-underline">Live Quotation</span>
 			</h1>
 			<p class="text-base sm:text-lg text-[#635D54] dark:text-[#9DA3AF] mt-3 max-w-3xl leading-relaxed">
-				Upload your <span class="font-mono text-filament font-bold">.3mf</span>, <span class="font-mono text-filament font-bold">.obj</span>, or <span class="font-mono text-filament font-bold">.stl</span> file. Our server slices the toolpath in real-time, applies calibrated production profiles with a transparent <span class="font-numeral font-bold">1.5x</span> safety buffer, and calculates an immediate rupee price with zero guesswork.
+				Upload your <span class="font-mono text-filament font-bold">.3mf</span>, <span class="font-mono text-filament font-bold">.obj</span>, or <span class="font-mono text-filament font-bold">.stl</span> file. Our server slices the toolpath in real-time, applies calibrated production profiles, and calculates an immediate rupee price with zero guesswork.
 			</p>
 		</div>
 
@@ -99,8 +99,7 @@
 					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
 						We calculate print quotes using our open-source <strong>LayerInvoice</strong> pricing engine. Pricing combines raw filament mass, machine hourly rate (<span class="font-numeral">Rs 250/hr</span>), lab electricity, and a <span class="font-numeral">5%</span> failure safety margin.
 					</p>
-					<div class="pt-2 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-between text-xs font-mono text-filament">
-						<span>Prepaid Bank / Raast Only</span>
+					<div class="pt-2 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-end text-xs font-mono text-filament">
 						<a href="/support#warranty" class="hover:underline">View Warranty &rarr;</a>
 					</div>
 				</div>
@@ -129,7 +128,7 @@
 						<div class="w-12 h-12 mx-auto rounded-full border-4 border-filament/20 border-t-filament animate-spin"></div>
 						<div>
 							<h3 class="font-display font-bold text-lg text-parchment-ink dark:text-white">Slicing 3D Geometry...</h3>
-							<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1">Analyzing triangle facets, computing solid volume, and generating toolpaths with a 1.5x buffer.</p>
+							<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1">Analyzing triangle facets, computing solid volume, and generating precision toolpaths.</p>
 						</div>
 					</div>
 				</div>
@@ -145,14 +144,14 @@
 						<div class="max-w-md mx-auto space-y-2">
 							<h3 class="font-display font-bold text-xl text-parchment-ink dark:text-white">Your Instant Quote Will Appear Here</h3>
 							<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
-								Drop any <strong>.3MF</strong>, <strong>.OBJ</strong>, or <strong>.STL</strong> file in the box to the left. The moment it uploads, this area will immediately populate with exact dimensions, buffered print hours, required filament mass, and an itemized rupee quote.
+								Drop any <strong>.3MF</strong>, <strong>.OBJ</strong>, or <strong>.STL</strong> file in the box to the left. The moment it uploads, this area will immediately populate with exact dimensions, print hours, required filament mass, and an itemized rupee quote.
 							</p>
 						</div>
 
 						<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-lg mx-auto pt-4 text-xs font-mono text-[#635D54] dark:text-[#9DA3AF]">
 							<div class="p-3 rounded-[10px_2px_10px_2px] bg-white/60 dark:bg-[#0C0E11]/60 border border-[#E5DEC9] dark:border-[#28303F]">
-								<span class="block text-filament font-bold">1.5x Timer Buffer</span>
-								<span class="text-[10px]">Guarantees delivery</span>
+								<span class="block text-filament font-bold">Calibrated Speed</span>
+								<span class="text-[10px]">Precision Profiles</span>
 							</div>
 							<div class="p-3 rounded-[10px_2px_10px_2px] bg-white/60 dark:bg-[#0C0E11]/60 border border-[#E5DEC9] dark:border-[#28303F]">
 								<span class="block text-[#17C3B2] font-bold">White Basic PLA</span>
@@ -165,26 +164,6 @@
 						</div>
 					</div>
 
-				</div>
-
-				<!-- FAQ / Transparency Box -->
-				<div class="nouveau-card p-6 bg-parchment-surface dark:bg-[#14181F] border border-[#E5DEC9] dark:border-[#28303F] space-y-4 shadow-sm">
-					<h3 class="font-display font-bold text-base text-parchment-ink dark:text-white">Why our Instant Slicer is different</h3>
-					
-					<div class="space-y-3 text-xs text-[#635D54] dark:text-[#9DA3AF]">
-						<div>
-							<h4 class="font-bold text-parchment-ink dark:text-white mb-0.5">Why is there a 1.5x buffer timer applied?</h4>
-							<p class="leading-relaxed">3D printing in Pakistan involves real-world variables like summer ambient temperatures and UPS power transitions. We apply a 1.5x buffer so the print time you see is realistic and reliable — never an optimistic under-estimate.</p>
-						</div>
-						<div>
-							<h4 class="font-bold text-parchment-ink dark:text-white mb-0.5">How does the 1.5x weight buffer work?</h4>
-							<p class="leading-relaxed">When printing functional mechanical parts, we account for purge lines, support structures, and wall perimeters (1.5x safety multiplier) so you never get surprised by hidden post-processing surcharges.</p>
-						</div>
-						<div>
-							<h4 class="font-bold text-parchment-ink dark:text-white mb-0.5">How do I place the order once quoted?</h4>
-							<p class="leading-relaxed">Simply click the "Lock In Order on WhatsApp" button. It opens WhatsApp with your exact model dimensions, weight, and price prefilled so our Karachi workshop can immediately dispatch your invoice for prepaid confirmation.</p>
-						</div>
-					</div>
 				</div>
 
 			</div>
