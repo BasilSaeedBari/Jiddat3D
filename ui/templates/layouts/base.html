@@ -1,19 +1,26 @@
 {{ define "base" }}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth bg-[#0C0E11] text-[#F4F1EA]">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{{ if .Title }}{{ .Title }} | Jiddat3D{{ else }}Jiddat3D | Build Something Amazing{{ end }}</title>
-	<meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}Affordable, repairable manufacturing tools — designed, assembled, and supported from right here in Pakistan.{{ end }}">
+	<title>{{ if .Title }}{{ .Title }} | Jiddat3D Pakistan{{ else }}Jiddat3D | 3D Printers, School Labs & 3D Printing in Pakistan{{ end }}</title>
+	<meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}Buy genuine 3D printers in Pakistan with local warranty, spare parts, and training. Creality, Bambu Lab, Elegoo, FDM & resin printers. WhatsApp: 0300-1318112.{{ end }}">
 	
-	<!-- Fonts (Preconnect and load) -->
+	<!-- OpenGraph & Social Cards -->
+	<meta property="og:title" content="{{ if .Title }}{{ .Title }} | Jiddat3D{{ else }}3D Printers & School Labs in Pakistan | Jiddat3D{{ end }}">
+	<meta property="og:description" content="Genuine 3D printers, official spare parts, school STEAM labs, and 3D printing service in Pakistan. Cash on delivery nationwide.">
+	<meta property="og:image" content="/static/img/logo/JiddatBrightTrasnparent-removebg-preview.png">
+	<meta property="og:type" content="website">
+	<meta name="theme-color" content="#FF6A1A">
+
+	<!-- Fonts (Space Grotesk + Inter + JetBrains Mono) -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 	
 	<!-- Styles -->
-	<link rel="stylesheet" href="/static/css/output.css?v=3">
+	<link rel="stylesheet" href="/static/css/output.css?v=4">
 	
 	<!-- Inline Preloader Style & Logic -->
 	<style>
@@ -21,32 +28,34 @@
 			position: fixed;
 			inset: 0;
 			z-index: 9999;
-			background: var(--color-bg, #FFFFFF);
+			background: #0C0E11;
 			display: flex;
+			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			transition: opacity 0.4s ease, visibility 0.4s ease;
+			transition: opacity 0.35s ease, visibility 0.35s ease;
 		}
 		.preloader-glow {
-			filter: drop-shadow(0 0 16px var(--color-primary-light, #9B5DE5));
-			animation: pulseGlow 1.5s infinite alternate;
-			max-width: 150px;
+			filter: drop-shadow(0 0 20px rgba(255, 106, 26, 0.6));
+			animation: pulseGlow 1.4s infinite alternate ease-in-out;
+			max-width: 140px;
 		}
 		@keyframes pulseGlow {
-			0% { filter: drop-shadow(0 0 8px #9B5DE5); transform: scale(1); }
-			100% { filter: drop-shadow(0 0 24px #9B5DE5); transform: scale(1.05); }
+			0% { filter: drop-shadow(0 0 10px rgba(255, 106, 26, 0.4)); transform: scale(0.98); }
+			100% { filter: drop-shadow(0 0 26px rgba(255, 106, 26, 0.85)); transform: scale(1.03); }
 		}
 		body.loaded #preloader {
 			opacity: 0;
 			visibility: hidden;
+			pointer-events: none;
 		}
+		[x-cloak] { display: none !important; }
 	</style>
 	<script>
 		document.addEventListener("DOMContentLoaded", () => {
 			const finishLoad = () => document.body.classList.add('loaded');
 			window.addEventListener("load", finishLoad);
-			// Fallback if images take too long
-			setTimeout(finishLoad, 500);
+			setTimeout(finishLoad, 400); // Super snappy fallback
 		});
 	</script>
 	
@@ -56,20 +65,74 @@
 	<script src="/static/js/scroll-reveal.js" defer></script>
 	<script src="/static/js/sw-register.js" defer></script>
 </head>
-<body class="font-sans text-ink bg-bg antialiased flex flex-col min-h-screen">
+<body class="font-sans text-ink bg-workshop-bg antialiased flex flex-col min-h-screen selection:bg-filament selection:text-white pb-16 md:pb-0">
 	<!-- Preloader -->
 	<div id="preloader">
-		<img src="/static/img/logo/JiddatBrightTrasnparent-removebg-preview.png" alt="Jiddat3D Loading..." class="preloader-glow">
+		<img src="/static/img/logo/JiddatBrightTrasnparent-removebg-preview.png" alt="Jiddat3D Loading..." class="preloader-glow mb-4">
+		<p class="text-xs font-mono tracking-widest text-[#9DA3AF] uppercase animate-pulse">Warming up the nozzle...</p>
 	</div>
 
+	<!-- Global Header & Navigation -->
 	{{ template "nav" . }}
 
+	<!-- Main Page Content -->
 	<main class="flex-grow">
 		{{ template "content" . }}
 	</main>
 
+	<!-- Global Footer -->
 	{{ template "footer" . }}
 
+	<!-- Floating Sticky WhatsApp Widget -->
+	<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 group" x-data="{ expanded: false }">
+		<!-- Tooltip / Callout bubble on desktop hover -->
+		<div x-show="expanded" x-transition.opacity.scale.origin.bottom.right @click.outside="expanded = false" class="bg-[#1A1F29] border border-[#28303F] text-xs p-3.5 rounded-xl shadow-2xl max-w-xs text-left mb-1 backdrop-blur-md">
+			<div class="flex items-center gap-2 mb-1.5">
+				<span class="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-ping"></span>
+				<span class="font-semibold text-white">WhatsApp Business</span>
+			</div>
+			<p class="text-[#9DA3AF] mb-2 leading-relaxed">Assalam o Alaikum! Have questions about 3D printer prices, school labs, or print orders? Chat with our engineers directly.</p>
+			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum%20Jiddat3D.%20I%20have%20an%20inquiry%20about%20your%203D%20printers%20and%20services." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#25D366] hover:underline">
+				Chat 0300-1318112 &rarr;
+			</a>
+		</div>
+
+		<!-- The Floating WhatsApp Button -->
+		<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum%20Jiddat3D.%20I%20have%20an%20inquiry%20about%20your%203D%20printers%20and%20services." target="_blank" rel="noopener noreferrer" class="relative flex items-center justify-center w-14 h-14 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 group focus:outline-none" title="Chat on WhatsApp (0300-1318112)" aria-label="WhatsApp Business Contact">
+			<!-- Pulsing Ring -->
+			<span class="absolute inset-0 rounded-full bg-[#25D366] opacity-30 animate-ping pointer-events-none"></span>
+			<!-- WhatsApp Icon SVG -->
+			<svg class="w-7 h-7 fill-current relative z-10" viewBox="0 0 24 24">
+				<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+			</svg>
+			<!-- Online Indicator Dot -->
+			<span class="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-[#0C0E11]"></span>
+		</a>
+	</div>
+
+	<!-- Mobile Thumb-Friendly Bottom Navigation Bar -->
+	<nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#14181F]/95 backdrop-blur-lg border-t border-[#28303F] px-2 py-2 flex items-center justify-around text-[11px] text-[#9DA3AF]">
+		<a href="/" class="flex flex-col items-center gap-0.5 hover:text-[#FF6A1A] py-1 transition-colors">
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+			<span>Home</span>
+		</a>
+		<a href="/printers" class="flex flex-col items-center gap-0.5 hover:text-[#FF6A1A] py-1 transition-colors">
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+			<span>Printers</span>
+		</a>
+		<a href="/schools" class="flex flex-col items-center gap-0.5 hover:text-[#FF6A1A] py-1 transition-colors">
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/></svg>
+			<span>Schools</span>
+		</a>
+		<a href="/print-service" class="flex flex-col items-center gap-0.5 hover:text-[#FF6A1A] py-1 transition-colors">
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+			<span>Service</span>
+		</a>
+		<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20inquire%20about%203D%20printers." target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-0.5 text-[#25D366] font-semibold py-1">
+			<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+			<span>WhatsApp</span>
+		</a>
+	</nav>
 </body>
 </html>
 {{ end }}

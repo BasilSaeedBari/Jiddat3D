@@ -1,15 +1,16 @@
 {{ define "content" }}
-<section class="min-h-[70vh] flex items-center justify-center bg-bg text-center px-4">
-	<div class="max-w-md mx-auto relative z-10 reveal-on-scroll text-center">
-		<img src="/static/img/logo/JiddatBrightTrasnparent-removebg-preview.png" alt="Jiddat3D" class="h-16 object-contain mx-auto mb-8 preloader-glow">
-		<h1 class="font-serif text-6xl text-primary font-bold mb-4">404</h1>
-		<p class="text-ink-muted text-lg mb-8">
-			Looks like this page hasn't been built yet — even we start with a blank plate sometimes.
+<div class="min-h-[70vh] flex items-center justify-center bg-[#0C0E11] text-center px-4 py-20">
+	<div class="max-w-md mx-auto relative z-10 text-center space-y-6">
+		<img src="/static/img/logo/JiddatBrightTrasnparent-removebg-preview.png" alt="Jiddat3D" class="h-14 object-contain mx-auto preloader-glow">
+		<h1 class="font-display text-7xl text-[#FF6A1A] font-bold">404</h1>
+		<h2 class="font-display text-xl font-bold text-white">Nozzle homed off the build plate</h2>
+		<p class="text-[#9DA3AF] text-sm leading-relaxed">
+			The page you are looking for has been moved or doesn't exist. Let's get you back to working machines and real prints.
 		</p>
-		<div class="flex flex-col sm:flex-row gap-4 justify-center">
-			<a href="/" class="px-6 py-3 bg-primary text-white rounded-md font-medium hover:bg-primary-light transition-colors">Go Home</a>
-			<a href="/products" class="px-6 py-3 border border-border text-ink rounded-md font-medium hover:border-primary transition-colors">View Products</a>
+		<div class="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+			<a href="/" class="btn-filament text-sm py-3 px-6">Back to Home</a>
+			<a href="/printers" class="btn-secondary text-sm py-3 px-6">Explore 3D Printers</a>
 		</div>
 	</div>
-</section>
+</div>
 {{ end }}

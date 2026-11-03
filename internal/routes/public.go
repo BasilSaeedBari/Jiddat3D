@@ -1,15 +1,16 @@
 package routes
 
 import (
-	"strings"
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 
-	"jiddat3d/internal/compiler"
-	"jiddat3d/internal/mailer"
 	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/core"
+	"jiddat3d/internal/compiler"
+	"jiddat3d/internal/mailer"
 )
 
 func RegisterPublicRoutes(app core.App) {
@@ -20,16 +21,12 @@ func RegisterPublicRoutes(app core.App) {
 			source := strings.TrimSpace(c.Request.FormValue("source"))
 			
 			if email == "" {
-				return c.HTML(http.StatusBadRequest, `<div class="text-accent-terracotta text-sm mt-2">Email is required.</div>`)
+				return c.HTML(http.StatusBadRequest, `<div class="text-[#FF6A1A] text-xs mt-2">Email is required.</div>`)
 			}
 
-			// We rely on PocketBase's unique constraint on email.
-			// If it fails, they are likely already subscribed.
-
-			// Create record
 			collection, err := app.FindCollectionByNameOrId("subscribers")
 			if err != nil {
-				return c.HTML(http.StatusInternalServerError, `<div class="text-accent-terracotta text-sm mt-2">Internal server error.</div>`)
+				return c.HTML(http.StatusInternalServerError, `<div class="text-[#FF6A1A] text-xs mt-2">Internal server error.</div>`)
 			}
 
 			record := core.NewRecord(collection)
@@ -38,11 +35,10 @@ func RegisterPublicRoutes(app core.App) {
 			record.Set("source", source)
 
 			if err := app.Save(record); err != nil {
-				// Assume duplicate email
-				return c.HTML(http.StatusOK, `<div class="text-accent-gold text-sm mt-2">You are already subscribed. Thanks!</div>`)
+				return c.HTML(http.StatusOK, `<div class="text-[#FFB400] text-xs mt-2 font-mono">You are already subscribed. Thanks!</div>`)
 			}
 
-			return c.HTML(http.StatusOK, `<div class="text-primary font-medium text-sm mt-2">You're in. We'll keep you posted.</div>`)
+			return c.HTML(http.StatusOK, `<div class="text-[#3DDC84] font-medium text-xs mt-2 font-mono">✓ Subscribed. We will keep you updated.</div>`)
 		})
 
 		e.Router.POST("/api/contact/submit", func(c *core.RequestEvent) error {
@@ -52,12 +48,12 @@ func RegisterPublicRoutes(app core.App) {
 			message := strings.TrimSpace(c.Request.FormValue("message"))
 
 			if name == "" || contactMethod == "" || message == "" {
-				return c.HTML(http.StatusBadRequest, `<div class="p-4 bg-accent-terracotta/10 border border-accent-terracotta text-accent-terracotta rounded-md">Please fill in all required fields.</div>`)
+				return c.HTML(http.StatusBadRequest, `<div class="p-4 bg-red-500/10 border border-red-500 text-red-400 rounded-lg text-xs font-mono">Please fill in all required fields.</div>`)
 			}
 
 			collection, err := app.FindCollectionByNameOrId("contact_submissions")
 			if err != nil {
-				return c.HTML(http.StatusInternalServerError, `<div class="p-4 bg-accent-terracotta/10 border border-accent-terracotta text-accent-terracotta rounded-md">Internal server error.</div>`)
+				return c.HTML(http.StatusInternalServerError, `<div class="p-4 bg-red-500/10 border border-red-500 text-red-400 rounded-lg text-xs font-mono">Internal server error.</div>`)
 			}
 
 			record := core.NewRecord(collection)
@@ -68,13 +64,13 @@ func RegisterPublicRoutes(app core.App) {
 			record.Set("status", "new")
 
 			if err := app.Save(record); err != nil {
-				return c.HTML(http.StatusInternalServerError, `<div class="p-4 bg-accent-terracotta/10 border border-accent-terracotta text-accent-terracotta rounded-md">Failed to send message.</div>`)
+				return c.HTML(http.StatusInternalServerError, `<div class="p-4 bg-red-500/10 border border-red-500 text-red-400 rounded-lg text-xs font-mono">Failed to save inquiry.</div>`)
 			}
 
 			// Fire and forget email notification
 			go mailer.SendContactNotification(name, contactMethod, subject, message)
 
-			return c.HTML(http.StatusOK, `<div class="p-8 text-center"><h3 class="font-serif text-2xl text-primary mb-2">Message Sent</h3><p class="text-ink-muted">We will get back to you shortly.</p></div>`)
+			return c.HTML(http.StatusOK, `<div class="p-6 text-center bg-[#14181F] border border-[#3DDC84]/50 rounded-xl"><h3 class="font-display font-bold text-xl text-[#3DDC84] mb-2">Inquiry Received</h3><p class="text-xs text-[#9DA3AF] leading-relaxed">Thank you, `+name+`. Our team in Karachi will reply via WhatsApp or email shortly.</p></div>`)
 		})
 		
 		// Serve static assets from ui/static
@@ -121,13 +117,35 @@ func RegisterPublicRoutes(app core.App) {
 				return nil
 			}
 			
-			// 4. Try dynamic render for base templates (home, about, contact, etc.)
-			pageName := strings.TrimPrefix(reqPath, "/")
+			// 4. Try dynamic render
+			rawPath := strings.TrimPrefix(reqPath, "/")
+			pageName := rawPath
+			
+			// Path aliases
+			switch pageName {
+			case "printers":
+				pageName = "products"
+			case "schools-and-universities":
+				pageName = "schools"
+			case "find-my-printer":
+				pageName = "quiz"
+			case "fyp":
+				pageName = "print_service"
+			case "print-service":
+				pageName = "print_service"
+			case "parts":
+				pageName = "filament"
+			case "courses":
+				pageName = "workshops"
+			}
 			
 			siteSettings, _ := app.FindFirstRecordByFilter("site_settings", "1=1")
 			siteMap := make(map[string]any)
 			if siteSettings != nil {
 				siteMap = siteSettings.PublicExport()
+			}
+			if _, ok := siteMap["whatsapp_business_number"]; !ok || siteMap["whatsapp_business_number"] == "" {
+				siteMap["whatsapp_business_number"] = "923001318112"
 			}
 			
 			var listData []map[string]any
@@ -136,8 +154,12 @@ func RegisterPublicRoutes(app core.App) {
 				if pageName == "projects" {
 					cType = "project"
 				}
-				// Fetch records for the list
 				records, _ := app.FindRecordsByFilter("content", "type = {:type} && published = true", "-published_at", 100, 0, dbx.Params{"type": cType})
+				for _, r := range records {
+					listData = append(listData, r.PublicExport())
+				}
+			} else if pageName == "products" {
+				records, _ := app.FindRecordsByFilter("products", "active = true", "-created", 100, 0)
 				for _, r := range records {
 					listData = append(listData, r.PublicExport())
 				}
@@ -165,13 +187,88 @@ func RegisterPublicRoutes(app core.App) {
 							data.Body = compiler.SafeHTML(rendered)
 						}
 						
-						// Template map: blog -> blog_detail.html
 						tmplName := parts[0] + "_detail.html"
 						if parts[0] == "projects" {
 							tmplName = "project_detail.html"
 						}
 						
 						html, err := compiler.RenderTemplate(tmplName, data)
+						if err == nil {
+							return c.HTML(http.StatusOK, html)
+						}
+					}
+				}
+			}
+
+			// Handle Product / Printer Detail Pages
+			if strings.HasPrefix(reqPath, "/products/") || strings.HasPrefix(reqPath, "/printers/") {
+				parts := strings.Split(strings.TrimPrefix(reqPath, "/"), "/")
+				if len(parts) == 2 {
+					slug := parts[1]
+					record, _ := app.FindFirstRecordByFilter("products", "slug = {:slug}", dbx.Params{"slug": slug})
+					if record != nil {
+						data.Record = record.PublicExport()
+					} else {
+						// Fallback catalog map for known models
+						fallbackCatalog := map[string]map[string]any{
+							"bambu-lab-a1": {
+								"name":        "Bambu Lab A1",
+								"tagline":     "Flagship automated 500mm/s high-speed printer with optional 4-color AMS Lite.",
+								"price":       "165,000",
+								"currency":    "PKR",
+								"availability": "in-stock",
+								"featured":    true,
+							},
+							"bambu-lab-a1-mini": {
+								"name":        "Bambu Lab A1 Mini",
+								"tagline":     "Compact, desktop automated 3D printer with active noise cancellation.",
+								"price":       "115,000",
+								"currency":    "PKR",
+								"availability": "in-stock",
+								"featured":    true,
+							},
+							"bambu-lab-p1s": {
+								"name":        "Bambu Lab P1S Enclosed",
+								"tagline":     "Fully enclosed CoreXY chamber designed for high-temperature ABS and engineering filaments.",
+								"price":       "245,000",
+								"currency":    "PKR",
+								"availability": "in-stock",
+								"featured":    true,
+							},
+							"creality-ender-3-v3-ke": {
+								"name":        "Creality Ender-3 V3 KE",
+								"tagline":     "High-speed 500mm/s CoreXZ architecture running Klipper OS under 1 Lakh PKR.",
+								"price":       "98,000",
+								"currency":    "PKR",
+								"availability": "in-stock",
+								"featured":    false,
+							},
+							"elegoo-mars-4-ultra": {
+								"name":        "Elegoo Mars 4 Ultra 9K",
+								"tagline":     "Ultra-precision 9K mono LCD resin printer for fine jewelry casting and dental molds.",
+								"price":       "128,000",
+								"currency":    "PKR",
+								"availability": "in-stock",
+								"featured":    false,
+							},
+							"jiddat-corexy": {
+								"name":        "Jiddat CoreXY Maker Kit",
+								"tagline":     "100% repairable open-source RepRap machine assembled with local Pakistani hardware.",
+								"price":       "85,000",
+								"currency":    "PKR",
+								"availability": "in-stock",
+								"featured":    false,
+							},
+						}
+
+						if mockItem, exists := fallbackCatalog[slug]; exists {
+							data.Record = mockItem
+						}
+					}
+
+					if data.Record != nil {
+						data.Title = fmt.Sprintf("%v Price in Pakistan", data.Record["name"])
+						html, err := compiler.RenderTemplate("product_detail.html", data)
 						if err == nil {
 							return c.HTML(http.StatusOK, html)
 						}

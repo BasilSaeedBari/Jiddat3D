@@ -5,9 +5,101 @@
 @layer base {
 	html {
 		scroll-behavior: smooth;
+		background-color: #0C0E11;
+		color: #F4F1EA;
 	}
 	body {
 		font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+		background-color: #0C0E11;
+		color: #F4F1EA;
+		overflow-x: hidden;
+	}
+	
+	/* Custom Sleek Scrollbar */
+	::-webkit-scrollbar {
+		width: 8px;
+		height: 8px;
+	}
+	::-webkit-scrollbar-track {
+		background: #0C0E11;
+	}
+	::-webkit-scrollbar-thumb {
+		background: #28303F;
+		border-radius: 4px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: #FF6A1A;
+	}
+}
+
+@layer components {
+	.workshop-card {
+		background-color: #1A1F29;
+		border: 1px solid #28303F;
+		border-radius: 1rem;
+		transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	.workshop-card:hover {
+		border-color: rgba(255, 106, 26, 0.4);
+		transform: translateY(-2px);
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 106, 26, 0.12);
+	}
+	
+	.btn-filament {
+		background-color: #FF6A1A;
+		color: #FFFFFF;
+		font-weight: 600;
+		padding: 0.75rem 1.5rem;
+		border-radius: 0.5rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		transition: all 0.25s ease;
+		box-shadow: 0 4px 14px rgba(255, 106, 26, 0.35);
+	}
+	.btn-filament:hover {
+		background-color: #FF8038;
+		transform: translateY(-1px);
+		box-shadow: 0 6px 20px rgba(255, 106, 26, 0.5);
+	}
+	
+	.btn-whatsapp {
+		background-color: #25D366;
+		color: #FFFFFF;
+		font-weight: 600;
+		padding: 0.75rem 1.5rem;
+		border-radius: 0.5rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		transition: all 0.25s ease;
+		box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+	}
+	.btn-whatsapp:hover {
+		background-color: #20BA5A;
+		transform: translateY(-1px);
+		box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+	}
+
+	.btn-secondary {
+		background-color: #14181F;
+		color: #F4F1EA;
+		border: 1px solid #28303F;
+		font-weight: 500;
+		padding: 0.75rem 1.5rem;
+		border-radius: 0.5rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		transition: all 0.25s ease;
+	}
+	.btn-secondary:hover {
+		background-color: #1A1F29;
+		border-color: #FF6A1A;
+		color: #FF6A1A;
 	}
 }
 
@@ -20,6 +112,34 @@
 	.reveal-on-scroll.is-visible {
 		opacity: 1;
 		transform: translateY(0);
+	}
+
+	.bg-grid-pattern {
+		background-size: 32px 32px;
+		background-image: 
+			linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+			linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+	}
+
+	.bg-dots-pattern {
+		background-size: 24px 24px;
+		background-image: radial-gradient(rgba(255, 106, 26, 0.12) 1px, transparent 1px);
+	}
+
+	.pulse-glow {
+		animation: pulseGlow 2s infinite alternate;
+	}
+
+	@keyframes pulseGlow {
+		0% {
+			box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+		}
+		70% {
+			box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
+		}
+		100% {
+			box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {

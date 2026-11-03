@@ -1,0 +1,260 @@
+{{ define "content" }}
+<div class="py-12 bg-[#0C0E11] text-[#F4F1EA] min-h-screen">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		
+		<!-- Breadcrumbs -->
+		<nav class="flex items-center gap-2 text-xs text-[#9DA3AF] mb-8 font-mono">
+			<a href="/" class="hover:text-white">Home</a>
+			<span>/</span>
+			<span class="text-white">Schools & Universities</span>
+		</nav>
+
+		<!-- Hero Section -->
+		<div class="border-b border-[#28303F] pb-16 mb-16">
+			<div class="max-w-4xl space-y-6">
+				<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FF6A1A]/10 border border-[#FF6A1A]/30 text-xs font-semibold text-[#FF6A1A]">
+					<span>🏫 STEAM Makerspace Labs in Pakistan</span>
+				</div>
+				<h1 class="font-display text-hero font-bold text-white tracking-tight leading-[1.08]">
+					Give your students a machine that makes things.
+				</h1>
+				<p class="text-lg md:text-xl text-[#9DA3AF] leading-relaxed">
+					We set up the 3D printing lab, train your teachers from scratch, and deliver curriculum-aligned lesson plans. Your students go from drawing simple shapes on a screen to holding real engineering parts in their hands.
+				</p>
+				
+				<div class="flex flex-wrap items-center gap-4 pt-4">
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20am%20from%20a%20school/university%20and%20would%20like%20a%20quotation%20for%20a%203D%20printing%20lab." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-sm px-6 py-3.5">
+						<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Get Institutional Quote</span>
+					</a>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20We%20would%20like%20to%20book%20a%20free%20demo%20day%20at%20our%20campus." target="_blank" rel="noopener noreferrer" class="btn-filament text-sm px-6 py-3.5">
+						<span>Book a Free Demo Day</span>
+					</a>
+					<a href="#packages" class="btn-secondary text-sm px-6 py-3.5">
+						<span>View Lab Packages &darr;</span>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Section: What Happens When You Work With Us (5-Step Roadmap) -->
+		<div class="py-12 border-b border-[#28303F]">
+			<div class="text-center max-w-3xl mx-auto mb-16">
+				<span class="text-[#FF6A1A] font-mono text-xs uppercase tracking-wider">End-to-End Implementation</span>
+				<h2 class="font-display text-h2 font-bold text-white mt-1">How we set up your school lab</h2>
+				<p class="text-[#9DA3AF] text-sm md:text-base mt-2">
+					You don't need in-house 3D printing engineers. We handle the technical heavy lifting from room setup to classroom delivery.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+				<div class="workshop-card p-5">
+					<div class="w-10 h-10 rounded-lg bg-[#FF6A1A]/10 text-[#FF6A1A] font-mono font-bold flex items-center justify-center mb-4 text-base">01</div>
+					<h4 class="font-display font-bold text-white text-base mb-1">Campus Assessment</h4>
+					<p class="text-xs text-[#9DA3AF] leading-relaxed">We inspect your room, electrical load capacity, and student group sizes to recommend optimal printer quantities.</p>
+				</div>
+
+				<div class="workshop-card p-5">
+					<div class="w-10 h-10 rounded-lg bg-[#17C3B2]/10 text-[#17C3B2] font-mono font-bold flex items-center justify-center mb-4 text-base">02</div>
+					<h4 class="font-display font-bold text-white text-base mb-1">Lab Installation</h4>
+					<p class="text-xs text-[#9DA3AF] leading-relaxed">Delivery, calibration, and safety configuration. We supply safe PLA filaments and student safety posters.</p>
+				</div>
+
+				<div class="workshop-card p-5">
+					<div class="w-10 h-10 rounded-lg bg-[#FFB400]/10 text-[#FFB400] font-mono font-bold flex items-center justify-center mb-4 text-base">03</div>
+					<h4 class="font-display font-bold text-white text-base mb-1">Teacher Training</h4>
+					<p class="text-xs text-[#9DA3AF] leading-relaxed">2-day intensive hands-on workshop for your science & computer teachers. Starts from absolute zero.</p>
+				</div>
+
+				<div class="workshop-card p-5">
+					<div class="w-10 h-10 rounded-lg bg-[#3DDC84]/10 text-[#3DDC84] font-mono font-bold flex items-center justify-center mb-4 text-base">04</div>
+					<h4 class="font-display font-bold text-white text-base mb-1">Lesson Plans</h4>
+					<p class="text-xs text-[#9DA3AF] leading-relaxed">24 classroom-ready modules for Grades 4 to Matric/O-Levels. Tinkercad design challenges and physics demos.</p>
+				</div>
+
+				<div class="workshop-card p-5">
+					<div class="w-10 h-10 rounded-lg bg-[#2B59FF]/10 text-[#2B59FF] font-mono font-bold flex items-center justify-center mb-4 text-base">05</div>
+					<h4 class="font-display font-bold text-white text-base mb-1">Ongoing Care</h4>
+					<p class="text-xs text-[#9DA3AF] leading-relaxed">Spare parts kit stocked in your lab, direct WhatsApp teacher hotline, and termly hardware checkups.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Section: What Schools Worry About (And Honest Answers) -->
+		<div class="py-16 border-b border-[#28303F]">
+			<div class="max-w-4xl mx-auto space-y-6">
+				<div class="text-center mb-10">
+					<span class="text-[#17C3B2] font-mono text-xs uppercase tracking-wider">Common Questions From Principals</span>
+					<h2 class="font-display text-h2 font-bold text-white mt-1">What schools worry about (and our answers)</h2>
+				</div>
+
+				<div class="space-y-4">
+					<div class="workshop-card p-6">
+						<h4 class="font-display font-bold text-white text-base mb-2">"Is 3D printing safe around young children?"</h4>
+						<p class="text-xs md:text-sm text-[#9DA3AF] leading-relaxed">
+							Yes. For schools, we exclusively recommend <strong>PLA (Polylactic Acid)</strong> filament, which is made from biodegradable corn-starch and emits no toxic fumes or foul odors. We also supply machines with enclosed walls or protective door sensors that pause if touched during printing.
+						</p>
+					</div>
+
+					<div class="workshop-card p-6">
+						<h4 class="font-display font-bold text-white text-base mb-2">"Our teachers have zero 3D modeling experience."</h4>
+						<p class="text-xs md:text-sm text-[#9DA3AF] leading-relaxed">
+							Almost all teachers we train have never seen a 3D printer before! Our training uses free, browser-based tools (like Autodesk Tinkercad) that allow teachers to build geometric objects, gears, and nameplates within the first hour. We leave them with step-by-step PDF slide decks they can project directly in class.
+						</p>
+					</div>
+
+					<div class="workshop-card p-6">
+						<h4 class="font-display font-bold text-white text-base mb-2">"What are the ongoing consumable costs?"</h4>
+						<p class="text-xs md:text-sm text-[#9DA3AF] leading-relaxed">
+							Filament is surprisingly inexpensive: a 1kg spool costs around <strong>Rs 2,500 – Rs 3,000</strong>. Typical student projects weigh between 10 to 18 grams, which means the plastic cost per student is only <strong>Rs 30 to Rs 55</strong>! One single spool can support up to 60 to 80 student creations.
+						</p>
+					</div>
+
+					<div class="workshop-card p-6">
+						<h4 class="font-display font-bold text-white text-base mb-2">"What happens if a printer breaks mid-term?"</h4>
+						<p class="text-xs md:text-sm text-[#9DA3AF] leading-relaxed">
+							Unlike imported grey-market hardware where you must wait a month for parts from China, Jiddat3D maintains a dedicated inventory of replacement nozzles, thermistors, extruder gears, and heater blocks right in Karachi and Lahore. Most common clogs can be resolved in 10 minutes using the spare parts kit we include with every school lab.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Section: Packages Grid -->
+		<div class="py-16 border-b border-[#28303F]" id="packages">
+			<div class="text-center max-w-3xl mx-auto mb-16">
+				<span class="text-[#FF6A1A] font-mono text-xs uppercase tracking-wider">Turnkey Lab Solutions</span>
+				<h2 class="font-display text-h2 font-bold text-white mt-1">School & University Packages</h2>
+				<p class="text-[#9DA3AF] text-sm md:text-base mt-2">
+					Packages can be customized for your exact student count and room layout.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+				
+				<!-- Package 1: Starter Lab -->
+				<div class="workshop-card p-6 flex flex-col justify-between">
+					<div>
+						<div class="pb-4 border-b border-[#28303F] mb-4">
+							<span class="text-xs font-mono text-[#9DA3AF] uppercase">Entry Level</span>
+							<h3 class="font-display font-bold text-white text-2xl mt-1">Starter Lab</h3>
+							<p class="text-xs text-[#9DA3AF] mt-1">Ideal for one school branch or club testing the waters.</p>
+						</div>
+
+						<ul class="space-y-3 text-xs text-[#9DA3AF]">
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 2x High-Speed Automated 3D Printers</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 1-Day Hands-on Teacher Training</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 8 Curriculum-Ready Lesson Plans</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 4kg Genuine PLA Filament (Assorted)</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> Essential Spare Parts & Tool Kit</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> WhatsApp Teacher Technical Hotline</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 12-Month Service Warranty</li>
+						</ul>
+					</div>
+
+					<div class="mt-8 pt-4 border-t border-[#28303F]">
+						<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20We%20want%20a%20detailed%20quotation%20for%20the%20Starter%20Lab%20Package." target="_blank" rel="noopener noreferrer" class="btn-filament w-full text-xs py-3 justify-center text-center">
+							Request Starter Quote
+						</a>
+					</div>
+				</div>
+
+				<!-- Package 2: Classroom Lab -->
+				<div class="workshop-card p-6 flex flex-col justify-between border-[#FF6A1A]/60 bg-gradient-to-b from-[#1A1F29] to-[#14181F] relative">
+					<div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-[#FF6A1A] text-white text-[10px] font-bold uppercase tracking-wider">
+						Recommended for Schools
+					</div>
+					<div>
+						<div class="pb-4 border-b border-[#28303F] mb-4">
+							<span class="text-xs font-mono text-[#3DDC84] uppercase">Comprehensive Setup</span>
+							<h3 class="font-display font-bold text-white text-2xl mt-1">Classroom Lab</h3>
+							<p class="text-xs text-[#9DA3AF] mt-1">Designed for full class periods and STEAM timetables.</p>
+						</div>
+
+						<ul class="space-y-3 text-xs text-[#9DA3AF]">
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 4x to 6x High-Speed 3D Printers (Enclosed options)</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> Multi-Color Printing Capability (4 Colors)</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 2-Day Comprehensive Faculty Workshop</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 24 Structured Term Lesson Plans</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 12kg PLA & PETG Filament Stock</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> Full Maintenance Station & Hotends</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> Quarterly On-Campus Inspection Visits</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> Priority 24-hr Replacement Guarantee</li>
+						</ul>
+					</div>
+
+					<div class="mt-8 pt-4 border-t border-[#28303F]">
+						<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20We%20want%20a%20detailed%20quotation%20for%20the%20Classroom%20Lab%20Package." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-3 justify-center text-center">
+							Request Classroom Quote
+						</a>
+					</div>
+				</div>
+
+				<!-- Package 3: University Campus Lab -->
+				<div class="workshop-card p-6 flex flex-col justify-between">
+					<div>
+						<div class="pb-4 border-b border-[#28303F] mb-4">
+							<span class="text-xs font-mono text-[#2B59FF] uppercase">Advanced & Tenders</span>
+							<h3 class="font-display font-bold text-white text-2xl mt-1">Campus Lab</h3>
+							<p class="text-xs text-[#9DA3AF] mt-1">For Engineering, Architecture, and Fab Labs.</p>
+						</div>
+
+						<ul class="space-y-3 text-xs text-[#9DA3AF]">
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 8+ High-Performance CoreXY Machines</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> Carbon Fiber & High-Temp ABS Enclosures</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> Ultra-High Resolution 9K Resin System</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> Advanced CAD & Slicing Faculty Training</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> 25kg Engineering Material Inventory</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> Dedicated Institutional Account Manager</li>
+							<li class="flex items-center gap-2"><strong class="text-white">✓</strong> EPADS / PPRA Tender Billing & NTN Invoices</li>
+						</ul>
+					</div>
+
+					<div class="mt-8 pt-4 border-t border-[#28303F]">
+						<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20We%20require%20a%20formal%20tender/procurement%20proposal%20for%20our%20University%20Campus%20Lab." target="_blank" rel="noopener noreferrer" class="btn-filament w-full text-xs py-3 justify-center text-center">
+							Request Tender Packet
+						</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Section: Tender & Procurement Support for Public Universities -->
+		<div class="py-16" id="tenders">
+			<div class="workshop-card p-8 bg-[#14181F] border border-[#28303F]">
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+					<div class="lg:col-span-8 space-y-4">
+						<span class="text-xs font-mono text-[#17C3B2] uppercase">Public Sector & Government Procurement</span>
+						<h3 class="font-display font-bold text-white text-2xl">
+							Buying through an official tender? We are ready.
+						</h3>
+						<p class="text-sm text-[#9DA3AF] leading-relaxed">
+							We supply university engineering departments and public sector makerspaces across Pakistan. We can provide all documentation required by your procurement committee:
+						</p>
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#9DA3AF] pt-2 font-mono">
+							<span class="flex items-center gap-2"><strong class="text-white">✓</strong> NTN and GST Registered Entity</span>
+							<span class="flex items-center gap-2"><strong class="text-white">✓</strong> Active Taxpayer List (ATL) Compliant</span>
+							<span class="flex items-center gap-2"><strong class="text-white">✓</strong> Brand Authorization Letters</span>
+							<span class="flex items-center gap-2"><strong class="text-white">✓</strong> Formal Standard Quotation Format</span>
+							<span class="flex items-center gap-2"><strong class="text-white">✓</strong> EPADS & PPRA Tender Submission</span>
+							<span class="flex items-center gap-2"><strong class="text-white">✓</strong> Ministry of Interior Permit Records</span>
+						</div>
+					</div>
+
+					<div class="lg:col-span-4 flex flex-col gap-3">
+						<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20We%20are%20issuing%20an%20RFQ/Tender%20for%203D%20printers%20and%20need%20formal%20spec%20sheets%20and%20quotations." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-3 px-4 justify-center text-center">
+							<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+							<span>Direct Procurement WhatsApp</span>
+						</a>
+						<a href="mailto:info@jiddat3d.com?subject=Tender%20Inquiry%20for%203D%20Printers" class="btn-secondary text-xs py-3 px-4 justify-center text-center">
+							<span>Email RFQ: info@jiddat3d.com</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+{{ end }}

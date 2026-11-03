@@ -1,12 +1,407 @@
 {{ define "content" }}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-	<h1 class="text-h1 font-serif text-primary mb-8 text-center reveal-on-scroll">Our Machines</h1>
-	<p class="text-xl text-center text-ink-muted max-w-3xl mx-auto mb-16 reveal-on-scroll">Affordable, open-source hardware designed for the Pakistani maker.</p>
+<div class="py-12 bg-[#0C0E11] min-h-screen text-[#F4F1EA]" x-data="{
+	category: 'all',
+	budget: 'all',
+	search: '',
+	sort: 'popular',
+	matches(cat, bud, name, tag) {
+		const matchCat = this.category === 'all' || cat === this.category;
+		const matchBud = this.budget === 'all' || bud === this.budget;
+		const matchSearch = this.search === '' || name.toLowerCase().includes(this.search.toLowerCase()) || tag.toLowerCase().includes(this.search.toLowerCase());
+		return matchCat && matchBud && matchSearch;
+	}
+}">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		
+		<!-- Breadcrumbs -->
+		<nav class="flex items-center gap-2 text-xs text-[#9DA3AF] mb-6 font-mono">
+			<a href="/" class="hover:text-white">Home</a>
+			<span>/</span>
+			<span class="text-white">3D Printers</span>
+		</nav>
 
-	<!-- Fetch products from DB? In dev without Caddy we don't have PocketBase logic injected here directly unless we modify RenderTemplate. For now, a static fallback is fine or a message -->
-	<div class="text-center p-12 bg-bg-subtle rounded-xl border border-border">
-		<h3 class="text-2xl font-serif text-ink mb-4">Store currently offline</h3>
-		<p class="text-ink-muted">We are setting up the product database. Please check back later or contact us.</p>
+		<!-- Header -->
+		<div class="border-b border-[#28303F] pb-8 mb-8">
+			<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+				<div>
+					<h1 class="font-display text-h1 font-bold text-white tracking-tight">3D Printers in Pakistan</h1>
+					<p class="text-[#9DA3AF] text-sm md:text-base mt-2 max-w-2xl leading-relaxed">
+						Genuine, factory-sealed 3D printers from Bambu Lab, Creality, Elegoo, and Jiddat. Prices in rupees, updated daily for exchange rates. Includes 12-month service warranty and local Pakistan setup support.
+					</p>
+				</div>
+				<div class="text-left md:text-right shrink-0">
+					<a href="/find-my-printer" class="btn-filament text-xs py-2.5 px-4 shadow-lg inline-flex items-center gap-2">
+						<span>⚡ Not sure? Take the 1-Min Quiz</span> &rarr;
+					</a>
+				</div>
+			</div>
+
+			<!-- Warning Banner: 3D Printer vs 3D Pen -->
+			<div class="mt-6 p-4 rounded-xl bg-[#14181F] border border-[#28303F] flex items-start sm:items-center gap-3 text-xs">
+				<span class="text-xl shrink-0">💡</span>
+				<div class="text-[#9DA3AF] leading-relaxed">
+					<strong class="text-white">3D Printer vs 3D Pen:</strong> A 3D pen is a handheld toy. A 3D printer is a computer-guided manufacturing tool that builds digital 3D models with precision. All machines listed on this page are genuine 3D printers.
+				</div>
+			</div>
+		</div>
+
+		<!-- Filters & Search Toolbar -->
+		<div class="bg-[#14181F] p-4 rounded-xl border border-[#28303F] mb-8 space-y-4">
+			
+			<!-- Top Row: Search & Category Chips -->
+			<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+				<!-- Search Input -->
+				<div class="relative flex-1 max-w-md">
+					<input type="text" x-model="search" placeholder="Search by model (e.g. A1, Ender, Resin, Bambu)..." class="w-full bg-[#1A1F29] border border-[#28303F] focus:border-[#FF6A1A] rounded-lg px-3.5 py-2 text-xs md:text-sm text-white placeholder-[#656D7D] focus:outline-none">
+					<svg class="w-4 h-4 text-[#656D7D] absolute right-3 top-3 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+				</div>
+
+				<!-- Technology Filter Tabs -->
+				<div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+					<button @click="category = 'all'" :class="category === 'all' ? 'bg-[#FF6A1A] text-white' : 'bg-[#1A1F29] text-[#9DA3AF] hover:text-white'" class="px-3 py-1.5 rounded-lg border border-[#28303F] transition-colors">
+						All Tech
+					</button>
+					<button @click="category = 'fdm'" :class="category === 'fdm' ? 'bg-[#FF6A1A] text-white' : 'bg-[#1A1F29] text-[#9DA3AF] hover:text-white'" class="px-3 py-1.5 rounded-lg border border-[#28303F] transition-colors">
+						FDM (Plastic Thread)
+					</button>
+					<button @click="category = 'resin'" :class="category === 'resin' ? 'bg-[#FF6A1A] text-white' : 'bg-[#1A1F29] text-[#9DA3AF] hover:text-white'" class="px-3 py-1.5 rounded-lg border border-[#28303F] transition-colors">
+						Resin (High Detail Liquid)
+					</button>
+					<button @click="category = 'enclosed'" :class="category === 'enclosed' ? 'bg-[#FF6A1A] text-white' : 'bg-[#1A1F29] text-[#9DA3AF] hover:text-white'" class="px-3 py-1.5 rounded-lg border border-[#28303F] transition-colors">
+						Enclosed Only
+					</button>
+				</div>
+			</div>
+
+			<!-- Bottom Row: Budget Chips -->
+			<div class="flex flex-wrap items-center gap-2 pt-2 border-t border-[#1E2532] text-xs">
+				<span class="text-[#656D7D] font-mono">Budget (PKR):</span>
+				<button @click="budget = 'all'" :class="budget === 'all' ? 'border-[#FF6A1A] text-[#FF6A1A]' : 'border-[#28303F] text-[#9DA3AF] hover:text-white'" class="px-2.5 py-1 rounded bg-[#1A1F29] border transition-colors">
+					Any Price
+				</button>
+				<button @click="budget = 'under100k'" :class="budget === 'under100k' ? 'border-[#FF6A1A] text-[#FF6A1A]' : 'border-[#28303F] text-[#9DA3AF] hover:text-white'" class="px-2.5 py-1 rounded bg-[#1A1F29] border transition-colors">
+					Under Rs 100,000
+				</button>
+				<button @click="budget = '100k-250k'" :class="budget === '100k-250k' ? 'border-[#FF6A1A] text-[#FF6A1A]' : 'border-[#28303F] text-[#9DA3AF] hover:text-white'" class="px-2.5 py-1 rounded bg-[#1A1F29] border transition-colors">
+					Rs 100,000 – 250,000
+				</button>
+				<button @click="budget = 'above250k'" :class="budget === 'above250k' ? 'border-[#FF6A1A] text-[#FF6A1A]' : 'border-[#28303F] text-[#9DA3AF] hover:text-white'" class="px-2.5 py-1 rounded bg-[#1A1F29] border transition-colors">
+					Above Rs 250,000
+				</button>
+			</div>
+
+		</div>
+
+		<!-- Product Grid -->
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+			<!-- 1. Bambu Lab A1 -->
+			<div x-show="matches('fdm', '100k-250k', 'Bambu Lab A1', 'high speed multi color')" class="workshop-card p-6 flex flex-col justify-between group">
+				<div>
+					<div class="flex items-center justify-between mb-3">
+						<span class="px-2.5 py-1 rounded bg-[#FF6A1A]/10 text-[#FF6A1A] border border-[#FF6A1A]/30 text-xs font-semibold">Best Seller</span>
+						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1">
+							<span class="w-2 h-2 rounded-full bg-[#3DDC84]"></span> In Stock (Karachi)
+						</span>
+					</div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] flex flex-col items-center justify-center p-4 mb-4">
+						<span class="text-4xl">🖨️</span>
+						<span class="font-display font-bold text-white text-base mt-2">Bambu Lab A1</span>
+						<span class="text-[11px] font-mono text-[#9DA3AF]">Auto Calibration &bull; Up to 4 Colors</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-xl group-hover:text-[#FF6A1A] transition-colors">Bambu Lab A1</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1.5 leading-relaxed">
+						Full-sized high-speed printer with active flow-rate compensation, automated resonance tuning, and silent motor drivers.
+					</p>
+
+					<div class="grid grid-cols-2 gap-2 my-4 text-xs font-mono">
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">BUILD VOLUME</span>
+							<span class="text-white font-medium">256 x 256 x 256 mm</span>
+						</div>
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">MAX SPEED</span>
+							<span class="text-white font-medium">500 mm/s (Rapid)</span>
+						</div>
+					</div>
+
+					<p class="text-xs text-[#17C3B2] mb-1"><strong class="text-white">Good for:</strong> Beginners, home users, creative makers, multi-color prints.</p>
+					<p class="text-[11px] text-[#656D7D]">❌ Not ideal for: High-temperature warping plastics without enclosure.</p>
+				</div>
+
+				<div class="mt-6 pt-4 border-t border-[#28303F]">
+					<div class="flex items-baseline justify-between mb-4 font-mono">
+						<div>
+							<span class="text-2xl font-bold text-white">Rs 165,000</span>
+							<span class="text-[10px] text-[#9DA3AF] block">Updated today &bull; COD Available</span>
+						</div>
+						<a href="/printers/bambu-lab-a1" class="text-xs font-medium text-[#FF8038] hover:underline">Full Specs &rarr;</a>
+					</div>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20order%20the%20Bambu%20Lab%20A1%20(Rs%20165,000).%20Is%20it%20available%20for%20delivery%3F" target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
+						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Order via WhatsApp</span>
+					</a>
+				</div>
+			</div>
+
+			<!-- 2. Bambu Lab A1 Mini -->
+			<div x-show="matches('fdm', '100k-250k', 'Bambu Lab A1 Mini', 'compact budget beginner')" class="workshop-card p-6 flex flex-col justify-between group">
+				<div>
+					<div class="flex items-center justify-between mb-3">
+						<span class="px-2.5 py-1 rounded bg-[#3DDC84]/10 text-[#3DDC84] border border-[#3DDC84]/30 text-xs font-semibold">Most Compact</span>
+						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1">
+							<span class="w-2 h-2 rounded-full bg-[#3DDC84]"></span> In Stock
+						</span>
+					</div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] flex flex-col items-center justify-center p-4 mb-4">
+						<span class="text-4xl">📐</span>
+						<span class="font-display font-bold text-white text-base mt-2">Bambu Lab A1 Mini</span>
+						<span class="text-[11px] font-mono text-[#9DA3AF]">Desktop Size &bull; Fully Automatic</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-xl group-hover:text-[#FF6A1A] transition-colors">Bambu Lab A1 Mini</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1.5 leading-relaxed">
+						All the smart calibration features of the A1 in a compact, portable desk size. Flawless first layers with zero tuning.
+					</p>
+
+					<div class="grid grid-cols-2 gap-2 my-4 text-xs font-mono">
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">BUILD VOLUME</span>
+							<span class="text-white font-medium">180 x 180 x 180 mm</span>
+						</div>
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">SPEED</span>
+							<span class="text-white font-medium">500 mm/s</span>
+						</div>
+					</div>
+
+					<p class="text-xs text-[#17C3B2] mb-1"><strong class="text-white">Good for:</strong> Small desks, apartments, toy makers, student projects.</p>
+					<p class="text-[11px] text-[#656D7D]">❌ Not ideal for: Helmet-sized prints or parts wider than 18 cm.</p>
+				</div>
+
+				<div class="mt-6 pt-4 border-t border-[#28303F]">
+					<div class="flex items-baseline justify-between mb-4 font-mono">
+						<div>
+							<span class="text-2xl font-bold text-white">Rs 115,000</span>
+							<span class="text-[10px] text-[#9DA3AF] block">Updated today &bull; Free setup guide</span>
+						</div>
+						<a href="/printers/bambu-lab-a1-mini" class="text-xs font-medium text-[#FF8038] hover:underline">Full Specs &rarr;</a>
+					</div>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20order%20the%20Bambu%20Lab%20A1%20Mini%20(Rs%20115,000).%20Please%20confirm%20today%27s%20stock." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
+						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Order via WhatsApp</span>
+					</a>
+				</div>
+			</div>
+
+			<!-- 3. Bambu Lab P1S Enclosed -->
+			<div x-show="matches('enclosed', '100k-250k', 'Bambu Lab P1S', 'enclosed engineering')" class="workshop-card p-6 flex flex-col justify-between group">
+				<div>
+					<div class="flex items-center justify-between mb-3">
+						<span class="px-2.5 py-1 rounded bg-[#17C3B2]/10 text-[#17C3B2] border border-[#17C3B2]/30 text-xs font-semibold">Fully Enclosed</span>
+						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1">
+							<span class="w-2 h-2 rounded-full bg-[#3DDC84]"></span> In Stock
+						</span>
+					</div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] flex flex-col items-center justify-center p-4 mb-4">
+						<span class="text-4xl">📦</span>
+						<span class="font-display font-bold text-white text-base mt-2">Bambu Lab P1S</span>
+						<span class="text-[11px] font-mono text-[#9DA3AF]">CoreXY &bull; Chamber Enclosure &bull; ABS</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-xl group-hover:text-[#FF6A1A] transition-colors">Bambu Lab P1S</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1.5 leading-relaxed">
+						Enclosed body for printing strong functional parts in ABS and ASA without draft warping. Excellent for lab & school safety.
+					</p>
+
+					<div class="grid grid-cols-2 gap-2 my-4 text-xs font-mono">
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">CHAMBER</span>
+							<span class="text-white font-medium">Enclosed Glass Door</span>
+						</div>
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">BUILD VOLUME</span>
+							<span class="text-white font-medium">256 x 256 x 256 mm</span>
+						</div>
+					</div>
+
+					<p class="text-xs text-[#17C3B2] mb-1"><strong class="text-white">Good for:</strong> Engineering FYP projects, functional brackets, robotics labs.</p>
+					<p class="text-[11px] text-[#656D7D]">❌ Note: Louder fans than A1 when cooling high speed ABS.</p>
+				</div>
+
+				<div class="mt-6 pt-4 border-t border-[#28303F]">
+					<div class="flex items-baseline justify-between mb-4 font-mono">
+						<div>
+							<span class="text-2xl font-bold text-white">Rs 245,000</span>
+							<span class="text-[10px] text-[#9DA3AF] block">Updated today &bull; 12-Month Warranty</span>
+						</div>
+						<a href="/printers/bambu-lab-p1s" class="text-xs font-medium text-[#FF8038] hover:underline">Full Specs &rarr;</a>
+					</div>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20order%20the%20Bambu%20Lab%20P1S%20(Rs%20245,000).%20Is%20it%20available%3F" target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
+						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Order via WhatsApp</span>
+					</a>
+				</div>
+			</div>
+
+			<!-- 4. Creality Ender-3 V3 KE -->
+			<div x-show="matches('fdm', 'under100k', 'Creality Ender-3 V3 KE', 'budget high speed value')" class="workshop-card p-6 flex flex-col justify-between group">
+				<div>
+					<div class="flex items-center justify-between mb-3">
+						<span class="px-2.5 py-1 rounded bg-[#FFB400]/10 text-[#FFB400] border border-[#FFB400]/30 text-xs font-semibold">Under 1 Lakh</span>
+						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1">
+							<span class="w-2 h-2 rounded-full bg-[#3DDC84]"></span> In Stock
+						</span>
+					</div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] flex flex-col items-center justify-center p-4 mb-4">
+						<span class="text-4xl">⚡</span>
+						<span class="font-display font-bold text-white text-base mt-2">Creality Ender-3 V3 KE</span>
+						<span class="text-[11px] font-mono text-[#9DA3AF]">500mm/s CoreXZ &bull; Klipper OS</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-xl group-hover:text-[#FF6A1A] transition-colors">Creality Ender-3 V3 KE</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1.5 leading-relaxed">
+						CoreXZ architecture and smart Klipper OS. High-speed printing at a fraction of prosumer price. Widest part availability in Pakistan.
+					</p>
+
+					<div class="grid grid-cols-2 gap-2 my-4 text-xs font-mono">
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">BUILD VOLUME</span>
+							<span class="text-white font-medium">220 x 220 x 240 mm</span>
+						</div>
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">SPEED</span>
+							<span class="text-white font-medium">500 mm/s</span>
+						</div>
+					</div>
+
+					<p class="text-xs text-[#17C3B2] mb-1"><strong class="text-white">Good for:</strong> Students, budget makers, tinkering, parts availability.</p>
+					<p class="text-[11px] text-[#656D7D]">❌ Note: Single material only (no multi-color AMS).</p>
+				</div>
+
+				<div class="mt-6 pt-4 border-t border-[#28303F]">
+					<div class="flex items-baseline justify-between mb-4 font-mono">
+						<div>
+							<span class="text-2xl font-bold text-white">Rs 98,000</span>
+							<span class="text-[10px] text-[#9DA3AF] block">Updated today &bull; COD Available</span>
+						</div>
+						<a href="/printers/creality-ender-3-v3-ke" class="text-xs font-medium text-[#FF8038] hover:underline">Full Specs &rarr;</a>
+					</div>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20order%20the%20Creality%20Ender-3%20V3%20KE%20(Rs%2098,000).%20Please%20confirm%20delivery." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
+						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Order via WhatsApp</span>
+					</a>
+				</div>
+			</div>
+
+			<!-- 5. Elegoo Mars 4 Ultra 9K Resin -->
+			<div x-show="matches('resin', '100k-250k', 'Elegoo Mars 4 Ultra 9K', 'resin jewelry miniature dental')" class="workshop-card p-6 flex flex-col justify-between group">
+				<div>
+					<div class="flex items-center justify-between mb-3">
+						<span class="px-2.5 py-1 rounded bg-[#E83E8C]/10 text-[#E83E8C] border border-[#E83E8C]/30 text-xs font-semibold">9K Precision Resin</span>
+						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1">
+							<span class="w-2 h-2 rounded-full bg-[#3DDC84]"></span> In Stock
+						</span>
+					</div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] flex flex-col items-center justify-center p-4 mb-4">
+						<span class="text-4xl">🧪</span>
+						<span class="font-display font-bold text-white text-base mt-2">Elegoo Mars 4 Ultra</span>
+						<span class="text-[11px] font-mono text-[#9DA3AF]">9K Mono LCD &bull; 18 Micron Detail</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-xl group-hover:text-[#FF6A1A] transition-colors">Elegoo Mars 4 Ultra 9K</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1.5 leading-relaxed">
+						Incredible microscopic resolution using liquid photopolymer resin and UV light. Perfect for jewelry casting, dental models, and figurines.
+					</p>
+
+					<div class="grid grid-cols-2 gap-2 my-4 text-xs font-mono">
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">RESOLUTION</span>
+							<span class="text-white font-medium">9K (8520x4320)</span>
+						</div>
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">TECHNOLOGY</span>
+							<span class="text-white font-medium">MSLA Liquid Resin</span>
+						</div>
+					</div>
+
+					<p class="text-xs text-[#17C3B2] mb-1"><strong class="text-white">Good for:</strong> Jewelers (lost-wax casting), dental clinics, tabletop figurines.</p>
+					<p class="text-[11px] text-[#656D7D]">⚠️ Note: Needs gloves, isopropyl alcohol wash, and good ventilation.</p>
+				</div>
+
+				<div class="mt-6 pt-4 border-t border-[#28303F]">
+					<div class="flex items-baseline justify-between mb-4 font-mono">
+						<div>
+							<span class="text-2xl font-bold text-white">Rs 128,000</span>
+							<span class="text-[10px] text-[#9DA3AF] block">Updated today &bull; Resin starter guidance</span>
+						</div>
+						<a href="/printers/elegoo-mars-4-ultra" class="text-xs font-medium text-[#FF8038] hover:underline">Full Specs &rarr;</a>
+					</div>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20am%20interested%20in%20the%20Elegoo%20Mars%204%20Ultra%209K%20Resin%20Printer%20(Rs%20128,000).%20Please%20share%20details." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
+						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Order via WhatsApp</span>
+					</a>
+				</div>
+			</div>
+
+			<!-- 6. Jiddat CoreXY Pakistan Kit -->
+			<div x-show="matches('fdm', 'under100k', 'Jiddat CoreXY Open Source', 'pakistan local open source repairable')" class="workshop-card p-6 flex flex-col justify-between group">
+				<div>
+					<div class="flex items-center justify-between mb-3">
+						<span class="px-2.5 py-1 rounded bg-[#FF6A1A]/20 text-[#FF8038] border border-[#FF6A1A]/40 text-xs font-semibold">100% Repairable</span>
+						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1">
+							<span class="w-2 h-2 rounded-full bg-[#3DDC84]"></span> Karachi Assembled
+						</span>
+					</div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] flex flex-col items-center justify-center p-4 mb-4">
+						<span class="text-4xl">🇵🇰</span>
+						<span class="font-display font-bold text-white text-base mt-2">Jiddat CoreXY Maker Kit</span>
+						<span class="text-[11px] font-mono text-[#9DA3AF]">Open Source RepRap &bull; Standard Hardware</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-xl group-hover:text-[#FF6A1A] transition-colors">Jiddat CoreXY Maker Kit</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1.5 leading-relaxed">
+						Our own open-hardware machine. Every bracket can be self-printed, every stepper motor and lead screw purchased locally in Pakistani industrial bazaars.
+					</p>
+
+					<div class="grid grid-cols-2 gap-2 my-4 text-xs font-mono">
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">BUILD VOLUME</span>
+							<span class="text-white font-medium">230 x 230 x 250 mm</span>
+						</div>
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">PHILOSOPHY</span>
+							<span class="text-white font-medium">Open-Source RepRap</span>
+						</div>
+					</div>
+
+					<p class="text-xs text-[#17C3B2] mb-1"><strong class="text-white">Good for:</strong> Engineering students wanting to master the hardware, hackers, builders.</p>
+					<p class="text-[11px] text-[#656D7D]">💡 Assembly assistance available in our Karachi workshop.</p>
+				</div>
+
+				<div class="mt-6 pt-4 border-t border-[#28303F]">
+					<div class="flex items-baseline justify-between mb-4 font-mono">
+						<div>
+							<span class="text-2xl font-bold text-white">Rs 85,000</span>
+							<span class="text-[10px] text-[#9DA3AF] block">Kit Edition &bull; Local Karachi Assembly</span>
+						</div>
+						<a href="/printers/jiddat-corexy" class="text-xs font-medium text-[#FF8038] hover:underline">Full Specs &rarr;</a>
+					</div>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20know%20more%20about%20the%20Jiddat%20CoreXY%20Maker%20Kit%20(Rs%2085,000)." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
+						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Inquire on WhatsApp</span>
+					</a>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Bottom SEO Informational Text Block -->
+		<div class="mt-20 p-8 rounded-2xl bg-[#14181F] border border-[#28303F] text-xs leading-relaxed text-[#9DA3AF] space-y-4">
+			<h2 class="font-display font-bold text-white text-base">How much does a 3D printer cost in Pakistan? (Buyer's Guide)</h2>
+			<p>
+				In Pakistan, 3D printer prices typically range from <strong>Rs 68,000 for budget entry units</strong> up to <strong>Rs 385,000 for industrial-grade carbon fiber enclosed systems</strong>. The majority of makers, hobbyists, and university students invest in mid-range machines between Rs 98,000 and Rs 165,000 (such as the Creality Ender-3 V3 or the Bambu Lab A1 series), which combine automatic bed calibration with rapid 500 mm/s print speeds.
+			</p>
+			<p>
+				When budgeting for your workshop, also account for the consumable costs: a 1kg spool of genuine PLA or PETG filament costs about <strong>Rs 2,500 to Rs 3,500</strong>, delivering around 60 to 80 average-sized prints. If your area experiences regular load-shedding, ensure your machine has power-loss recovery, or pair it with an inexpensive 600VA Pure Sine Wave UPS.
+			</p>
+		</div>
+
 	</div>
 </div>
 {{ end }}

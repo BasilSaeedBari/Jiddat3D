@@ -1,114 +1,742 @@
 {{ define "content" }}
 <!-- Hero Section -->
-<section class="relative overflow-hidden min-h-[80vh] flex items-center bg-gradient-to-br from-bg via-bg-subtle to-primary-light/10">
-	<!-- Background lattice motif (optional, subtle) -->
-	<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: url('data:image/svg+xml;utf8,<svg width=\'20\' height=\'20\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M10 0l10 10-10 10L0 10z\' fill=\'%235B2A86\'/></svg>');"></div>
+<section class="relative overflow-hidden pt-12 pb-20 md:py-24 bg-gradient-to-b from-[#0C0E11] via-[#14181F] to-[#0C0E11] border-b border-[#28303F]">
+	<!-- Subtle Geometric Lattice Pattern Overlay -->
+	<div class="absolute inset-0 opacity-[0.035] pointer-events-none bg-grid-pattern"></div>
+	<div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#FF6A1A]/10 rounded-full blur-[120px] pointer-events-none"></div>
 	
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-24 md:py-32 flex flex-col items-center text-center">
-		<h1 class="font-serif text-hero font-semibold text-ink leading-tight mb-6 tracking-tight max-w-4xl reveal-on-scroll">
-			{{ .Site.hero_headline }}
-		</h1>
-		<p class="text-lg md:text-xl text-ink-muted mb-10 max-w-2xl leading-relaxed reveal-on-scroll" style="transition-delay: 100ms;">
-			{{ .Site.hero_subheadline }}
-		</p>
-		<div class="flex flex-col sm:flex-row gap-4 reveal-on-scroll" style="transition-delay: 200ms;">
-			<a href="/products" class="px-8 py-4 bg-primary text-white rounded-md font-medium text-lg shadow-lg hover:bg-primary-light hover:shadow-glow transition-all duration-300">
-				Explore Printers
-			</a>
-			<a href="/learn" class="px-8 py-4 bg-white text-primary border border-border rounded-md font-medium text-lg hover:border-primary hover:text-primary-light transition-colors duration-300">
-				Start Learning
-			</a>
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+			
+			<!-- Left Column: Copy & CTAs -->
+			<div class="lg:col-span-7 text-center lg:text-left space-y-6">
+				<!-- Live Stock Pill -->
+				<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1A1F29] border border-[#28303F] text-xs font-medium text-[#9DA3AF]">
+					<span class="w-2 h-2 rounded-full bg-[#3DDC84] animate-ping"></span>
+					<span class="text-white font-semibold">In Stock in Karachi & Lahore</span>
+					<span class="text-[#FF6A1A]">&bull;</span>
+					<span>Same-day dispatch nationwide</span>
+				</div>
+
+				<h1 class="font-display text-hero font-bold text-white leading-[1.08] tracking-tight">
+					3D printers for Pakistan.<br>
+					<span class="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6A1A] via-[#FF8038] to-[#FFB400]">Bought here. Fixed here. Taught here.</span>
+				</h1>
+
+				<p class="text-lg md:text-xl text-[#9DA3AF] leading-relaxed max-w-2xl mx-auto lg:mx-0">
+					We sell genuine 3D printers you can trust, fix them with local spare parts, and teach your students or engineering team how to turn ideas into real plastic parts.
+				</p>
+
+				<!-- Urdu Tagline -->
+				<p class="text-base text-[#17C3B2] font-medium tracking-wide">
+					ڈیزائن کریں۔ پرنٹ کریں۔ ہاتھ میں پکڑیں۔
+				</p>
+
+				<!-- CTAs -->
+				<div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+					<a href="/printers" class="btn-filament w-full sm:w-auto text-base px-7 py-3.5">
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+						<span>Explore 3D Printers</span>
+					</a>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20am%20interested%20in%20buying%20a%203D%20printer.%20Can%20you%20guide%20me%3F" target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full sm:w-auto text-base px-6 py-3.5">
+						<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Chat 0300-1318112</span>
+					</a>
+					<a href="/schools" class="btn-secondary w-full sm:w-auto text-base px-6 py-3.5">
+						<span>School Labs &rarr;</span>
+					</a>
+				</div>
+
+				<!-- Quick Badges -->
+				<div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs text-[#9DA3AF]">
+					<span class="flex items-center gap-1.5"><strong class="text-white">✓</strong> 12-Month Local Warranty</span>
+					<span class="flex items-center gap-1.5"><strong class="text-white">✓</strong> Cash on Delivery (COD)</span>
+					<span class="flex items-center gap-1.5"><strong class="text-white">✓</strong> Import Permit Verified</span>
+				</div>
+			</div>
+
+			<!-- Right Column: Interactive 3D Machine Simulation Card -->
+			<div class="lg:col-span-5">
+				<div class="workshop-card p-6 relative overflow-hidden bg-gradient-to-b from-[#1A1F29] to-[#12161D] border border-[#28303F] shadow-2xl">
+					<!-- Top Machine Status Bar -->
+					<div class="flex items-center justify-between pb-4 border-b border-[#28303F] text-xs font-mono">
+						<div class="flex items-center gap-2 text-[#3DDC84]">
+							<span class="w-2.5 h-2.5 rounded-full bg-[#3DDC84] animate-pulse"></span>
+							<span class="font-semibold uppercase tracking-wider">Lab Machine Printing</span>
+						</div>
+						<span class="text-[#9DA3AF]">Karachi Hub #01</span>
+					</div>
+
+					<!-- Visual 3D Printer Graphical Simulation -->
+					<div class="my-6 relative h-64 bg-[#0C0E11] rounded-xl border border-[#28303F] overflow-hidden flex flex-col justify-end p-4">
+						<!-- Grid Bed -->
+						<div class="absolute inset-0 bg-grid-pattern opacity-30"></div>
+						
+						<!-- Gantry Light / Hotend simulation -->
+						<div class="absolute top-12 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#FF6A1A] to-transparent opacity-75"></div>
+						<div class="absolute top-10 left-1/2 -translate-x-1/2 w-8 h-8 rounded bg-[#1A1F29] border border-[#FF6A1A] flex items-center justify-center shadow-[0_0_15px_rgba(255,106,26,0.8)]">
+							<div class="w-2 h-2 rounded-full bg-[#FF8038] animate-ping"></div>
+						</div>
+
+						<!-- Extrusion Glow Beam -->
+						<div class="absolute top-16 left-1/2 -translate-x-1/2 w-0.5 h-24 bg-gradient-to-b from-[#FF6A1A] to-transparent"></div>
+
+						<!-- Layer-by-layer Building Model Representation -->
+						<div class="relative z-10 mx-auto w-32 h-28 bg-gradient-to-t from-[#FF6A1A]/90 via-[#FF8038]/70 to-[#FFA066]/50 rounded-t-lg border-t-2 border-[#FFE3D1] shadow-[0_0_25px_rgba(255,106,26,0.4)] flex flex-col items-center justify-center text-center p-2">
+							<span class="text-[10px] font-mono text-white/90 uppercase tracking-wider font-semibold">Functional Part</span>
+							<span class="text-xs font-display font-bold text-white mt-1">Phone Stand</span>
+							<span class="text-[10px] font-mono text-white/80">78% Complete</span>
+						</div>
+
+						<!-- Live Part Label Overlay (The Signature Jiddat Proof) -->
+						<div class="absolute bottom-3 left-3 right-3 bg-[#1A1F29]/90 backdrop-blur-md border border-[#28303F] rounded-lg p-2.5 flex items-center justify-between text-xs font-mono">
+							<div>
+								<span class="text-[#9DA3AF]">Print Time:</span>
+								<span class="text-white font-semibold ml-1">42 mins</span>
+							</div>
+							<div class="h-3 w-px bg-[#28303F]"></div>
+							<div>
+								<span class="text-[#9DA3AF]">Plastic:</span>
+								<span class="text-white font-semibold ml-1">16g PLA</span>
+							</div>
+							<div class="h-3 w-px bg-[#28303F]"></div>
+							<div>
+								<span class="text-[#9DA3AF]">Raw Cost:</span>
+								<span class="text-[#3DDC84] font-bold ml-1">Rs 45</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Bottom Machine Info -->
+					<div class="space-y-3">
+						<div class="flex justify-between items-center text-xs">
+							<span class="text-[#9DA3AF]">Machine in demonstration:</span>
+							<span class="text-white font-semibold">Bambu Lab A1 Combo</span>
+						</div>
+						<div class="flex gap-2">
+							<a href="/printers/bambu-lab-a1" class="flex-1 py-2 px-3 text-center rounded bg-[#14181F] border border-[#28303F] hover:border-[#FF6A1A] text-xs font-medium text-white transition-colors">
+								View Machine Specs
+							</a>
+							<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20saw%20the%20Bambu%20Lab%20A1%20on%20your%20site.%20Is%20it%20available%20for%20delivery%3F" target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded bg-[#25D366]/20 border border-[#25D366]/40 hover:bg-[#25D366] text-[#25D366] hover:text-white text-xs font-medium transition-colors flex items-center justify-center gap-1">
+								<svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+								Ask Price
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
 		</div>
-	</div>
-	
-	<!-- Divider Motif -->
-	<div class="absolute bottom-0 left-1/2 -translate-x-1/2 flex items-center justify-center w-full max-w-md opacity-30">
-		<div class="h-px bg-primary flex-grow"></div>
-		<svg class="w-6 h-6 text-primary mx-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
-		<div class="h-px bg-primary flex-grow"></div>
 	</div>
 </section>
 
-<!-- Three Pillars -->
-<section class="py-24 bg-bg">
+<!-- Section 1: "Made Here This Week" (Real Parts, Real Prices) -->
+<section class="py-20 bg-[#0C0E11] border-b border-[#28303F]">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-			<!-- Pillar 1 -->
-			<a href="/learn" class="group p-8 rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 bg-white reveal-on-scroll flex flex-col h-full">
-				<div class="w-12 h-12 rounded-full bg-accent-teal/10 flex items-center justify-center text-accent-teal mb-6 group-hover:scale-110 transition-transform">
-					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+		<div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+			<div>
+				<div class="inline-flex items-center gap-2 text-[#FF6A1A] font-mono text-xs uppercase tracking-wider mb-2">
+					<span>📍 Real Lab Output &bull; Karachi</span>
 				</div>
-				<h3 class="font-serif text-2xl font-semibold mb-3 text-ink group-hover:text-primary transition-colors">Learn</h3>
-				<p class="text-ink-muted leading-relaxed flex-grow">Free guides, videos, and honest lessons on 3D printing — from your first layer to your hundredth failed print.</p>
-			</a>
-			<!-- Pillar 2 -->
-			<a href="/products" class="group p-8 rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 bg-white reveal-on-scroll flex flex-col h-full" style="transition-delay: 100ms;">
-				<div class="w-12 h-12 rounded-full bg-accent-gold/10 flex items-center justify-center text-accent-gold mb-6 group-hover:scale-110 transition-transform">
-					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+				<h2 class="font-display text-h2 font-bold text-white tracking-tight">Real parts. Real rupee prices.</h2>
+				<p class="text-[#9DA3AF] mt-2 max-w-xl text-sm md:text-base">
+					Everything below was printed in our lab. Tap any part to see how long it took to print, which plastic was used, and what it cost in raw materials.
+				</p>
+			</div>
+			<div class="mt-4 md:mt-0">
+				<a href="/gallery" class="text-sm font-semibold text-[#FF8038] hover:text-[#FFA066] inline-flex items-center gap-1.5">
+					<span>Browse Full Gallery (50+ Parts)</span> &rarr;
+				</a>
+			</div>
+		</div>
+
+		<!-- Grid of 6 Real Local Prints -->
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+			
+			<!-- Card 1: Fan Knob -->
+			<div class="workshop-card p-5 group flex flex-col justify-between">
+				<div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
+						<svg class="w-20 h-20 text-[#FF6A1A]/80 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+						<span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-mono bg-[#1E2532] text-[#9DA3AF] border border-[#28303F]">Replacement</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-lg group-hover:text-[#FF6A1A] transition-colors">Fan Regulator Knob</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1 leading-relaxed">Exact replacement for broken Pakistani ceiling fan regulator. Sturdy grip, heat-resistant PETG.</p>
 				</div>
-				<h3 class="font-serif text-2xl font-semibold mb-3 text-ink group-hover:text-primary transition-colors">Build</h3>
-				<p class="text-ink-muted leading-relaxed flex-grow">Affordable, repairable printers and parts, priced for the Pakistani maker, not the import market.</p>
-			</a>
-			<!-- Pillar 3 -->
-			<a href="/projects" class="group p-8 rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-300 bg-white reveal-on-scroll flex flex-col h-full" style="transition-delay: 200ms;">
-				<div class="w-12 h-12 rounded-full bg-accent-terracotta/10 flex items-center justify-center text-accent-terracotta mb-6 group-hover:scale-110 transition-transform">
-					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+				<div class="mt-4 pt-3 border-t border-[#28303F] flex items-center justify-between font-mono text-xs">
+					<span class="text-[#9DA3AF]">35 min &bull; 14g PETG</span>
+					<span class="text-[#3DDC84] font-bold text-sm">Rs 45</span>
 				</div>
-				<h3 class="font-serif text-2xl font-semibold mb-3 text-ink group-hover:text-primary transition-colors">Create</h3>
-				<p class="text-ink-muted leading-relaxed flex-grow">Real projects from real people — students, repair techs, artists, and tinkerers building things nobody imported for them.</p>
-			</a>
+			</div>
+
+			<!-- Card 2: Civil FYP Bridge -->
+			<div class="workshop-card p-5 group flex flex-col justify-between">
+				<div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
+						<svg class="w-20 h-20 text-[#17C3B2]/80 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+						<span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-mono bg-[#1E2532] text-[#17C3B2] border border-[#28303F]">University FYP</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-lg group-hover:text-[#FF6A1A] transition-colors">Civil Engineering Truss Bridge</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1 leading-relaxed">Structural scale model for NED/NUST final year project. Tested to hold up to 12 kg weight.</p>
+				</div>
+				<div class="mt-4 pt-3 border-t border-[#28303F] flex items-center justify-between font-mono text-xs">
+					<span class="text-[#9DA3AF]">9 hrs &bull; 180g PLA+</span>
+					<span class="text-[#3DDC84] font-bold text-sm">Rs 480</span>
+				</div>
+			</div>
+
+			<!-- Card 3: Urdu Calligraphy Plate -->
+			<div class="workshop-card p-5 group flex flex-col justify-between">
+				<div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
+						<div class="text-3xl font-bold text-[#FFB400] tracking-wider">بِسْمِ اللَّهِ</div>
+						<span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-mono bg-[#1E2532] text-[#FFB400] border border-[#28303F]">Custom Gift</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-lg group-hover:text-[#FF6A1A] transition-colors">Urdu Calligraphy Living Room Plate</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1 leading-relaxed">Dual-color 3D relief art piece with wall mounting bracket. Popular wedding and Eid gift.</p>
+				</div>
+				<div class="mt-4 pt-3 border-t border-[#28303F] flex items-center justify-between font-mono text-xs">
+					<span class="text-[#9DA3AF]">2 hrs &bull; 48g PLA</span>
+					<span class="text-[#3DDC84] font-bold text-sm">Rs 130</span>
+				</div>
+			</div>
+
+			<!-- Card 4: Bike Lever Guard -->
+			<div class="workshop-card p-5 group flex flex-col justify-between">
+				<div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
+						<svg class="w-20 h-20 text-[#3DDC84]/80 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+						<span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-mono bg-[#1E2532] text-[#3DDC84] border border-[#28303F]">Automotive</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-lg group-hover:text-[#FF6A1A] transition-colors">Heavy-Duty Bike Brake Lever Guard</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1 leading-relaxed">Custom replacement guard for 150cc motorcycles. Printed in tough impact-resistant ABS/ASA.</p>
+				</div>
+				<div class="mt-4 pt-3 border-t border-[#28303F] flex items-center justify-between font-mono text-xs">
+					<span class="text-[#9DA3AF]">1 hr 20m &bull; 38g ABS</span>
+					<span class="text-[#3DDC84] font-bold text-sm">Rs 110</span>
+				</div>
+			</div>
+
+			<!-- Card 5: Electronics Snap Enclosure -->
+			<div class="workshop-card p-5 group flex flex-col justify-between">
+				<div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
+						<svg class="w-20 h-20 text-[#2B59FF]/80 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
+						<span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-mono bg-[#1E2532] text-[#2B59FF] border border-[#28303F]">Prototyping</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-lg group-hover:text-[#FF6A1A] transition-colors">ESP32 IoT Case with Snap Lid</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1 leading-relaxed">Ventilated PCB housing with screw standoffs and wire ports for solar monitor project.</p>
+				</div>
+				<div class="mt-4 pt-3 border-t border-[#28303F] flex items-center justify-between font-mono text-xs">
+					<span class="text-[#9DA3AF]">3 hrs &bull; 75g PETG</span>
+					<span class="text-[#3DDC84] font-bold text-sm">Rs 220</span>
+				</div>
+			</div>
+
+			<!-- Card 6: Drone Camera Bracket -->
+			<div class="workshop-card p-5 group flex flex-col justify-between">
+				<div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
+						<svg class="w-20 h-20 text-[#E83E8C]/80 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+						<span class="absolute top-3 left-3 px-2 py-0.5 rounded text-[10px] font-mono bg-[#1E2532] text-[#E83E8C] border border-[#28303F]">Robotics</span>
+					</div>
+					<h3 class="font-display font-bold text-white text-lg group-hover:text-[#FF6A1A] transition-colors">Flexible TPU Drone Action-Cam Mount</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1 leading-relaxed">Vibration-dampening flexible rubber mount for FPV drone. Survives high-speed crashes.</p>
+				</div>
+				<div class="mt-4 pt-3 border-t border-[#28303F] flex items-center justify-between font-mono text-xs">
+					<span class="text-[#9DA3AF]">1 hr 45m &bull; 32g TPU</span>
+					<span class="text-[#3DDC84] font-bold text-sm">Rs 140</span>
+				</div>
+			</div>
+
 		</div>
 	</div>
 </section>
 
-<!-- Statement Band -->
-<section class="py-24 bg-primary text-white text-center px-4 relative overflow-hidden">
-	<div class="absolute inset-0 bg-primary-dark/20 pointer-events-none"></div>
-	<div class="max-w-4xl mx-auto relative z-10 reveal-on-scroll">
-		<h2 class="font-serif text-h2 font-semibold leading-tight mb-8">For too long, building things in Pakistan meant importing them instead.</h2>
-		<p class="text-xl md:text-2xl text-white/80 leading-relaxed font-light">
-			Jiddat3D exists to change that — one machine, one maker, one workshop at a time.
-		</p>
-	</div>
-</section>
-
-<!-- Impact / Social Proof Band -->
-<section class="py-20 bg-bg-subtle border-y border-border">
+<!-- Section 2: Six Things People Make with a 3D Printer -->
+<section class="py-20 bg-[#14181F] border-b border-[#28303F]">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-border">
-			<div class="px-4 reveal-on-scroll">
-				<p class="text-4xl md:text-5xl font-bold text-accent-gold mb-2 font-serif">{{ .Site.impact_stat_1_value }}</p>
-				<p class="text-sm md:text-base text-ink-muted font-medium">{{ .Site.impact_stat_1_label }}</p>
+		<div class="text-center max-w-3xl mx-auto mb-16">
+			<span class="text-[#17C3B2] font-mono text-xs uppercase tracking-wider">Unleash Everyday Creation</span>
+			<h2 class="font-display text-h2 font-bold text-white mt-1">Six things you can make with a 3D printer</h2>
+			<p class="text-[#9DA3AF] text-sm md:text-base mt-2">
+				From replacing broken plastic parts to running an e-commerce craft shop right from your bedroom.
+			</p>
+		</div>
+
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+			<div class="p-6 rounded-xl bg-[#1A1F29] border border-[#28303F] hover:border-[#FF6A1A]/40 transition-colors">
+				<div class="w-12 h-12 rounded-lg bg-[#FF6A1A]/10 text-[#FF6A1A] flex items-center justify-center text-2xl mb-4 font-mono">01</div>
+				<h3 class="font-display font-bold text-white text-lg mb-2">Fix Broken Things</h3>
+				<p class="text-sm text-[#9DA3AF] leading-relaxed">Don't throw away appliances just because a plastic clip or gear snapped. Measure it, model it, and print a replacement for Rs 30–50.</p>
 			</div>
-			<div class="px-4 reveal-on-scroll" style="transition-delay: 100ms;">
-				<p class="text-4xl md:text-5xl font-bold text-accent-teal mb-2 font-serif">{{ .Site.impact_stat_2_value }}</p>
-				<p class="text-sm md:text-base text-ink-muted font-medium">{{ .Site.impact_stat_2_label }}</p>
+
+			<div class="p-6 rounded-xl bg-[#1A1F29] border border-[#28303F] hover:border-[#FF6A1A]/40 transition-colors">
+				<div class="w-12 h-12 rounded-lg bg-[#17C3B2]/10 text-[#17C3B2] flex items-center justify-center text-2xl mb-4 font-mono">02</div>
+				<h3 class="font-display font-bold text-white text-lg mb-2">Build Working Models</h3>
+				<p class="text-sm text-[#9DA3AF] leading-relaxed">Engineering FYPs, robotics mechanisms, mosque architecture models, and science fair projects brought to life in hours.</p>
 			</div>
-			<div class="px-4 reveal-on-scroll" style="transition-delay: 200ms;">
-				<p class="text-4xl md:text-5xl font-bold text-primary mb-2 font-serif">{{ .Site.impact_stat_3_value }}</p>
-				<p class="text-sm md:text-base text-ink-muted font-medium">{{ .Site.impact_stat_3_label }}</p>
+
+			<div class="p-6 rounded-xl bg-[#1A1F29] border border-[#28303F] hover:border-[#FF6A1A]/40 transition-colors">
+				<div class="w-12 h-12 rounded-lg bg-[#FFB400]/10 text-[#FFB400] flex items-center justify-center text-2xl mb-4 font-mono">03</div>
+				<h3 class="font-display font-bold text-white text-lg mb-2">Make Custom Gifts</h3>
+				<p class="text-sm text-[#9DA3AF] leading-relaxed">Personalized Urdu calligraphy desk plaques, lithophane photo lamps that glow with family pictures, and custom sports trophies.</p>
 			</div>
-			<div class="px-4 reveal-on-scroll" style="transition-delay: 300ms;">
-				<p class="text-4xl md:text-5xl font-bold text-accent-terracotta mb-2 font-serif">{{ .Site.impact_stat_4_value }}</p>
-				<p class="text-sm md:text-base text-ink-muted font-medium">{{ .Site.impact_stat_4_label }}</p>
+
+			<div class="p-6 rounded-xl bg-[#1A1F29] border border-[#28303F] hover:border-[#FF6A1A]/40 transition-colors">
+				<div class="w-12 h-12 rounded-lg bg-[#3DDC84]/10 text-[#3DDC84] flex items-center justify-center text-2xl mb-4 font-mono">04</div>
+				<h3 class="font-display font-bold text-white text-lg mb-2">Test Product Prototypes</h3>
+				<p class="text-sm text-[#9DA3AF] leading-relaxed">Validate ergonomics and enclosure fit before spending millions on injection mold tooling. Iterate rapidly in your workshop.</p>
+			</div>
+
+			<div class="p-6 rounded-xl bg-[#1A1F29] border border-[#28303F] hover:border-[#FF6A1A]/40 transition-colors">
+				<div class="w-12 h-12 rounded-lg bg-[#2B59FF]/10 text-[#2B59FF] flex items-center justify-center text-2xl mb-4 font-mono">05</div>
+				<h3 class="font-display font-bold text-white text-lg mb-2">Teach Hands-On Science</h3>
+				<p class="text-sm text-[#9DA3AF] leading-relaxed">Bring geometry, physics, biology, and mechanics off textbook pages. Students hold DNA helixes and gear ratios in their own hands.</p>
+			</div>
+
+			<div class="p-6 rounded-xl bg-[#1A1F29] border border-[#28303F] hover:border-[#FF6A1A]/40 transition-colors">
+				<div class="w-12 h-12 rounded-lg bg-[#E83E8C]/10 text-[#E83E8C] flex items-center justify-center text-2xl mb-4 font-mono">06</div>
+				<h3 class="font-display font-bold text-white text-lg mb-2">Start a Print Business</h3>
+				<p class="text-sm text-[#9DA3AF] leading-relaxed">Sell specialized drone parts, cookie cutters, custom keychains, or miniature figurines on Daraz and Instagram. High profit margin on raw filament.</p>
 			</div>
 		</div>
 	</div>
 </section>
 
-<!-- Final CTA Band -->
-<section class="py-32 bg-bg text-center">
-	<div class="max-w-3xl mx-auto px-4 reveal-on-scroll">
-		<h2 class="font-serif text-h2 font-semibold text-ink mb-6">Ready to build something?</h2>
-		<p class="text-ink-muted mb-10 text-lg">Join a community of makers or get your own machine today.</p>
-		<div class="flex flex-col sm:flex-row gap-4 justify-center">
-			<a href="/products" class="px-8 py-4 bg-accent-gold text-ink rounded-md font-medium text-lg shadow-md hover:bg-white hover:text-primary transition-colors duration-300">
-				Browse Products
-			</a>
-			<a href="/community" class="px-8 py-4 bg-white text-ink border border-border rounded-md font-medium text-lg hover:border-primary hover:text-primary transition-colors duration-300">
-				Join the Community
+<!-- Section 3: Popular 3D Printers in Pakistan (Category Showcase) -->
+<section class="py-20 bg-[#0C0E11] border-b border-[#28303F]" id="popular-printers">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		
+		<div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+			<div>
+				<span class="text-[#FF6A1A] font-mono text-xs uppercase tracking-wider">Today's Curated Selection</span>
+				<h2 class="font-display text-h2 font-bold text-white mt-1">Popular 3D printers in Pakistan</h2>
+				<p class="text-[#9DA3AF] text-sm md:text-base mt-1">
+					Prices in PKR, updated for current exchange rates. Genuine sealed units with 12-month local warranty.
+				</p>
+			</div>
+			<div class="mt-4 md:mt-0 flex gap-2">
+				<a href="/printers" class="btn-filament text-xs py-2.5 px-4">
+					View All Models &rarr;
+				</a>
+			</div>
+		</div>
+
+		<!-- Printer Cards Grid -->
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+			<!-- Machine 1: Bambu Lab A1 -->
+			<div class="workshop-card p-6 flex flex-col justify-between group">
+				<div>
+					<div class="flex items-center justify-between mb-4">
+						<span class="px-2.5 py-1 rounded bg-[#FF6A1A]/10 text-[#FF6A1A] border border-[#FF6A1A]/30 text-xs font-semibold uppercase tracking-wider">Best Seller</span>
+						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1">
+							<span class="w-2 h-2 rounded-full bg-[#3DDC84]"></span> In Stock
+						</span>
+					</div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] flex items-center justify-center p-4 mb-4">
+						<div class="text-center">
+							<span class="text-4xl">🖨️</span>
+							<p class="font-display font-bold text-white text-base mt-2">Bambu Lab A1</p>
+							<p class="text-[11px] font-mono text-[#9DA3AF]">High Speed FDM &bull; Active Noise Cancellation</p>
+						</div>
+					</div>
+					<h3 class="font-display font-bold text-white text-xl">Bambu Lab A1</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1.5 leading-relaxed">
+						The easiest, most reliable high-speed printer in the market. Auto bed leveling, flow rate compensation, and optional 4-color AMS Lite.
+					</p>
+
+					<!-- Spec Pills -->
+					<div class="grid grid-cols-2 gap-2 my-4 text-xs font-mono">
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">BUILD VOLUME</span>
+							<span class="text-white font-medium">256 x 256 x 256 mm</span>
+						</div>
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">MAX SPEED</span>
+							<span class="text-white font-medium">500 mm/s (Rapid)</span>
+						</div>
+					</div>
+
+					<p class="text-xs text-[#17C3B2]"><strong class="text-white">Good for:</strong> Beginners, home makers, and multi-color product makers.</p>
+				</div>
+
+				<div class="mt-6 pt-4 border-t border-[#28303F]">
+					<div class="flex items-baseline justify-between mb-4">
+						<div>
+							<span class="text-2xl font-mono font-bold text-white">Rs 165,000</span>
+							<span class="text-[10px] text-[#9DA3AF] block font-mono">Updated today &bull; COD Available</span>
+						</div>
+						<a href="/printers/bambu-lab-a1" class="text-xs font-medium text-[#FF8038] hover:underline">Specs &rarr;</a>
+					</div>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20order%20the%20Bambu%20Lab%20A1%20(Rs%20165,000).%20Is%20it%20available%20for%20delivery%3F" target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
+						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Order via WhatsApp</span>
+					</a>
+				</div>
+			</div>
+
+			<!-- Machine 2: Bambu Lab P1S Enclosed -->
+			<div class="workshop-card p-6 flex flex-col justify-between group">
+				<div>
+					<div class="flex items-center justify-between mb-4">
+						<span class="px-2.5 py-1 rounded bg-[#17C3B2]/10 text-[#17C3B2] border border-[#17C3B2]/30 text-xs font-semibold uppercase tracking-wider">Enclosed &bull; Engineering</span>
+						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1">
+							<span class="w-2 h-2 rounded-full bg-[#3DDC84]"></span> In Stock
+						</span>
+					</div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] flex items-center justify-center p-4 mb-4">
+						<div class="text-center">
+							<span class="text-4xl">📦</span>
+							<p class="font-display font-bold text-white text-base mt-2">Bambu Lab P1S</p>
+							<p class="text-[11px] font-mono text-[#9DA3AF]">Fully Enclosed &bull; Carbon Filter &bull; ABS/ASA Ready</p>
+						</div>
+					</div>
+					<h3 class="font-display font-bold text-white text-xl">Bambu Lab P1S</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1.5 leading-relaxed">
+						Fully enclosed chamber for high-temperature engineering plastics like ABS, ASA, and Carbon Fiber. Zero warping, quiet operation.
+					</p>
+
+					<!-- Spec Pills -->
+					<div class="grid grid-cols-2 gap-2 my-4 text-xs font-mono">
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">CHAMBER</span>
+							<span class="text-white font-medium">Fully Enclosed Body</span>
+						</div>
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">SPEED</span>
+							<span class="text-white font-medium">500 mm/s CoreXY</span>
+						</div>
+					</div>
+
+					<p class="text-xs text-[#17C3B2]"><strong class="text-white">Good for:</strong> Engineering FYP projects, functional car/bike parts, classrooms needing safety walls.</p>
+				</div>
+
+				<div class="mt-6 pt-4 border-t border-[#28303F]">
+					<div class="flex items-baseline justify-between mb-4">
+						<div>
+							<span class="text-2xl font-mono font-bold text-white">Rs 245,000</span>
+							<span class="text-[10px] text-[#9DA3AF] block font-mono">Updated today &bull; 12-Month Warranty</span>
+						</div>
+						<a href="/printers/bambu-lab-p1s" class="text-xs font-medium text-[#FF8038] hover:underline">Specs &rarr;</a>
+					</div>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20order%20the%20Bambu%20Lab%20P1S%20Enclosed%20(Rs%20245,000).%20Please%20share%20details." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
+						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Order via WhatsApp</span>
+					</a>
+				</div>
+			</div>
+
+			<!-- Machine 3: Creality Ender-3 V3 KE -->
+			<div class="workshop-card p-6 flex flex-col justify-between group">
+				<div>
+					<div class="flex items-center justify-between mb-4">
+						<span class="px-2.5 py-1 rounded bg-[#FFB400]/10 text-[#FFB400] border border-[#FFB400]/30 text-xs font-semibold uppercase tracking-wider">Value Champion</span>
+						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1">
+							<span class="w-2 h-2 rounded-full bg-[#3DDC84]"></span> In Stock
+						</span>
+					</div>
+					<div class="h-44 bg-[#14181F] rounded-lg border border-[#28303F] flex items-center justify-center p-4 mb-4">
+						<div class="text-center">
+							<span class="text-4xl">⚡</span>
+							<p class="font-display font-bold text-white text-base mt-2">Creality Ender-3 V3 KE</p>
+							<p class="text-[11px] font-mono text-[#9DA3AF]">500mm/s &bull; Klipper Firmware &bull; Auto Level</p>
+						</div>
+					</div>
+					<h3 class="font-display font-bold text-white text-xl">Creality Ender-3 V3 KE</h3>
+					<p class="text-xs text-[#9DA3AF] mt-1.5 leading-relaxed">
+						Fast, smart, and affordable. Built-in Creality OS (Klipper), auto-calibration, and wide spare parts availability across Pakistan.
+					</p>
+
+					<!-- Spec Pills -->
+					<div class="grid grid-cols-2 gap-2 my-4 text-xs font-mono">
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">BUILD VOLUME</span>
+							<span class="text-white font-medium">220 x 220 x 240 mm</span>
+						</div>
+						<div class="p-2 rounded bg-[#14181F] border border-[#28303F]">
+							<span class="text-[#656D7D] block text-[10px]">MAX SPEED</span>
+							<span class="text-white font-medium">500 mm/s</span>
+						</div>
+					</div>
+
+					<p class="text-xs text-[#17C3B2]"><strong class="text-white">Good for:</strong> Students on a budget, hobbyists, first-time buyers looking for high speed.</p>
+				</div>
+
+				<div class="mt-6 pt-4 border-t border-[#28303F]">
+					<div class="flex items-baseline justify-between mb-4">
+						<div>
+							<span class="text-2xl font-mono font-bold text-white">Rs 98,000</span>
+							<span class="text-[10px] text-[#9DA3AF] block font-mono">Under 1 Lakh &bull; Updated today</span>
+						</div>
+						<a href="/printers/creality-ender-3-v3-ke" class="text-xs font-medium text-[#FF8038] hover:underline">Specs &rarr;</a>
+					</div>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20order%20the%20Ender-3%20V3%20KE%20(Rs%2098,000).%20Is%20it%20in%20stock%3F" target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
+						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+						<span>Order via WhatsApp</span>
+					</a>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Warning Strip (3D Printer vs 3D Pen) -->
+		<div class="mt-12 p-4 rounded-xl bg-[#14181F] border border-[#28303F] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+			<div class="flex items-center gap-3">
+				<span class="text-xl">⚠️</span>
+				<div>
+					<strong class="text-white">Looking on Daraz or OLX?</strong>
+					<span class="text-[#9DA3AF]">Most cheap listings labeled "3D printer filament" are actually 3D pen refills. Jiddat3D sells full 1kg precision printer spools tested on real machines.</span>
+				</div>
+			</div>
+			<a href="/filament" class="btn-secondary text-xs py-2 px-3 whitespace-nowrap">
+				View Genuine Filament &rarr;
 			</a>
 		</div>
+
+	</div>
+</section>
+
+<!-- Section 4: Schools & Universities Teaser -->
+<section class="py-20 bg-[#14181F] border-b border-[#28303F]">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+			
+			<div class="lg:col-span-6 space-y-6">
+				<span class="text-[#FF6A1A] font-mono text-xs uppercase tracking-wider">STEAM Education in Pakistan</span>
+				<h2 class="font-display text-h2 font-bold text-white tracking-tight leading-tight">
+					Your students make things.<br>Not just read about them.
+				</h2>
+				<p class="text-[#9DA3AF] text-sm md:text-base leading-relaxed">
+					We set up the 3D printing lab, train your teachers from scratch, and deliver ready-to-teach bilingual lesson plans. Your school doesn't need prior 3D printing experts to launch a state-of-the-art makerspace.
+				</p>
+
+				<!-- 3 Step Roadmap -->
+				<div class="space-y-4 pt-2">
+					<div class="flex items-start gap-4">
+						<div class="w-8 h-8 rounded-full bg-[#FF6A1A]/20 text-[#FF6A1A] font-mono font-bold flex items-center justify-center shrink-0 border border-[#FF6A1A]/40 text-sm">1</div>
+						<div>
+							<h4 class="font-display font-semibold text-white text-base">Printers Installed & Tested</h4>
+							<p class="text-xs text-[#9DA3AF]">Safe, enclosed machines set up on your campus with safety checklist and spare parts kit.</p>
+						</div>
+					</div>
+					<div class="flex items-start gap-4">
+						<div class="w-8 h-8 rounded-full bg-[#17C3B2]/20 text-[#17C3B2] font-mono font-bold flex items-center justify-center shrink-0 border border-[#17C3B2]/40 text-sm">2</div>
+						<div>
+							<h4 class="font-display font-semibold text-white text-base">Teachers Trained (2-Day Workshop)</h4>
+							<p class="text-xs text-[#9DA3AF]">Hands-on training for non-technical teachers. How to guide students, run slicing software, and clear clogs.</p>
+						</div>
+					</div>
+					<div class="flex items-start gap-4">
+						<div class="w-8 h-8 rounded-full bg-[#3DDC84]/20 text-[#3DDC84] font-mono font-bold flex items-center justify-center shrink-0 border border-[#3DDC84]/40 text-sm">3</div>
+						<div>
+							<h4 class="font-display font-semibold text-white text-base">Students Start Making</h4>
+							<p class="text-xs text-[#9DA3AF]">Curriculum-aligned projects for Grades 4 through A-Level/University. Plastic cost is only Rs 35–50 per student project.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="flex flex-wrap gap-4 pt-4">
+					<a href="/schools" class="btn-filament text-sm py-3 px-6">
+						<span>Explore School Packages</span>
+					</a>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20We%20are%20interested%20in%20setting%20up%20a%203D%20printing%20lab%20at%20our%20institution.%20Can%20we%20schedule%20a%20demo%20day%3F" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-sm py-3 px-5">
+						<span>Book a Free Demo Day</span>
+					</a>
+				</div>
+			</div>
+
+			<!-- Right: Comparison / Package Snapshot -->
+			<div class="lg:col-span-6">
+				<div class="workshop-card p-6 bg-[#1A1F29] border border-[#28303F]">
+					<div class="flex items-center justify-between pb-4 border-b border-[#28303F]">
+						<h3 class="font-display font-bold text-white text-lg">School Lab Packages</h3>
+						<span class="text-xs font-mono text-[#17C3B2]">All-Inclusive Setup</span>
+					</div>
+
+					<div class="divide-y divide-[#28303F] text-xs">
+						<div class="py-4">
+							<div class="flex justify-between font-semibold text-sm mb-1">
+								<span class="text-white">Starter Lab (1–2 Printers)</span>
+								<span class="text-[#FF6A1A] font-mono">Ideal for 1st Term</span>
+							</div>
+							<p class="text-[#9DA3AF]">For schools testing the waters. Includes 2 printers, 8 lesson plans, 1-day teacher workshop, and WhatsApp teacher hotline.</p>
+						</div>
+
+						<div class="py-4">
+							<div class="flex justify-between font-semibold text-sm mb-1">
+								<span class="text-white">Classroom Lab (4–6 Printers)</span>
+								<span class="text-[#3DDC84] font-mono">Most Popular</span>
+							</div>
+							<p class="text-[#9DA3AF]">Full class periods. Multi-color capabilities, 24 structured project modules, 2-day on-campus training, and quarterly maintenance visits.</p>
+						</div>
+
+						<div class="py-4">
+							<div class="flex justify-between font-semibold text-sm mb-1">
+								<span class="text-white">University & Tender Procurement</span>
+								<span class="text-[#2B59FF] font-mono">EPADS / PPRA Ready</span>
+							</div>
+							<p class="text-[#9DA3AF]">GST/NTN invoices, brand authorization letters, official technical spec sheets, and formal quotation packets for department heads.</p>
+						</div>
+					</div>
+
+					<div class="mt-6 pt-4 border-t border-[#28303F] flex items-center justify-between text-xs">
+						<span class="text-[#9DA3AF]">Need an official quotation?</span>
+						<a href="/schools#tenders" class="text-[#FF8038] font-bold hover:underline">Download Proposal Pack &rarr;</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<!-- Section 5: Why Buy from Jiddat3D vs Grey Market / OLX -->
+<section class="py-20 bg-[#0C0E11] border-b border-[#28303F]">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="text-center max-w-3xl mx-auto mb-16">
+			<span class="text-[#FF6A1A] font-mono text-xs uppercase tracking-wider">Unmatched Accountability</span>
+			<h2 class="font-display text-h2 font-bold text-white mt-1">Why buy from Jiddat3D vs grey market sellers</h2>
+			<p class="text-[#9DA3AF] text-sm md:text-base mt-2">
+				A 3D printer is a precision manufacturing tool. If it breaks, who will fix it?
+			</p>
+		</div>
+
+		<div class="overflow-x-auto">
+			<table class="w-full text-left border-collapse text-xs md:text-sm">
+				<thead>
+					<tr class="border-b border-[#28303F] text-[#9DA3AF]">
+						<th class="py-4 px-4 font-mono font-medium">FEATURE</th>
+						<th class="py-4 px-4 font-display font-bold text-[#FF6A1A] text-base">Jiddat3D Pakistan</th>
+						<th class="py-4 px-4 font-mono font-medium text-[#656D7D]">OLX / Marketplace Sellers</th>
+					</tr>
+				</thead>
+				<tbody class="divide-y divide-[#28303F] font-mono">
+					<tr>
+						<td class="py-4 px-4 text-white font-medium">Warranty</td>
+						<td class="py-4 px-4 text-[#3DDC84] font-semibold">12-Month Service Warranty handled locally</td>
+						<td class="py-4 px-4 text-[#656D7D]">"Checking warranty" or none at all</td>
+					</tr>
+					<tr>
+						<td class="py-4 px-4 text-white font-medium">Spare Parts</td>
+						<td class="py-4 px-4 text-[#3DDC84] font-semibold">Stocked in Karachi & Lahore (Nozzles, belts, thermistors)</td>
+						<td class="py-4 px-4 text-[#656D7D]">Must wait 4–6 weeks on AliExpress</td>
+					</tr>
+					<tr>
+						<td class="py-4 px-4 text-white font-medium">Legal Status</td>
+						<td class="py-4 px-4 text-[#3DDC84] font-semibold">Legally imported & Ministry of Interior compliant</td>
+						<td class="py-4 px-4 text-[#656D7D]">Grey market smuggling or smuggled cargo</td>
+					</tr>
+					<tr>
+						<td class="py-4 px-4 text-white font-medium">Initial Setup Help</td>
+						<td class="py-4 px-4 text-[#3DDC84] font-semibold">Video call & WhatsApp setup assistance included</td>
+						<td class="py-4 px-4 text-[#656D7D]">You are completely on your own</td>
+					</tr>
+					<tr>
+						<td class="py-4 px-4 text-white font-medium">Power Cuts & Load-shedding</td>
+						<td class="py-4 px-4 text-[#3DDC84] font-semibold">Advice on UPS sizing & models with power-loss recovery</td>
+						<td class="py-4 px-4 text-[#656D7D]">Zero local testing on Pakistani electricity</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+
+<!-- Section 6: FAQ Bank -->
+<section class="py-20 bg-[#14181F] border-b border-[#28303F]">
+	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="text-center mb-12">
+			<span class="text-[#17C3B2] font-mono text-xs uppercase tracking-wider">Clear & Honest Answers</span>
+			<h2 class="font-display text-h2 font-bold text-white mt-1">Frequently asked questions</h2>
+		</div>
+
+		<div class="space-y-4" x-data="{ active: null }">
+			
+			<!-- FAQ 1 -->
+			<div class="workshop-card overflow-hidden">
+				<button @click="active = (active === 1 ? null : 1)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
+					<span class="font-display font-semibold text-white text-base">How much does a 3D printer cost in Pakistan?</span>
+					<span class="text-[#FF6A1A] font-bold text-lg" x-text="active === 1 ? '−' : '+'"></span>
+				</button>
+				<div x-show="active === 1" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#9DA3AF] leading-relaxed border-t border-[#28303F] pt-4">
+					Beginner fast machines (like the Creality Ender-3 V3 series) start around <strong>Rs 80,000 to Rs 100,000</strong>. Flagship modern multi-color printers (like the Bambu Lab A1) range from <strong>Rs 140,000 to Rs 175,000</strong>. Fully enclosed high-temperature engineering machines (like Bambu Lab P1S) cost between <strong>Rs 220,000 to Rs 270,000</strong>. Because rates move with the US Dollar, we update prices on each page regularly. Confirm today's exact price on WhatsApp before buying.
+				</div>
+			</div>
+
+			<!-- FAQ 2 -->
+			<div class="workshop-card overflow-hidden">
+				<button @click="active = (active === 2 ? null : 2)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
+					<span class="font-display font-semibold text-white text-base">Can I pay Cash on Delivery (COD)?</span>
+					<span class="text-[#FF6A1A] font-bold text-lg" x-text="active === 2 ? '−' : '+'"></span>
+				</button>
+				<div x-show="active === 2" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#9DA3AF] leading-relaxed border-t border-[#28303F] pt-4">
+					Yes! We offer <strong>Cash on Delivery (COD)</strong> across major cities in Pakistan (Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad, Multan, Peshawar, and more). For high-value machines over Rs 100,000, our team will call or message you on WhatsApp to confirm your delivery address and contact details prior to dispatch. We also support direct bank transfer (IBFT), JazzCash, and Easypaisa.
+				</div>
+			</div>
+
+			<!-- FAQ 3 -->
+			<div class="workshop-card overflow-hidden">
+				<button @click="active = (active === 3 ? null : 3)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
+					<span class="font-display font-semibold text-white text-base">Is 3D printing difficult for a beginner?</span>
+					<span class="text-[#FF6A1A] font-bold text-lg" x-text="active === 3 ? '−' : '+'"></span>
+				</button>
+				<div x-show="active === 3" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#9DA3AF] leading-relaxed border-t border-[#28303F] pt-4">
+					Modern 3D printers are dramatically easier than older models. Machines like the Bambu Lab A1 or Creality V3 calibrate themselves automatically, meaning you don't have to fiddle with manual bed screws or paper leveling. You can unbox the machine and print your first download in under 30 minutes! For designing your own models, our free beginner guides and Tinkercad workshops get you building from scratch quickly.
+				</div>
+			</div>
+
+			<!-- FAQ 4 -->
+			<div class="workshop-card overflow-hidden">
+				<button @click="active = (active === 4 ? null : 4)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
+					<span class="font-display font-semibold text-white text-base">What happens when load-shedding strikes?</span>
+					<span class="text-[#FF6A1A] font-bold text-lg" x-text="active === 4 ? '−' : '+'"></span>
+				</button>
+				<div x-show="active === 4" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#9DA3AF] leading-relaxed border-t border-[#28303F] pt-4">
+					All our modern printers include <strong>Power-Loss Recovery</strong>. If the electricity cuts, the printer saves its height position. When power returns, it re-heats and continues from where it stopped. For areas with frequent voltage swings, we recommend connecting the machine to a standard Pure Sine Wave UPS (600VA–1000VA). We can recommend the exact setup for your room.
+				</div>
+			</div>
+
+			<!-- FAQ 5 -->
+			<div class="workshop-card overflow-hidden">
+				<button @click="active = (active === 5 ? null : 5)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
+					<span class="font-display font-semibold text-white text-base">What does it cost to actually print something?</span>
+					<span class="text-[#FF6A1A] font-bold text-lg" x-text="active === 5 ? '−' : '+'"></span>
+				</button>
+				<div x-show="active === 5" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#9DA3AF] leading-relaxed border-t border-[#28303F] pt-4">
+					Plastic filament (PLA/PETG) costs between <strong>Rs 2,500 and Rs 3,500 per 1 kg spool</strong> (1,000 grams). That means plastic costs about <strong>Rs 2.5 to Rs 3.5 per gram</strong>! A phone stand uses about 15 grams (Rs 45). A fan knob uses 12 grams (Rs 35). A large engineering FYP model uses 150 grams (Rs 450). Electricity consumption is around 80W–150W (about the same as a laptop or pedestal fan).
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<!-- Final WhatsApp Conversion Banner -->
+<section class="py-20 bg-gradient-to-r from-[#14181F] via-[#1E2532] to-[#14181F] border-b border-[#28303F] text-center">
+	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+		<span class="w-3 h-3 rounded-full bg-[#25D366] inline-block animate-ping"></span>
+		<h2 class="font-display text-h2 font-bold text-white tracking-tight">
+			Have a question? We reply like humans.
+		</h2>
+		<p class="text-base text-[#9DA3AF] max-w-xl mx-auto leading-relaxed">
+			Whether you're picking your first machine, budgeting for a school STEAM lab, or need a fast price quotation for your department — message us directly.
+		</p>
+		
+		<div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20have%20questions%20about%203D%20printers%20in%20Pakistan." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-base px-8 py-4 shadow-2xl">
+				<svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+				<span>WhatsApp: 0300-1318112</span>
+			</a>
+			<a href="tel:+923001318112" class="btn-secondary text-base px-6 py-4">
+				<span>Call Directly</span>
+			</a>
+		</div>
+
+		<p class="text-xs text-[#656D7D] font-mono">
+			Karachi Lab &bull; Monday to Saturday, 10am – 8pm &bull; Replies within 15 minutes
+		</p>
 	</div>
 </section>
 {{ end }}

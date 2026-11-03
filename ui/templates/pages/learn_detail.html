@@ -1,47 +1,51 @@
 {{ define "content" }}
-<article class="py-16 bg-bg">
+<article class="py-16 bg-[#0C0E11] text-[#F4F1EA] min-h-screen">
 	<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 		<!-- Back link -->
-		<a href="/learn" class="inline-flex items-center gap-2 text-primary hover:text-primary-light font-medium text-sm mb-12 transition-colors">
+		<a href="/learn" class="inline-flex items-center gap-2 text-[#FF6A1A] hover:text-[#FF8038] font-mono text-xs mb-8 transition-colors">
 			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-			Back to Learn
+			Back to Guides
 		</a>
 
-		<header class="mb-12">
+		<header class="mb-10">
 			{{ if .Record.track }}
-			<span class="inline-block px-3 py-1 bg-accent-teal/10 text-accent-teal text-xs font-bold uppercase tracking-widest rounded-full mb-6">
+			<span class="inline-block px-3 py-1 bg-[#17C3B2]/10 text-[#17C3B2] border border-[#17C3B2]/30 text-xs font-mono uppercase tracking-wider rounded-full mb-4">
 				{{ if eq .Record.track "getting-started" }}Getting Started
 				{{ else if eq .Record.track "designing-making" }}Designing & Making
 				{{ else if eq .Record.track "going-deeper" }}Going Deeper
 				{{ else }}{{ .Record.track }}{{ end }}
 			</span>
 			{{ end }}
-			<h1 class="font-serif text-h1 font-semibold text-ink leading-tight mb-4">{{ .Record.title }}</h1>
-			<p class="text-xl text-ink-muted mb-8">{{ .Record.excerpt }}</p>
+			<h1 class="font-display text-h1 font-bold text-white leading-tight mb-4">{{ .Record.title }}</h1>
+			<p class="text-lg text-[#9DA3AF] mb-6 leading-relaxed">{{ .Record.excerpt }}</p>
 			
-			<div class="flex items-center gap-4 text-sm text-ink-muted border-y border-border py-4">
-				<span class="font-medium">By {{ if .Record.author_name }}{{ .Record.author_name }}{{ else }}Jiddat3D Team{{ end }}</span>
+			<div class="flex items-center gap-4 text-xs font-mono text-[#9DA3AF] border-y border-[#28303F] py-3">
+				<span>By {{ if .Record.author_name }}{{ .Record.author_name }}{{ else }}Jiddat3D Lab{{ end }}</span>
 				<span>&bull;</span>
-				<span>{{ .Record.published_at }}</span>
+				<span>Published in Pakistan</span>
 			</div>
 		</header>
 
 		{{ if .Record.hero_image }}
-		<div class="mb-16 rounded-xl overflow-hidden border border-border">
+		<div class="mb-12 rounded-xl overflow-hidden border border-[#28303F]">
 			<img src="/api/files/content/{{ .Record.id }}/{{ .Record.hero_image }}" alt="{{ .Record.title }}" class="w-full h-auto object-cover">
 		</div>
 		{{ end }}
 
-		<!-- Markdown Content Body -->
-		<div class="prose prose-lg prose-ink max-w-none mb-24">
+		<!-- Markdown Content Body with Dark Inversion -->
+		<div class="prose prose-invert prose-orange max-w-none mb-16 leading-relaxed text-[#D1D5DB]">
 			{{ .Body }}
 		</div>
 
-		<!-- Footer Action -->
-		<div class="bg-bg-subtle p-8 rounded-xl border border-border text-center max-w-xl mx-auto mt-24">
-			<h3 class="font-serif font-semibold text-2xl text-ink mb-2">Build Something Amazing</h3>
-			<p class="text-ink-muted mb-6">Get guides like this delivered straight to your inbox.</p>
-			{{ template "newsletter_form" . }}
+		<!-- Footer Action with WhatsApp and Newsletter -->
+		<div class="workshop-card p-8 bg-[#14181F] text-center max-w-xl mx-auto border border-[#28303F] space-y-4">
+			<h3 class="font-display font-bold text-xl text-white">Have Questions About This Guide?</h3>
+			<p class="text-xs text-[#9DA3AF]">Chat directly with our engineers in Karachi on WhatsApp.</p>
+			<div class="pt-2">
+				<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20have%20a%20question%20about%20the%20guide:%20{{ .Record.title }}" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-3 px-5">
+					💬 Ask on WhatsApp: 0300-1318112
+				</a>
+			</div>
 		</div>
 	</div>
 </article>
@@ -52,5 +56,4 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
 {{ end }}
-
 {{ end }}

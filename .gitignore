@@ -1,7 +1,11 @@
 pb_data/
 ui/static/css/output.css
 tools/tailwindcss.exe
+tailwindcss
+tailwindcss-linux
+jiddat3d
 *.exe
 .env
 .DS_Store
 .vscode/
+
