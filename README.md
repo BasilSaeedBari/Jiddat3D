@@ -20,19 +20,20 @@ By engineering our own specialized hardware right here in **Karachi**, we unders
 - **100% Open Source Architecture Guarantee:** If tomorrow Jiddat3D ceases to exist, your machine will never become an obsolete brick. All CAD models, Marlin/Klipper profiles, and wiring schematics remain public and repairable with standard off-the-shelf components.
 - **Prepaid Custom Builds (No COD):** Every unit is custom-calibrated with multi-hour bench testing before dispatch. We operate strictly on prepaid direct bank wire (IBFT) and Raast with formal NTN invoices.
 - **6-Month Working Warranty & STEAM Education Warranty:** Clear bench claim clauses for manufacturing defects, plus dedicated support packages for partner schools and engineering universities.
+- **Filament & Resin Roadmap:** In-house filament extrusion and ultra-high resolution liquid UV resin (SLA/MSLA) systems are in active engineering development. All machines are calibrated for standard, full-size 1kg spools.
 - **Engineering Innovation Lab Vision:** Active roadmap development expanding beyond 3D printing into Rapid PCB Prototyping and Desktop CNC Milling Machines.
 
 ---
 
 ## 2. Technology Stack & Rationale
 
-To build a platform robust enough to scale, yet simple enough to maintain without massive operational overhead, we intentionally avoided the complexity of traditional Javascript-heavy Single Page Applications (SPAs). 
+To build a platform robust enough to scale, yet simple enough to maintain without massive operational overhead, we intentionally avoided the complexity of traditional JavaScript-heavy Single Page Applications (SPAs). 
 
 ### The Stack:
 - **Backend & Database:** [Go (Golang)](https://go.dev/) + [PocketBase](https://pocketbase.io/)
 - **Templating:** Go's native `html/template` integrated with a custom markdown compiler ([Goldmark](https://github.com/yuin/goldmark)).
 - **Styling:** [Tailwind CSS v3](https://tailwindcss.com/) (using the standalone CLI, avoiding Node.js runtime bloat)
-- **Frontend Interactivity:** [HTMX](https://htmx.org/) (hypermedia-driven reactive updates) + [Alpine.js](https://alpinejs.dev/) (declarative client state)
+- **Frontend Interactivity:** [HTMX](https://htmx.org/) (hypermedia-driven reactive updates) + [Alpine.js](https://alpinejs.dev/) (declarative client state for dropdowns, modals, and themes)
 - **Design Language:** Dynamic Light (Artisan Parchment) & Dark (Modern Midnight Workshop) themes, Art Nouveau whiplash curves, Memphis squiggles, and calligraphic figure styling.
 
 ---
@@ -47,7 +48,7 @@ Jiddat3D features an integrated, server-side instant slicing engine that gives c
 - **.STL** (Binary & ASCII stereolithography facets)
 
 ### Preemptive / Speculative Execution
-Using HTMX (`hx-post="/api/instant-slice"`), the moment a user drops or selects a 3D file, the client immediately begins uploading and slicing in the background before they even click a button. The server extracts discrete signed tetrahedral volume and surface area in microseconds.
+Using HTMX (`hx-post="/api/instant-slice"`), the moment a user selects or drops a 3D model, the file immediately uploads and slices on the server before they even click start. The backend geometry engine calculates discrete signed tetrahedral volume and surface area in microseconds.
 
 ### Slicing Calculations & LayerInvoice Formulation
 Slicing logic directly integrates the accounting formulas from [BasilSaeedBari/LayerInvoice](https://github.com/BasilSaeedBari/LayerInvoice):
@@ -57,10 +58,12 @@ $$\text{Base Cost} = \text{Filament} + \text{Machine Time} + \text{Labor} + \tex
 $$\text{Total Production Cost} = \text{Base Cost} + \text{Failure Allowance (5\%)}$$
 $$\text{Final Quote} = \text{Total Production Cost} + \text{Profit Margin}$$
 
+Once quoted, customers can lock in their order via WhatsApp (`0300-1318112`) with model dimensions, print duration, and price prefilled for direct invoice confirmation.
+
 ### Admin Panel Slicer Controls (`/_/`)
 Administrators can log into the PocketBase Admin UI (`http://127.0.0.1:8090/_/`) and configure the `slicer_settings` and `filament_types` collections:
-- **`time_multiplier`:** Default `1.5` (applies a transparent 1.5x buffer timer to ensure guaranteed print turnaround times during grid load-shedding).
-- **`weight_multiplier`:** Default `1.5` (accounts for support structures and purge lines).
+- **`time_multiplier`:** Default `1.5` (internal safety buffer to account for UPS transitions, warmup, and guaranteed print turnaround).
+- **`weight_multiplier`:** Default `1.5` (internal production buffer for supports, brims, wall perimeters, and purge calibration).
 - **`machine_hourly_rate`:** Default `Rs 250/hr`.
 - **`default_filament_price`:** Default `Rs 8/g` for White Basic PLA.
 - **`profile_file`:** Upload custom `.ini`, `.json`, or `.curaprofile` slicing configurations.
@@ -70,12 +73,12 @@ Administrators can log into the PocketBase Admin UI (`http://127.0.0.1:8090/_/`)
 
 ## 4. Header & Navigation Structure
 
-The navigation header is organized into clean, responsive dropdowns with Art Nouveau geometry:
+The navigation header is organized into clean, responsive dropdowns with Art Nouveau geometry and mobile slide-out navigation:
 1. **Hardware & Services (Dropdown):**
-   - **Our Specialized Printers:** In-house CoreXY & Cartesian FDM/FFM lineup
+   - **Our Specialized Printers:** In-house CoreXY & Cartesian FDM/FFM lineup (`/printers`)
    - **Instant Slicer & Quote:** Preemptive 3D model upload & live pricing (`/instant-quote`)
    - **On-Demand Print Service:** Custom mechanical prototyping & FYP clinic (`/print-service`)
-   - **Filament & Parts:** Climate-tested spools (in plan) & stock spares (`/filament`)
+   - **Filament & Spares:** Climate-tested spools (in plan) & stock spares (`/filament`)
 2. **Labs & Learning (Dropdown):**
    - **Schools & University Labs:** Turn-key campus makerspaces & PPRA tenders (`/schools`)
    - **Hands-On Workshops:** Hardware assembly & Klipper bootcamps (`/workshops`)
@@ -87,7 +90,7 @@ The navigation header is organized into clean, responsive dropdowns with Art Nou
 4. **Header Utilities:**
    - Dark / Light Theme Toggle (Sun / Moon)
    - 1-Minute Machine Finder Quiz (`/find-my-printer`)
-   - Direct WhatsApp Hotline (`0300-1318112`)
+   - Direct WhatsApp Business Hotline (`0300-1318112`)
 
 ---
 
@@ -106,8 +109,11 @@ cd Jiddat3D
 # Compile Tailwind CSS bundle
 ./tailwindcss -i ui/static/css/input.css -o ui/static/css/output.css --minify
 
-# Start the Go web server with embedded PocketBase
+# Start using the Go source
 go run ./cmd/jiddat serve --http="127.0.0.1:8090"
+
+# Alternatively, run the pre-compiled binary directly:
+./jiddat3d serve --http="127.0.0.1:8090"
 ```
 
 - **Website Front-end:** `http://127.0.0.1:8090`
