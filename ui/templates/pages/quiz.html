@@ -22,35 +22,35 @@
 	calculateResult() {
 		if (this.useCase === 'resin') {
 			this.result = {
-				name: 'Elegoo Mars 4 Ultra 9K Resin',
-				price: 'Rs 128,000',
-				reason: 'Liquid photopolymer resin provides unmatched 18-micron layer precision. Ideal for jewelry lost-wax casting, miniatures, and dental prototypes.',
-				slug: 'elegoo-mars-4-ultra',
-				tag: 'Resin Precision Specialist'
+				name: 'Jiddat Precision Resin (MSLA)',
+				price: 'Rs 135,000 (R&D Waitlist)',
+				reason: 'We currently specialize in FDM/FFM printing. Our ultra-high-resolution stereolithography system for jewelry and dental prototypes is under active lab development in Karachi. Join our waitlist today.',
+				slug: 'jiddat-precision-resin',
+				tag: 'Engineering R&D Waitlist'
 			};
 		} else if (this.budget === 'under100k') {
 			this.result = {
-				name: 'Creality Ender-3 V3 KE',
+				name: 'Jiddat Edu-Maker V2',
 				price: 'Rs 98,000',
-				reason: 'Best high-speed printer under 1 Lakh PKR in Pakistan. 500 mm/s speed, automatic bed compensation, and widest local Karachi spare parts availability.',
-				slug: 'creality-ender-3-v3-ke',
-				tag: 'Top Budget High-Speed Pick'
+				reason: 'Student-safe, quiet, and robust FDM/FFM machine built in Karachi. Silent TMC stepper drivers, one-touch auto bed leveling, and specialized Education Warranty.',
+				slug: 'jiddat-edu-maker',
+				tag: 'Classroom & Value Champion'
 			};
 		} else if (this.userType === 'school' || this.useCase === 'strong' || this.budget === 'above250k') {
 			this.result = {
-				name: 'Bambu Lab P1S Enclosed',
+				name: 'Jiddat Apex CoreXY Enclosed',
 				price: 'Rs 245,000',
-				reason: 'Enclosed chamber keeps heat inside for printing tough ABS and engineering plastics without warping. Enclosure provides extra safety in classrooms.',
-				slug: 'bambu-lab-p1s',
-				tag: 'Engineering & School Lab Standard'
+				reason: 'Fully enclosed CoreXY chamber running custom Klipper OS on linear rails. Handles tough engineering polymers (ABS, Nylon, Polycarbonate) with zero warping. 6-Month Working Warranty.',
+				slug: 'jiddat-apex-corexy',
+				tag: 'Industrial & Research Workhorse'
 			};
 		} else {
 			this.result = {
-				name: 'Bambu Lab A1',
-				price: 'Rs 165,000',
-				reason: 'The ultimate all-rounder. Active noise cancellation, auto-calibration, phone app control, and optional 4-color multi-material upgrade.',
-				slug: 'bambu-lab-a1',
-				tag: 'Best Overall 3D Printer'
+				name: 'Jiddat Mark-1 Desktop',
+				price: 'Rs 145,000',
+				reason: 'Our flagship desktop machine. Direct drive 300°C all-metal hotend, dual Z-axis synchronization, magnetic PEI flex bed, and 100% open-source configurations.',
+				slug: 'jiddat-mark-1',
+				tag: 'Flagship Precision Desktop'
 			};
 		}
 	},

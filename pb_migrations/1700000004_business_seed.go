@@ -11,12 +11,12 @@ func init() {
 		settingsRecord, err := app.FindFirstRecordByFilter("site_settings", "1=1")
 		if err == nil && settingsRecord != nil {
 			settingsRecord.Set("whatsapp_business_number", "923001318112")
-			settingsRecord.Set("hero_headline", "3D Printers for Pakistan. Bought Here. Fixed Here. Taught Here.")
-			settingsRecord.Set("hero_subheadline", "Genuine machines with local warranty, spare parts, and hands-on training. Delivered across Pakistan with Cash on Delivery.")
+			settingsRecord.Set("hero_headline", "Engineering Innovation in Pakistan. Specialized 3D Printers.")
+			settingsRecord.Set("hero_subheadline", "Custom-designed FDM/FFM 3D printers, 100% open source architecture, 6-Month Working & Education Warranty. Precision-built in Karachi on a prepaid basis.")
 			_ = app.Save(settingsRecord)
 		}
 
-		// 2. Seed products
+		// 2. Seed products with our own specialized Jiddat machines (No ready-made international imports)
 		productsCol, err := app.FindCollectionByNameOrId("products")
 		if err != nil {
 			return nil
@@ -32,57 +32,57 @@ func init() {
 			featured    bool
 		}{
 			{
-				name:     "Bambu Lab A1",
-				slug:     "bambu-lab-a1",
+				name:     "Jiddat Apex CoreXY",
+				slug:     "jiddat-apex-corexy",
 				category: "3d-printer",
-				tagline:  "Flagship automated 500mm/s high-speed printer with optional 4-color AMS Lite.",
-				price:    165000,
-				avail:    "in-stock",
-				featured: true,
-			},
-			{
-				name:     "Bambu Lab A1 Mini",
-				slug:     "bambu-lab-a1-mini",
-				category: "3d-printer",
-				tagline:  "Compact, desktop automated 3D printer with active noise cancellation.",
-				price:    115000,
-				avail:    "in-stock",
-				featured: true,
-			},
-			{
-				name:     "Bambu Lab P1S Enclosed",
-				slug:     "bambu-lab-p1s",
-				category: "3d-printer",
-				tagline:  "Fully enclosed CoreXY chamber designed for high-temperature ABS and engineering filaments.",
+				tagline:  "Industrial enclosed high-speed FDM/FFM workhorse running custom Klipper firmware. Built for engineering plastics (ABS, Nylon, PC).",
 				price:    245000,
+				avail:    "built-to-order",
+				featured: true,
+			},
+			{
+				name:     "Jiddat Mark-1 Desktop",
+				slug:     "jiddat-mark-1",
+				category: "3d-printer",
+				tagline:  "Precision direct-drive FDM/FFM printer with CNC-machined rigid chassis and all-metal hotend for makers and engineers.",
+				price:    145000,
 				avail:    "in-stock",
 				featured: true,
 			},
 			{
-				name:     "Creality Ender-3 V3 KE",
-				slug:     "creality-ender-3-v3-ke",
+				name:     "Jiddat Edu-Maker V2",
+				slug:     "jiddat-edu-maker",
 				category: "3d-printer",
-				tagline:  "High-speed 500mm/s CoreXZ architecture running Klipper OS under 1 Lakh PKR.",
+				tagline:  "Classroom-safe, rugged educational FDM/FFM printer designed for Pakistani schools, colleges, and university STEAM labs.",
 				price:    98000,
 				avail:    "in-stock",
-				featured: false,
+				featured: true,
 			},
 			{
-				name:     "Elegoo Mars 4 Ultra 9K",
-				slug:     "elegoo-mars-4-ultra",
+				name:     "Jiddat L-500 Large-Format",
+				slug:     "jiddat-l500-workstation",
 				category: "3d-printer",
-				tagline:  "Ultra-precision 9K mono LCD resin printer for fine jewelry casting and dental molds.",
-				price:    128000,
-				avail:    "in-stock",
-				featured: false,
+				tagline:  "Massive 500x500x500mm build chamber for industrial tooling, full-scale automotive parts, and final year project prototypes.",
+				price:    385000,
+				avail:    "built-to-order",
+				featured: true,
 			},
 			{
-				name:     "Jiddat CoreXY Maker Kit",
+				name:     "Jiddat CoreXY Maker Edition",
 				slug:     "jiddat-corexy",
 				category: "3d-printer",
-				tagline:  "100% repairable open-source RepRap machine assembled with local Pakistani hardware.",
-				price:    85000,
+				tagline:  "100% open-source RepRap DIY maker assembly kit with local precision hardware, open firmware, and full CAD schematics.",
+				price:    78000,
 				avail:    "in-stock",
+				featured: false,
+			},
+			{
+				name:     "Jiddat Precision Resin (MSLA)",
+				slug:     "jiddat-precision-resin",
+				category: "resin-printer",
+				tagline:  "Ultra-high resolution stereolithography system for jewelry and dental casting — Currently in Engineering R&D in Karachi.",
+				price:    135000,
+				avail:    "in-development",
 				featured: false,
 			},
 		}

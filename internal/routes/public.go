@@ -209,54 +209,54 @@ func RegisterPublicRoutes(app core.App) {
 					if record != nil {
 						data.Record = record.PublicExport()
 					} else {
-						// Fallback catalog map for known models
+						// Fallback catalog map for specialized Jiddat machines
 						fallbackCatalog := map[string]map[string]any{
-							"bambu-lab-a1": {
-								"name":        "Bambu Lab A1",
-								"tagline":     "Flagship automated 500mm/s high-speed printer with optional 4-color AMS Lite.",
-								"price":       "165,000",
-								"currency":    "PKR",
-								"availability": "in-stock",
-								"featured":    true,
-							},
-							"bambu-lab-a1-mini": {
-								"name":        "Bambu Lab A1 Mini",
-								"tagline":     "Compact, desktop automated 3D printer with active noise cancellation.",
-								"price":       "115,000",
-								"currency":    "PKR",
-								"availability": "in-stock",
-								"featured":    true,
-							},
-							"bambu-lab-p1s": {
-								"name":        "Bambu Lab P1S Enclosed",
-								"tagline":     "Fully enclosed CoreXY chamber designed for high-temperature ABS and engineering filaments.",
+							"jiddat-apex-corexy": {
+								"name":        "Jiddat Apex CoreXY",
+								"tagline":     "Industrial enclosed high-speed FDM/FFM workhorse running custom Klipper firmware. Built for engineering plastics (ABS, Nylon, PC).",
 								"price":       "245,000",
 								"currency":    "PKR",
+								"availability": "built-to-order",
+								"featured":    true,
+							},
+							"jiddat-mark-1": {
+								"name":        "Jiddat Mark-1 Desktop",
+								"tagline":     "Precision direct-drive FDM/FFM printer with CNC-machined rigid chassis and all-metal hotend for makers and engineers.",
+								"price":       "145,000",
+								"currency":    "PKR",
 								"availability": "in-stock",
 								"featured":    true,
 							},
-							"creality-ender-3-v3-ke": {
-								"name":        "Creality Ender-3 V3 KE",
-								"tagline":     "High-speed 500mm/s CoreXZ architecture running Klipper OS under 1 Lakh PKR.",
+							"jiddat-edu-maker": {
+								"name":        "Jiddat Edu-Maker V2",
+								"tagline":     "Classroom-safe, rugged educational FDM/FFM printer designed for Pakistani schools, colleges, and university STEAM labs.",
 								"price":       "98,000",
 								"currency":    "PKR",
 								"availability": "in-stock",
-								"featured":    false,
+								"featured":    true,
 							},
-							"elegoo-mars-4-ultra": {
-								"name":        "Elegoo Mars 4 Ultra 9K",
-								"tagline":     "Ultra-precision 9K mono LCD resin printer for fine jewelry casting and dental molds.",
-								"price":       "128,000",
+							"jiddat-l500-workstation": {
+								"name":        "Jiddat L-500 Large-Format",
+								"tagline":     "Massive 500x500x500mm build chamber for industrial tooling, full-scale automotive parts, and final year project prototypes.",
+								"price":       "385,000",
 								"currency":    "PKR",
-								"availability": "in-stock",
-								"featured":    false,
+								"availability": "built-to-order",
+								"featured":    true,
 							},
 							"jiddat-corexy": {
-								"name":        "Jiddat CoreXY Maker Kit",
-								"tagline":     "100% repairable open-source RepRap machine assembled with local Pakistani hardware.",
-								"price":       "85,000",
+								"name":        "Jiddat CoreXY Maker Edition",
+								"tagline":     "100% open-source RepRap DIY maker assembly kit with local precision hardware, open firmware, and full CAD schematics.",
+								"price":       "78,000",
 								"currency":    "PKR",
 								"availability": "in-stock",
+								"featured":    false,
+							},
+							"jiddat-precision-resin": {
+								"name":        "Jiddat Precision Resin (MSLA)",
+								"tagline":     "Ultra-high resolution stereolithography system for jewelry and dental casting — Currently in Engineering R&D in Karachi.",
+								"price":       "135,000",
+								"currency":    "PKR",
+								"availability": "in-development",
 								"featured":    false,
 							},
 						}
