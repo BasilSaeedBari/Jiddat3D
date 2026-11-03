@@ -1,16 +1,16 @@
 {{ define "content" }}
-<article class="py-16 bg-[#0C0E11] text-[#F4F1EA] min-h-screen">
+<article class="py-16 bg-parchment-bg dark:bg-[#0C0E11] text-parchment-ink dark:text-[#F4F1EA] min-h-screen transition-colors">
 	<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-		<a href="/blog" class="inline-flex items-center gap-2 text-[#FF6A1A] hover:text-[#FF8038] font-mono text-xs mb-8 transition-colors">
+		<a href="/blog" class="inline-flex items-center gap-2 text-filament hover:text-[#FF8038] font-mono text-xs mb-8 transition-colors">
 			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
 			Back to Blog
 		</a>
 
 		<header class="mb-10">
-			<span class="inline-block px-3 py-1 bg-[#FF6A1A]/10 text-[#FF6A1A] border border-[#FF6A1A]/30 text-xs font-mono uppercase tracking-wider rounded-full mb-4">Field Dispatch</span>
-			<h1 class="font-display text-h1 font-bold text-white leading-tight mb-4">{{ .Record.title }}</h1>
+			<span class="inline-block px-3 py-1 bg-filament/10 text-filament border border-filament/30 text-xs font-mono uppercase tracking-wider rounded-[14px_2px_14px_2px] mb-4 font-semibold">Field Dispatch</span>
+			<h1 class="font-display text-4xl sm:text-5xl font-bold text-parchment-ink dark:text-white leading-tight mb-4">{{ .Record.title }}</h1>
 			
-			<div class="flex items-center gap-4 text-xs font-mono text-[#9DA3AF] border-y border-[#28303F] py-3">
+			<div class="flex items-center gap-4 text-xs font-mono text-[#635D54] dark:text-[#9DA3AF] border-y border-[#E2D7C7] dark:border-[#28303F] py-3">
 				<span>By {{ if .Record.author_name }}{{ .Record.author_name }}{{ else }}Basil Saeed Bari{{ end }}</span>
 				<span>&bull;</span>
 				<span>Karachi Lab</span>
@@ -18,21 +18,21 @@
 		</header>
 
 		{{ if .Record.hero_image }}
-		<div class="mb-12 rounded-xl overflow-hidden border border-[#28303F]">
+		<div class="mb-12 rounded-[18px_3px_18px_3px] overflow-hidden border border-[#E2D7C7] dark:border-[#28303F] shadow-lg">
 			<img src="/api/files/content/{{ .Record.id }}/{{ .Record.hero_image }}" alt="{{ .Record.title }}" class="w-full h-auto object-cover">
 		</div>
 		{{ end }}
 
 		<!-- Markdown Content Body -->
-		<div class="prose prose-invert prose-orange max-w-none mb-16 leading-relaxed text-[#D1D5DB]">
+		<div class="prose dark:prose-invert prose-orange max-w-none mb-16 leading-relaxed text-[#2D2A26] dark:text-[#D1D5DB]">
 			{{ .Body }}
 		</div>
 
 		<!-- Action -->
-		<div class="workshop-card p-6 bg-[#14181F] text-center max-w-md mx-auto">
-			<p class="text-xs text-[#9DA3AF] mb-3">Want to discuss this build or need custom parts?</p>
-			<a href="https://wa.me/923001318112" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-2 px-4">
-				💬 Chat on WhatsApp: 0300-1318112
+		<div class="nouveau-card p-6 bg-parchment-surface dark:bg-[#14181F] text-center max-w-md mx-auto shadow-xl">
+			<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mb-3">Want to discuss this build or need custom parts?</p>
+			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20read%20your%20article:%20{{ .Record.title }}" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-2.5 px-5 shadow-lg">
+				💬 Chat on WhatsApp: <span class="font-numeral">0300-1318112</span>
 			</a>
 		</div>
 	</div>

@@ -1,5 +1,5 @@
 {{ define "content" }}
-<div class="py-12 bg-[#0C0E11] text-[#F4F1EA] min-h-screen" x-data="{
+<div class="py-12 bg-parchment-bg dark:bg-[#0C0E12] text-parchment-ink dark:text-[#F4F1EA] min-h-screen transition-colors" x-data="{
 	weight: 50,
 	material: 'pla',
 	urgency: 'standard',
@@ -18,91 +18,91 @@
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		
 		<!-- Breadcrumbs -->
-		<nav class="flex items-center gap-2 text-xs text-[#9DA3AF] mb-8 font-mono">
-			<a href="/" class="hover:text-white">Home</a>
+		<nav class="flex items-center gap-2 text-xs text-[#635D54] dark:text-[#9DA3AF] mb-8 font-mono">
+			<a href="/" class="hover:text-filament">Home</a>
 			<span>/</span>
-			<span class="text-white">Print Service & FYP Clinic</span>
+			<span class="text-parchment-ink dark:text-white font-semibold">Print Service & FYP Clinic</span>
 		</nav>
 
 		<!-- Hero Section -->
-		<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center border-b border-[#28303F] pb-16 mb-16">
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center border-b border-[#E2D7C7] dark:border-[#28303F] pb-16 mb-16">
 			<div class="lg:col-span-7 space-y-6">
-				<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#17C3B2]/10 border border-[#17C3B2]/30 text-xs font-semibold text-[#17C3B2]">
+				<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-nouveau-sm bg-teal/10 border border-teal/30 text-xs font-semibold text-teal">
 					<span>⚡ Rapid On-Demand 3D Printing Service</span>
 				</div>
-				<h1 class="font-display text-hero font-bold text-white tracking-tight leading-[1.08]">
-					Send us your design.<br>We'll print and deliver it.
+				<h1 class="font-display text-hero font-bold text-parchment-ink dark:text-white tracking-tight leading-[1.08]">
+					Send us your design.<br><span class="squiggle-underline">We'll print and deliver it.</span>
 				</h1>
-				<p class="text-lg text-[#9DA3AF] leading-relaxed">
-					Don't own a 3D printer yet? Upload your 3D CAD model (STL, OBJ, STEP, 3MF) or send a photo with measurements. We inspect it, quote a price on WhatsApp, and deliver it to your doorstep in Pakistan.
+				<p class="text-lg text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
+					Don't own a 3D printer yet? Upload your 3D CAD model (STL, OBJ, STEP, 3MF) or send a photo with measurements. We inspect it in our Karachi lab, quote a price on WhatsApp, and deliver it to your doorstep nationwide.
 				</p>
 
 				<div class="flex flex-wrap items-center gap-4 pt-2">
 					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20have%20a%203D%20file/model%20to%20print.%20Can%20I%20send%20it%20here%20for%20a%20quotation%3F" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-sm px-6 py-3.5 shadow-xl">
 						<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-						<span>Send File on WhatsApp (0300-1318112)</span>
+						<span>Send File on WhatsApp (<span class="font-numeral">0300-1318112</span>)</span>
 					</a>
 					<a href="#calculator" class="btn-secondary text-sm px-6 py-3.5">
 						<span>Instant Price Calculator &darr;</span>
 					</a>
 				</div>
 
-				<div class="flex items-center gap-3 text-xs text-[#9DA3AF] pt-2">
-					<span class="flex items-center gap-1.5"><strong class="text-white">✓</strong> 24-hr Urgent Turnaround</span>
-					<span class="flex items-center gap-1.5"><strong class="text-white">✓</strong> Tough PETG & ABS</span>
-					<span class="flex items-center gap-1.5"><strong class="text-white">✓</strong> 9K High-Detail Resin</span>
+				<div class="flex items-center gap-3 text-xs text-[#635D54] dark:text-[#9DA3AF] pt-2">
+					<span class="flex items-center gap-1.5"><strong class="text-filament font-bold">✓</strong> <span class="font-numeral">24-hr</span> Urgent Turnaround</span>
+					<span class="flex items-center gap-1.5"><strong class="text-filament font-bold">✓</strong> Tough PETG & ABS</span>
+					<span class="flex items-center gap-1.5"><strong class="text-filament font-bold">✓</strong> <span class="font-numeral">9K</span> High-Detail Resin</span>
 				</div>
 			</div>
 
 			<!-- Right Column: Interactive Price Calculator Widget -->
 			<div class="lg:col-span-5" id="calculator">
-				<div class="workshop-card p-6 bg-[#14181F] border border-[#28303F]">
-					<div class="flex items-center justify-between pb-4 border-b border-[#28303F] mb-6">
+				<div class="workshop-card p-6 bg-white dark:bg-[#14181F] border-2 border-[#E2D7C7] dark:border-[#28303F]">
+					<div class="flex items-center justify-between pb-4 border-b border-[#E2D7C7] dark:border-[#28303F] mb-6">
 						<div>
-							<h3 class="font-display font-bold text-white text-lg">Instant Price Estimator</h3>
-							<p class="text-xs text-[#9DA3AF]">Estimate your custom 3D printing cost</p>
+							<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg">Instant Price Estimator</h3>
+							<p class="text-xs text-[#635D54] dark:text-[#9DA3AF]">Estimate your custom 3D printing cost</p>
 						</div>
-						<span class="text-xs font-mono text-[#FF6A1A]">PKR Rupees</span>
+						<span class="text-xs font-mono text-filament font-bold">PKR Currency</span>
 					</div>
 
 					<div class="space-y-5 text-xs">
 						<!-- Weight Slider -->
 						<div>
 							<div class="flex justify-between items-center mb-2 font-mono">
-								<span class="text-[#9DA3AF]">Estimated Weight:</span>
-								<span class="text-white font-bold text-sm" x-text="weight + ' grams'"></span>
+								<span class="text-[#635D54] dark:text-[#9DA3AF]">Estimated Weight:</span>
+								<span class="text-parchment-ink dark:text-white font-numeral font-bold text-sm" x-text="weight + ' grams'"></span>
 							</div>
-							<input type="range" min="10" max="350" step="5" x-model="weight" class="w-full accent-[#FF6A1A] cursor-pointer">
-							<span class="text-[10px] text-[#656D7D] block mt-1">Hint: A phone stand is ~15g. An electronics enclosure is ~60g.</span>
+							<input type="range" min="10" max="350" step="5" x-model="weight" class="w-full accent-filament cursor-pointer">
+							<span class="text-[10px] text-[#8A8175] dark:text-[#656D7D] block mt-1">Hint: A phone stand is ~<span class="font-numeral">15g</span>. An electronics enclosure is ~<span class="font-numeral">60g</span>.</span>
 						</div>
 
 						<!-- Material Selector -->
 						<div>
-							<label class="text-[#9DA3AF] block mb-2 font-medium">Select Plastic Material:</label>
+							<label class="text-[#635D54] dark:text-[#9DA3AF] block mb-2 font-medium">Select Plastic Material:</label>
 							<div class="grid grid-cols-3 gap-2">
-								<button @click="material = 'pla'" :class="material === 'pla' ? 'bg-[#FF6A1A] text-white border-[#FF6A1A]' : 'bg-[#1A1F29] text-[#9DA3AF] border-[#28303F]'" class="p-2 rounded border text-center font-mono transition-colors">
+								<button @click="material = 'pla'" :class="material === 'pla' ? 'bg-filament text-white border-filament' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] border-[#E2D7C7] dark:border-[#28303F]'" class="p-2 rounded-nouveau-sm border text-center font-mono transition-colors">
 									PLA+
 								</button>
-								<button @click="material = 'petg'" :class="material === 'petg' ? 'bg-[#FF6A1A] text-white border-[#FF6A1A]' : 'bg-[#1A1F29] text-[#9DA3AF] border-[#28303F]'" class="p-2 rounded border text-center font-mono transition-colors">
+								<button @click="material = 'petg'" :class="material === 'petg' ? 'bg-filament text-white border-filament' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] border-[#E2D7C7] dark:border-[#28303F]'" class="p-2 rounded-nouveau-sm border text-center font-mono transition-colors">
 									PETG
 								</button>
-								<button @click="material = 'abs'" :class="material === 'abs' ? 'bg-[#FF6A1A] text-white border-[#FF6A1A]' : 'bg-[#1A1F29] text-[#9DA3AF] border-[#28303F]'" class="p-2 rounded border text-center font-mono transition-colors">
+								<button @click="material = 'abs'" :class="material === 'abs' ? 'bg-filament text-white border-filament' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] border-[#E2D7C7] dark:border-[#28303F]'" class="p-2 rounded-nouveau-sm border text-center font-mono transition-colors">
 									ABS
 								</button>
-								<button @click="material = 'tpu'" :class="material === 'tpu' ? 'bg-[#FF6A1A] text-white border-[#FF6A1A]' : 'bg-[#1A1F29] text-[#9DA3AF] border-[#28303F]'" class="p-2 rounded border text-center font-mono transition-colors">
+								<button @click="material = 'tpu'" :class="material === 'tpu' ? 'bg-filament text-white border-filament' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] border-[#E2D7C7] dark:border-[#28303F]'" class="p-2 rounded-nouveau-sm border text-center font-mono transition-colors">
 									TPU (Rubber)
 								</button>
-								<button @click="material = 'resin'" :class="material === 'resin' ? 'bg-[#FF6A1A] text-white border-[#FF6A1A]' : 'bg-[#1A1F29] text-[#9DA3AF] border-[#28303F]'" class="p-2 rounded border text-center font-mono transition-colors col-span-2">
+								<button @click="material = 'resin'" :class="material === 'resin' ? 'bg-filament text-white border-filament' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] border-[#E2D7C7] dark:border-[#28303F]'" class="p-2 rounded-nouveau-sm border text-center font-mono transition-colors col-span-2">
 									9K Liquid Resin
 								</button>
 							</div>
 						</div>
 
-						<!-- Estimated Price Display -->
-						<div class="p-4 rounded-xl bg-[#0C0E11] border border-[#28303F] flex items-center justify-between font-mono mt-4">
+						<!-- Estimated Price Display (Calligraphic Output) -->
+						<div class="p-4 rounded-nouveau-sm bg-parchment-subtle dark:bg-[#0C0E12] border border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-between mt-4">
 							<div>
-								<span class="text-[11px] text-[#9DA3AF] block">Estimated Print Cost:</span>
-								<span class="text-2xl font-bold text-[#3DDC84]" x-text="'Rs ' + getPrice()"></span>
+								<span class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] block font-mono">Estimated Print Cost:</span>
+								<span class="text-3xl font-bold font-numeral-italic text-filament" x-text="'Rs ' + getPrice()"></span>
 							</div>
 							<a :href="'https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20used%20the%20print%20calculator%20for%20' + weight + 'g%20of%20' + material.toUpperCase() + '%20(Est%20Rs%20' + getPrice() + ').%20I%20have%20a%20file%20to%20send%20now.'" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-2 px-3">
 								Quote File &rarr;
@@ -114,17 +114,17 @@
 		</div>
 
 		<!-- Section: Final Year Project (FYP) Clinic -->
-		<div class="py-16 border-b border-[#28303F]">
+		<div class="py-16 border-b border-[#E2D7C7] dark:border-[#28303F]">
 			<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 				<div class="lg:col-span-6 space-y-4">
-					<span class="text-xs font-mono text-[#FFB400] uppercase">Engineering, Architecture & CS Students</span>
-					<h2 class="font-display text-h2 font-bold text-white tracking-tight">
-						Final Year Project (FYP) Print Clinic
+					<span class="text-xs font-mono text-accent-gold uppercase">Engineering, Architecture & CS Students</span>
+					<h2 class="font-display text-h2 font-bold text-parchment-ink dark:text-white tracking-tight">
+						<span class="squiggle-underline">Final Year Project (FYP) Print Clinic</span>
 					</h2>
-					<p class="text-sm text-[#9DA3AF] leading-relaxed">
+					<p class="text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
 						Every year, hundreds of engineering students at NED, NUST, UET, FAST, and GIKI lose marks because of broken prototypes or bad print tolerances.
 					</p>
-					<p class="text-sm text-[#9DA3AF] leading-relaxed">
+					<p class="text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
 						Bring your CAD design to Jiddat3D. Our engineers run a <strong>free pre-print check</strong>: we verify wall thicknesses, ensure bolt holes won't crack under load, select the right infill geometry, and print parts ready for your defense jury.
 					</p>
 
@@ -136,24 +136,24 @@
 				</div>
 
 				<div class="lg:col-span-6">
-					<div class="workshop-card p-6 bg-[#14181F] border border-[#28303F]">
-						<h4 class="font-display font-semibold text-white text-base mb-4">What we check before printing your FYP:</h4>
-						<div class="space-y-3 text-xs text-[#9DA3AF]">
+					<div class="workshop-card p-6 bg-white dark:bg-[#14181F] border-2 border-[#E2D7C7] dark:border-[#28303F]">
+						<h4 class="font-display font-semibold text-parchment-ink dark:text-white text-base mb-4">What we check before printing your FYP:</h4>
+						<div class="space-y-3 text-xs text-[#635D54] dark:text-[#9DA3AF]">
 							<div class="flex items-start gap-2.5">
-								<span class="text-[#3DDC84] font-bold">01</span>
-								<p><strong class="text-white">Wall Thickness & Shells:</strong> Prevent flimsy parts from cracking when motors or bearings are tightened.</p>
+								<span class="text-filament font-calligraphic font-bold text-base">01</span>
+								<p><strong class="text-parchment-ink dark:text-white">Wall Thickness & Shells:</strong> Prevent flimsy parts from cracking when motors or bearings are tightened.</p>
 							</div>
 							<div class="flex items-start gap-2.5">
-								<span class="text-[#3DDC84] font-bold">02</span>
-								<p><strong class="text-white">Hole Shrinkage Tolerances:</strong> Adjust M3/M4 screw holes so hardware fits tightly without drilling.</p>
+								<span class="text-teal font-calligraphic font-bold text-base">02</span>
+								<p><strong class="text-parchment-ink dark:text-white">Hole Shrinkage Tolerances:</strong> Adjust M3/M4 screw holes so hardware fits tightly without drilling.</p>
 							</div>
 							<div class="flex items-start gap-2.5">
-								<span class="text-[#3DDC84] font-bold">03</span>
-								<p><strong class="text-white">Stress-Oriented Layer Alignment:</strong> Rotate parts so mechanical force doesn't pull against layer adhesion.</p>
+								<span class="text-accent-gold font-calligraphic font-bold text-base">03</span>
+								<p><strong class="text-parchment-ink dark:text-white">Stress-Oriented Layer Alignment:</strong> Rotate parts so mechanical force doesn't shear layer adhesion.</p>
 							</div>
 							<div class="flex items-start gap-2.5">
-								<span class="text-[#3DDC84] font-bold">04</span>
-								<p><strong class="text-white">Heat & Load Suitability:</strong> Switch from PLA to PETG/ABS for parts exposed to car engines or sun.</p>
+								<span class="text-[#3DDC84] font-calligraphic font-bold text-base">04</span>
+								<p><strong class="text-parchment-ink dark:text-white">Heat & Load Suitability:</strong> Switch from PLA to PETG/ABS for parts exposed to engine bay heat or UV sun.</p>
 							</div>
 						</div>
 					</div>
@@ -161,19 +161,19 @@
 			</div>
 		</div>
 
-		<!-- Section: Responsible Use Policy -->
-		<div class="py-12 border-b border-[#28303F]">
-			<div class="p-6 rounded-xl bg-[#14181F] border border-[#28303F] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+		<!-- Section: Responsible Use Policy (Art Nouveau Cartouche) -->
+		<div class="py-12 border-b border-[#E2D7C7] dark:border-[#28303F]">
+			<div class="p-6 rounded-nouveau-sm bg-white dark:bg-[#14181F] border-2 border-[#E2D7C7] dark:border-[#28303F] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
 				<div class="flex items-start gap-3">
 					<span class="text-2xl shrink-0">🛡️</span>
 					<div>
-						<h4 class="font-bold text-white text-sm">Responsible Use & Legal Compliance Policy</h4>
-						<p class="text-[#9DA3AF] mt-1 leading-relaxed">
+						<h4 class="font-bold text-parchment-ink dark:text-white text-sm">Responsible Use & Legal Compliance Policy</h4>
+						<p class="text-[#635D54] dark:text-[#9DA3AF] mt-1 leading-relaxed">
 							We believe 3D printing should be used to build, fix, teach, and invent. Under Pakistani law and company policy, <strong>we do NOT print, design, or facilitate weapons or weapon components</strong> of any kind. All commercial files undergo safety verification.
 						</p>
 					</div>
 				</div>
-				<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20have%20a%20commercial%20prototype%20to%20review." target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs py-2 px-3 whitespace-nowrap">
+				<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20have%20a%20commercial%20prototype%20to%20review." target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs py-2 px-3.5 whitespace-nowrap">
 					Submit File for Review &rarr;
 				</a>
 			</div>

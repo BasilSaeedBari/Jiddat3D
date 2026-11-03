@@ -1,89 +1,95 @@
 {{ define "content" }}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-[#0C0E11] text-[#F4F1EA] min-h-screen">
-	<!-- Breadcrumbs -->
-	<nav class="flex items-center gap-2 text-xs text-[#9DA3AF] mb-8 font-mono">
-		<a href="/" class="hover:text-white">Home</a>
-		<span>/</span>
-		<span class="text-white">Community & Projects</span>
-	</nav>
+<div class="py-16 bg-parchment-bg dark:bg-[#0C0E11] text-parchment-ink dark:text-[#F4F1EA] min-h-screen transition-colors">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<!-- Breadcrumbs -->
+		<nav class="flex items-center gap-2 text-xs text-[#635D54] dark:text-[#9DA3AF] mb-8 font-mono">
+			<a href="/" class="hover:text-filament">Home</a>
+			<span>/</span>
+			<span class="text-parchment-ink dark:text-white font-semibold">Community & Projects</span>
+		</nav>
 
-	<div class="border-b border-[#28303F] pb-10 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-		<div>
-			<span class="text-xs font-mono text-[#FF6A1A] uppercase">Maker Showcase</span>
-			<h1 class="font-display text-h1 font-bold text-white tracking-tight mt-1">Community Projects</h1>
-			<p class="text-base text-[#9DA3AF] max-w-2xl mt-2 leading-relaxed">
-				Explore what Pakistani engineers, students, and independent makers are fabricating with 3D printing across Karachi, Lahore, and Islamabad.
-			</p>
-		</div>
-		<div>
-			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20submit%20my%203D%20printed%20project%20for%20the%20community%20showcase." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-3 px-4 shadow-xl">
-				Submit Your Project on WhatsApp
-			</a>
-		</div>
-	</div>
-
-	{{ if .List }}
-	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-		{{ range .List }}
-		<article class="workshop-card p-6 flex flex-col justify-between group">
+		<div class="border-b border-[#E2D7C7] dark:border-[#28303F] pb-10 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
 			<div>
-				<h3 class="font-display text-xl font-bold text-white group-hover:text-[#FF6A1A] transition-colors">
-					<a href="/projects/{{ .slug }}">{{ .title }}</a>
-				</h3>
-				<p class="text-xs text-[#9DA3AF] mt-2 line-clamp-3 leading-relaxed">{{ .excerpt }}</p>
+				<div class="inline-flex items-center gap-2 px-3 py-1 bg-filament/10 border border-filament/30 rounded-[14px_2px_14px_2px] text-filament font-mono text-xs uppercase tracking-wider mb-2">
+					<span>Maker Showcase</span>
+				</div>
+				<h1 class="font-display text-4xl sm:text-5xl font-bold text-parchment-ink dark:text-white tracking-tight mt-1">
+					Community <span class="squiggle-underline">Projects</span>
+				</h1>
+				<p class="text-base md:text-lg text-[#635D54] dark:text-[#9DA3AF] max-w-2xl mt-2 leading-relaxed">
+					Explore what Pakistani engineers, students, and independent makers are fabricating with 3D printing across Karachi and nationwide.
+				</p>
 			</div>
-			<div class="mt-6 pt-4 border-t border-[#28303F]">
-				<a href="/projects/{{ .slug }}" class="text-xs font-mono text-[#FF8038] hover:underline">
-					View Project Details &rarr;
+			<div>
+				<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20submit%20my%203D%20printed%20project%20for%20the%20community%20showcase." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-3 px-5 shadow-xl">
+					Submit Your Project on WhatsApp
 				</a>
 			</div>
-		</article>
+		</div>
+
+		{{ if .List }}
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+			{{ range .List }}
+			<article class="nouveau-card p-6 flex flex-col justify-between group hover:shadow-xl transition-all">
+				<div>
+					<h3 class="font-display text-xl font-bold text-parchment-ink dark:text-white group-hover:text-filament transition-colors">
+						<a href="/projects/{{ .slug }}">{{ .title }}</a>
+					</h3>
+					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-2 line-clamp-3 leading-relaxed">{{ .excerpt }}</p>
+				</div>
+				<div class="mt-6 pt-4 border-t border-[#E2D7C7] dark:border-[#28303F]">
+					<a href="/projects/{{ .slug }}" class="text-xs font-mono text-filament hover:underline font-semibold">
+						View Project Details &rarr;
+					</a>
+				</div>
+			</article>
+			{{ end }}
+		</div>
 		{{ end }}
-	</div>
-	{{ end }}
 
-	<!-- Featured Community Builds -->
-	<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-		<div class="workshop-card p-6">
-			<span class="text-3xl mb-3 block">🌉</span>
-			<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#17C3B2]/10 text-[#17C3B2] border border-[#17C3B2]/30 uppercase">Civil Engineering</span>
-			<h3 class="font-display font-bold text-white text-lg mt-2 mb-1">Arch Truss Bridge FYP</h3>
-			<p class="text-xs text-[#9DA3AF] leading-relaxed mb-4">Scale bridge prototype printed in PLA+ for NED University structural testing.</p>
-			<div class="pt-3 border-t border-[#28303F] text-xs font-mono text-[#3DDC84]">
-				Tested to 12 kg load
+		<!-- Featured Community Builds -->
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+			<div class="nouveau-card p-6 hover:shadow-xl transition-shadow">
+				<span class="text-3xl mb-3 block">🌉</span>
+				<span class="text-[10px] font-mono px-2.5 py-1 rounded-[8px_2px_8px_2px] bg-[#17C3B2]/10 text-[#17C3B2] border border-[#17C3B2]/30 uppercase font-semibold">Civil Engineering</span>
+				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg mt-2 mb-1">Arch Truss Bridge FYP</h3>
+				<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] leading-relaxed mb-4">Scale bridge prototype printed in PLA+ for NED University structural testing.</p>
+				<div class="pt-3 border-t border-[#E2D7C7] dark:border-[#28303F] text-xs font-mono text-[#3DDC84] font-semibold">
+					Tested to <span class="font-numeral text-sm">12 kg</span> load
+				</div>
+			</div>
+
+			<div class="nouveau-card p-6 hover:shadow-xl transition-shadow">
+				<span class="text-3xl mb-3 block">🚁</span>
+				<span class="text-[10px] font-mono px-2.5 py-1 rounded-[8px_2px_8px_2px] bg-filament/10 text-filament border border-filament/30 uppercase font-semibold">Robotics</span>
+				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg mt-2 mb-1">Autonomous Rover Chassis</h3>
+				<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] leading-relaxed mb-4">Four-wheel differential drive rover body with internal battery rails printed in impact PETG.</p>
+				<div class="pt-3 border-t border-[#E2D7C7] dark:border-[#28303F] text-xs font-mono text-[#3DDC84] font-semibold">
+					NUST Mechatronics Project
+				</div>
+			</div>
+
+			<div class="nouveau-card p-6 hover:shadow-xl transition-shadow">
+				<span class="text-3xl mb-3 block">🎛️</span>
+				<span class="text-[10px] font-mono px-2.5 py-1 rounded-[8px_2px_8px_2px] bg-[#FFB400]/10 text-[#FFB400] border border-[#FFB400]/30 uppercase font-semibold">Repair & Living</span>
+				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg mt-2 mb-1">Vintage Fan Switch Rebuild</h3>
+				<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] leading-relaxed mb-4">Saved a 1980s Pakistani pedestal fan by re-engineering and printing the broken oscillator cam gear.</p>
+				<div class="pt-3 border-t border-[#E2D7C7] dark:border-[#28303F] text-xs font-mono text-filament font-semibold">
+					Raw plastic cost: <span class="font-numeral text-sm font-bold">Rs 38</span>
+				</div>
 			</div>
 		</div>
 
-		<div class="workshop-card p-6">
-			<span class="text-3xl mb-3 block">🚁</span>
-			<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FF6A1A]/10 text-[#FF6A1A] border border-[#FF6A1A]/30 uppercase">Robotics</span>
-			<h3 class="font-display font-bold text-white text-lg mt-2 mb-1">Autonomous Rover Chassis</h3>
-			<p class="text-xs text-[#9DA3AF] leading-relaxed mb-4">Four-wheel differential drive rover body with internal battery rails printed in impact PETG.</p>
-			<div class="pt-3 border-t border-[#28303F] text-xs font-mono text-[#3DDC84]">
-				NUST Mechatronics Project
+		<!-- Gallery Banner -->
+		<div class="mt-16 nouveau-card p-8 bg-parchment-surface dark:bg-[#14181F] flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+			<div>
+				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-xl">Want to See More Lab Fabrications?</h3>
+				<p class="text-xs md:text-sm text-[#635D54] dark:text-[#9DA3AF] mt-1">Check out our live gallery with print times, plastic weights, and raw costs.</p>
 			</div>
+			<a href="/gallery" class="btn-filament text-xs py-3 px-6 whitespace-nowrap shadow-lg">
+				Browse Print Gallery &rarr;
+			</a>
 		</div>
-
-		<div class="workshop-card p-6">
-			<span class="text-3xl mb-3 block">🎛️</span>
-			<span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FFB400]/10 text-[#FFB400] border border-[#FFB400]/30 uppercase">Repair & Living</span>
-			<h3 class="font-display font-bold text-white text-lg mt-2 mb-1">Vintage Fan Switch Rebuild</h3>
-			<p class="text-xs text-[#9DA3AF] leading-relaxed mb-4">Saved a 1980s Pakistani pedestal fan by re-engineering and printing the broken oscillator cam gear.</p>
-			<div class="pt-3 border-t border-[#28303F] text-xs font-mono text-[#3DDC84]">
-				Raw plastic cost: Rs 38
-			</div>
-		</div>
-	</div>
-
-	<!-- Gallery Banner -->
-	<div class="mt-16 p-8 rounded-2xl bg-[#14181F] border border-[#28303F] flex flex-col md:flex-row items-center justify-between gap-6">
-		<div>
-			<h3 class="font-display font-bold text-white text-xl">Want to See More Lab Fabrications?</h3>
-			<p class="text-xs md:text-sm text-[#9DA3AF] mt-1">Check out our live gallery with print times, plastic weights, and raw costs.</p>
-		</div>
-		<a href="/gallery" class="btn-filament text-xs py-3 px-6 whitespace-nowrap">
-			Browse Print Gallery &rarr;
-		</a>
 	</div>
 </div>
 {{ end }}

@@ -1,64 +1,68 @@
 {{ define "content" }}
-<div class="py-16 bg-[#0C0E11] text-[#F4F1EA] min-h-screen">
+<div class="py-16 bg-parchment-bg dark:bg-[#0C0E11] text-parchment-ink dark:text-[#F4F1EA] min-h-screen transition-colors">
 	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 		
 		<!-- Breadcrumbs -->
-		<nav class="flex items-center gap-2 text-xs text-[#9DA3AF] font-mono">
-			<a href="/" class="hover:text-white">Home</a>
+		<nav class="flex items-center gap-2 text-xs text-[#635D54] dark:text-[#9DA3AF] font-mono">
+			<a href="/" class="hover:text-filament">Home</a>
 			<span>/</span>
-			<span class="text-white">About Jiddat3D</span>
+			<span class="text-parchment-ink dark:text-white font-semibold">About Jiddat3D</span>
 		</nav>
 
 		<!-- Heading -->
-		<div class="border-b border-[#28303F] pb-10">
-			<span class="text-xs font-mono text-[#FF6A1A] uppercase tracking-wider">Our Story & Mission</span>
-			<h1 class="font-display text-hero font-bold text-white tracking-tight leading-tight mt-1">
-				We make things.<br>And we teach people to make them.
+		<div class="border-b border-[#E2D7C7] dark:border-[#28303F] pb-10">
+			<div class="inline-flex items-center gap-2 px-3 py-1 bg-filament/10 border border-filament/30 rounded-[14px_2px_14px_2px] text-filament font-mono text-xs uppercase tracking-wider mb-2">
+				<span>Our Story & Mission</span>
+			</div>
+			<h1 class="font-display text-4xl sm:text-5xl font-bold text-parchment-ink dark:text-white tracking-tight leading-tight mt-1">
+				We make things.<br>And we <span class="squiggle-underline">teach people to make them.</span>
 			</h1>
-			<p class="text-lg text-[#9DA3AF] mt-4 leading-relaxed">
-				For too long, owning a 3D printer in Pakistan meant relying on overseas catalogs, waiting 6 weeks for replacement parts, and struggling without local support. Jiddat3D was created to change that forever.
+			<p class="text-lg text-[#635D54] dark:text-[#9DA3AF] mt-4 leading-relaxed">
+				For too long, owning a 3D printer in Pakistan meant relying on overseas catalogs, waiting <span class="font-numeral font-bold text-filament">6</span> weeks for replacement parts, and struggling without local support. Jiddat3D was created to change that forever.
 			</p>
 		</div>
 
-		<!-- Manifesto Box -->
-		<div class="p-8 rounded-2xl bg-[#14181F] border border-[#28303F] border-l-4 border-l-[#FF6A1A]">
-			<p class="text-base md:text-lg text-[#F4F1EA] leading-relaxed italic font-light">
+		<!-- Manifesto Box with Art Nouveau border -->
+		<div class="nouveau-card p-8 bg-parchment-surface dark:bg-[#14181F] border-l-4 border-l-filament shadow-xl relative overflow-hidden">
+			<p class="text-base md:text-lg text-parchment-ink dark:text-[#F4F1EA] leading-relaxed italic font-light">
 				"I started building printers because I wanted affordable, sovereign manufacturing in Pakistan. I wanted engineers, students, and independent makers to own real machines — not just admire them in imported catalogs. Jiddat means innovation — a deliberate departure from the old consumer way of doing things."
 			</p>
-			<span class="block mt-4 text-xs font-mono text-[#FF8038] uppercase tracking-wider">— Basil Saeed Bari, Founder of Jiddat3D</span>
+			<span class="block mt-4 text-xs font-mono text-filament uppercase tracking-wider">— Basil Saeed Bari, Founder of Jiddat3D</span>
 		</div>
 
 		<!-- 3 Core Values -->
 		<div>
-			<h2 class="font-display text-2xl font-bold text-white mb-6">Our Core Rules</h2>
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-[#9DA3AF]">
-				<div class="workshop-card p-6">
+			<h2 class="font-display text-2xl font-bold text-parchment-ink dark:text-white mb-6">
+				Our Core <span class="squiggle-underline">Rules</span>
+			</h2>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-[#635D54] dark:text-[#9DA3AF]">
+				<div class="nouveau-card p-6">
 					<span class="text-3xl mb-3 block">⚖️</span>
-					<h3 class="font-display font-bold text-white text-base mb-1">Tell the Truth</h3>
+					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-base mb-1">Tell the Truth</h3>
 					<p class="leading-relaxed">If a cheaper printer fits your project better than a high-end model, we will tell you straight. We never over-sell machine specs.</p>
 				</div>
-				<div class="workshop-card p-6">
+				<div class="nouveau-card p-6">
 					<span class="text-3xl mb-3 block">🛠️</span>
-					<h3 class="font-display font-bold text-white text-base mb-1">Be There After the Sale</h3>
+					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-base mb-1">Be There After the Sale</h3>
 					<p class="leading-relaxed">A printer without spare parts is just a paperweight. We keep nozzles, build plates, belts, and thermistors in stock in Pakistan.</p>
 				</div>
-				<div class="workshop-card p-6">
+				<div class="nouveau-card p-6">
 					<span class="text-3xl mb-3 block">🎓</span>
-					<h3 class="font-display font-bold text-white text-base mb-1">Teach, Don't Just Sell</h3>
+					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-base mb-1">Teach, Don't Just Sell</h3>
 					<p class="leading-relaxed">We run hands-on workshops and train teachers because Pakistan needs creators and builders, not passive consumers.</p>
 				</div>
 			</div>
 		</div>
 
 		<!-- Location & Lab Visit -->
-		<div class="p-8 rounded-2xl bg-[#14181F] border border-[#28303F] flex flex-col md:flex-row items-center justify-between gap-6">
+		<div class="nouveau-card p-8 bg-parchment-surface dark:bg-[#14181F] flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
 			<div>
-				<h3 class="font-display font-bold text-white text-xl">Visit Our Karachi Workshop</h3>
-				<p class="text-xs md:text-sm text-[#9DA3AF] mt-1 leading-relaxed">
+				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-xl">Visit Our Karachi Workshop</h3>
+				<p class="text-xs md:text-sm text-[#635D54] dark:text-[#9DA3AF] mt-1 leading-relaxed">
 					Located in DHA Phase 1, Karachi. See machines in live operation, test our filament, or discuss your school lab project in person (appointment recommended).
 				</p>
 			</div>
-			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20would%20like%20to%20schedule%20a%20visit%20to%20your%20Karachi%20lab." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-3.5 px-6 whitespace-nowrap">
+			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20would%20like%20to%20schedule%20a%20visit%20to%20your%20Karachi%20lab." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-3.5 px-6 whitespace-nowrap shadow-lg">
 				Schedule Lab Visit on WhatsApp
 			</a>
 		</div>

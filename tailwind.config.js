@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     "./ui/templates/**/*.html",
     "./ui/static/js/**/*.js"
@@ -9,12 +10,23 @@ module.exports = {
       colors: {
         // Modern Workshop Dark Palette
         workshop: {
-          bg: '#0C0E11',
-          surface: '#14181F',
-          card: '#1A1F29',
-          hover: '#222936',
-          border: '#28303F',
-          subtle: '#181D26',
+          bg: '#0C0E12',
+          surface: '#141820',
+          card: '#1B202A',
+          hover: '#242B38',
+          border: '#2C3545',
+          subtle: '#181E27',
+        },
+        // Artisan Light Palette (Warm Drafting Parchment)
+        parchment: {
+          bg: '#FAF7F2',
+          surface: '#FFFFFF',
+          card: '#FFFFFF',
+          hover: '#F2EDE4',
+          border: '#E2D7C7',
+          subtle: '#F5EFEB',
+          ink: '#1D1A16',
+          muted: '#635D54',
         },
         // Filament Orange (Primary Brand Accent)
         filament: {
@@ -28,7 +40,7 @@ module.exports = {
           light: '#FF8038',
           dark: '#E0550B',
         },
-        // Precision Cool Teal
+        // Precision Cool Teal / Art Nouveau Jade
         teal: {
           DEFAULT: '#17C3B2',
           light: '#2FE0CE',
@@ -40,39 +52,49 @@ module.exports = {
           dark: '#128C7E',
           hover: '#20BA5A',
         },
-        // UI Accents
+        // UI Accents & Memphis Contrasts
         accent: {
-          gold: '#FFB400',
+          gold: '#E5A93C',
           teal: '#17C3B2',
-          terracotta: '#FF6A1A',
+          terracotta: '#D9530F',
           magenta: '#E83E8C',
           green: '#3DDC84',
           blue: '#2B59FF',
         },
         // Canvas & Surface
         bg: {
-          DEFAULT: '#0C0E11',
-          subtle: '#14181F',
-          card: '#1A1F29',
+          DEFAULT: '#0C0E12',
+          subtle: '#141820',
+          card: '#1B202A',
         },
-        // Typography Colors (High contrast on dark workshop)
+        // Typography Colors
         ink: {
-          DEFAULT: '#F4F1EA',
-          muted: '#9DA3AF',
-          dim: '#656D7D',
-          dark: '#0C0E11',
+          DEFAULT: '#F5F3EF',
+          muted: '#9EA8B6',
+          dim: '#6B7687',
+          dark: '#1D1A16',
         },
         border: {
-          DEFAULT: '#28303F',
-          subtle: '#1E2430',
-          bright: '#3E495D',
+          DEFAULT: '#2C3545',
+          subtle: '#1E2532',
+          bright: '#414D63',
+          light: '#E2D7C7',
         },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Space Grotesk', 'system-ui', 'sans-serif'],
         serif: ['Space Grotesk', 'system-ui', 'sans-serif'],
+        calligraphic: ['"Cinzel Decorative"', '"Cormorant Garamond"', '"Playfair Display"', 'Georgia', 'serif'],
+        numeral: ['"Cormorant Garamond"', '"Cinzel Decorative"', '"Playfair Display"', 'Georgia', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
+      },
+      borderRadius: {
+        'nouveau': '28px 4px 28px 4px',
+        'nouveau-sm': '14px 2px 14px 2px',
+        'nouveau-lg': '42px 6px 42px 6px',
+        'nouveau-arch': '36px 36px 4px 4px',
+        'none': '0px',
       },
       dropShadow: {
         'glow': '0 0 20px rgba(255, 106, 26, 0.45)',
@@ -82,6 +104,8 @@ module.exports = {
       boxShadow: {
         'card': '0 4px 20px rgba(0, 0, 0, 0.4)',
         'card-hover': '0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 106, 26, 0.15)',
+        'card-light': '0 4px 20px rgba(180, 150, 120, 0.15)',
+        'card-light-hover': '0 8px 30px rgba(180, 150, 120, 0.25), 0 0 12px rgba(217, 83, 15, 0.2)',
         'glow-filament': '0 0 25px rgba(255, 106, 26, 0.3)',
       },
       fontSize: {

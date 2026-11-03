@@ -1,42 +1,49 @@
 {{ define "content" }}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 bg-[#0C0E11] text-[#F4F1EA] min-h-screen">
-	<!-- Breadcrumbs -->
-	<nav class="flex items-center gap-2 text-xs text-[#9DA3AF] mb-8 font-mono">
-		<a href="/" class="hover:text-white">Home</a>
-		<span>/</span>
-		<span class="text-white">Blog & Dispatches</span>
-	</nav>
+<div class="py-16 bg-parchment-bg dark:bg-[#0C0E11] text-parchment-ink dark:text-[#F4F1EA] min-h-screen transition-colors">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<!-- Breadcrumbs -->
+		<nav class="flex items-center gap-2 text-xs text-[#635D54] dark:text-[#9DA3AF] mb-8 font-mono">
+			<a href="/" class="hover:text-filament">Home</a>
+			<span>/</span>
+			<span class="text-parchment-ink dark:text-white font-semibold">Blog & Dispatches</span>
+		</nav>
 
-	<div class="border-b border-[#28303F] pb-10 mb-12">
-		<h1 class="font-display text-h1 font-bold text-white tracking-tight">The Jiddat3D Journal</h1>
-		<p class="text-base text-[#9DA3AF] max-w-2xl mt-2 leading-relaxed">Field dispatches, printer tear-downs, local supply chain notes, and stories from Pakistani makers.</p>
-	</div>
+		<div class="border-b border-[#E2D7C7] dark:border-[#28303F] pb-10 mb-12">
+			<div class="inline-flex items-center gap-2 px-3 py-1 bg-filament/10 border border-filament/30 rounded-[14px_2px_14px_2px] text-filament font-mono text-xs uppercase tracking-wider mb-2">
+				<span>From the Karachi Lab</span>
+			</div>
+			<h1 class="font-display text-4xl sm:text-5xl font-bold text-parchment-ink dark:text-white tracking-tight">
+				The Jiddat3D <span class="squiggle-underline">Journal</span>
+			</h1>
+			<p class="text-base md:text-lg text-[#635D54] dark:text-[#9DA3AF] max-w-2xl mt-2 leading-relaxed">Field dispatches, printer tear-downs, local supply chain notes, and stories from Pakistani makers.</p>
+		</div>
 
-	{{ if .List }}
-	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-		{{ range .List }}
-		<article class="workshop-card p-6 flex flex-col justify-between group">
-			<div>
-				<span class="text-xs font-mono text-[#FF6A1A] uppercase">Dispatch</span>
-				<h3 class="font-display text-xl font-bold text-white mt-1 mb-2 group-hover:text-[#FF6A1A] transition-colors">
-					<a href="/blog/{{ .slug }}">{{ .title }}</a>
-				</h3>
-				<p class="text-xs text-[#9DA3AF] leading-relaxed line-clamp-3">{{ .excerpt }}</p>
-			</div>
-			<div class="mt-6 pt-4 border-t border-[#28303F] flex justify-between items-center text-xs font-mono">
-				<a href="/blog/{{ .slug }}" class="text-[#FF8038] hover:underline flex items-center gap-1">
-					Read Article &rarr;
-				</a>
-			</div>
-		</article>
+		{{ if .List }}
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			{{ range .List }}
+			<article class="nouveau-card p-6 flex flex-col justify-between group hover:shadow-xl transition-all">
+				<div>
+					<span class="text-xs font-mono text-filament uppercase font-semibold">Dispatch</span>
+					<h3 class="font-display text-xl font-bold text-parchment-ink dark:text-white mt-1 mb-2 group-hover:text-filament transition-colors">
+						<a href="/blog/{{ .slug }}">{{ .title }}</a>
+					</h3>
+					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] leading-relaxed line-clamp-3">{{ .excerpt }}</p>
+				</div>
+				<div class="mt-6 pt-4 border-t border-[#E2D7C7] dark:border-[#28303F] flex justify-between items-center text-xs font-mono">
+					<a href="/blog/{{ .slug }}" class="text-filament hover:underline flex items-center gap-1 font-semibold">
+						Read Article &rarr;
+					</a>
+				</div>
+			</article>
+			{{ end }}
+		</div>
+		{{ else }}
+		<div class="nouveau-card p-12 text-center max-w-md mx-auto shadow-xl">
+			<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg mb-2">Dispatches Loading</h3>
+			<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mb-4">Our engineers are on the workshop floor testing new prints. Explore our learning guides in the meantime.</p>
+			<a href="/learn" class="btn-filament text-xs py-2.5 px-5">View Maker Guides &rarr;</a>
+		</div>
 		{{ end }}
 	</div>
-	{{ else }}
-	<div class="workshop-card p-12 text-center max-w-md mx-auto">
-		<h3 class="font-display font-bold text-white text-lg mb-2">Dispatches Loading</h3>
-		<p class="text-xs text-[#9DA3AF] mb-4">Our engineers are on the workshop floor testing new prints. Explore our learning guides in the meantime.</p>
-		<a href="/learn" class="btn-filament text-xs py-2 px-4">View Maker Guides &rarr;</a>
-	</div>
-	{{ end }}
 </div>
 {{ end }}

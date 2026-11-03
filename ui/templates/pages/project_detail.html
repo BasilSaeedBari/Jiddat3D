@@ -1,51 +1,43 @@
 {{ define "content" }}
-<article class="py-16 bg-bg">
+<article class="py-16 bg-parchment-bg dark:bg-[#0C0E11] text-parchment-ink dark:text-[#F4F1EA] min-h-screen transition-colors">
 	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-		<a href="/projects" class="inline-flex items-center gap-2 text-primary hover:text-primary-light font-medium text-sm mb-12 transition-colors">
+		<a href="/projects" class="inline-flex items-center gap-2 text-filament hover:text-[#FF8038] font-mono text-xs mb-10 transition-colors">
 			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-			Back to Gallery
+			Back to Projects
 		</a>
 
 		<div class="text-center mb-12">
-			<h1 class="font-serif text-h1 font-semibold text-ink leading-tight mb-4">{{ .Record.title }}</h1>
-			<p class="text-xl text-ink-muted mb-4">{{ .Record.excerpt }}</p>
-			<p class="text-sm text-ink-muted font-medium">Built by: {{ if .Record.author_name }}{{ .Record.author_name }}{{ else }}Community Maker{{ end }}</p>
+			<h1 class="font-display text-4xl sm:text-5xl font-bold text-parchment-ink dark:text-white leading-tight mb-4">{{ .Record.title }}</h1>
+			<p class="text-xl text-[#635D54] dark:text-[#9DA3AF] mb-4 max-w-2xl mx-auto">{{ .Record.excerpt }}</p>
+			<p class="text-xs font-mono text-[#635D54] dark:text-[#9DA3AF]">Built by: <strong class="text-parchment-ink dark:text-white">{{ if .Record.author_name }}{{ .Record.author_name }}{{ else }}Community Maker{{ end }}</strong> &bull; Karachi Lab Verified</p>
 		</div>
 
 		{{ if .Record.hero_image }}
-		<div class="mb-12 rounded-xl overflow-hidden border border-border bg-bg-subtle aspect-video flex items-center justify-center">
+		<div class="mb-12 rounded-[18px_3px_18px_3px] overflow-hidden border border-[#E2D7C7] dark:border-[#28303F] bg-parchment-surface dark:bg-[#14181F] aspect-video flex items-center justify-center shadow-lg">
 			<img src="/api/files/content/{{ .Record.id }}/{{ .Record.hero_image }}" alt="{{ .Record.title }}" class="object-cover w-full h-full">
 		</div>
 		{{ end }}
 
-		<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-			<div class="md:col-span-2 prose prose-lg prose-ink max-w-none">
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+			<div class="md:col-span-2 prose dark:prose-invert prose-orange max-w-none text-[#2D2A26] dark:text-[#D1D5DB]">
 				{{ .Body }}
 			</div>
 			
-			<div class="space-y-8">
-				<div class="p-6 bg-bg-subtle border border-border rounded-lg">
-					<h3 class="font-serif font-semibold text-lg text-ink mb-4">Lessons Learned</h3>
-					<div class="prose prose-sm prose-ink">
-						<!-- This can be pulled from a specific section of the markdown or a field. Let's just put a static placeholder to match the spec -->
-						<p>Iterative design is key. Always print a small calibration test before committing to a 24-hour part.</p>
+			<div class="space-y-6">
+				<div class="nouveau-card p-6 bg-parchment-surface dark:bg-[#14181F]">
+					<h3 class="font-display font-bold text-lg text-parchment-ink dark:text-white mb-3">Lessons Learned</h3>
+					<div class="text-xs text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
+						<p>Iterative design is key in Pakistani makerspaces. Always print a small calibration test before committing to a 24-hour part in high summer humidity.</p>
 					</div>
 				</div>
 
-				{{ if .Record.attachment_files }}
-				<div class="p-6 border border-border rounded-lg">
-					<h3 class="font-serif font-semibold text-lg text-ink mb-4">Files</h3>
-					<ul class="space-y-3">
-						<!-- Usually there would be a loop here. Since PocketBase array handling in raw Go text/templates can be tricky, we render a placeholder -->
-						<li>
-							<a href="#" class="flex items-center gap-2 text-primary hover:text-primary-light font-medium text-sm">
-								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-								Download Files
-							</a>
-						</li>
-					</ul>
+				<div class="nouveau-card p-6 bg-parchment-surface dark:bg-[#14181F] text-center space-y-3">
+					<h3 class="font-display font-bold text-base text-parchment-ink dark:text-white">Need a Similar Part?</h3>
+					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF]">Upload your design or message our team on WhatsApp for same-day dispatch.</p>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20am%20interested%20in%20a%20project%20like:%20{{ .Record.title }}" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-2.5 px-4 w-full justify-center">
+						💬 Ask on WhatsApp
+					</a>
 				</div>
-				{{ end }}
 			</div>
 		</div>
 	</div>

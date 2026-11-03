@@ -5,101 +5,232 @@
 @layer base {
 	html {
 		scroll-behavior: smooth;
-		background-color: #0C0E11;
-		color: #F4F1EA;
-	}
-	body {
-		font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-		background-color: #0C0E11;
-		color: #F4F1EA;
-		overflow-x: hidden;
 	}
 	
-	/* Custom Sleek Scrollbar */
+	/* Light Mode (Artisan Parchment) */
+	html:not(.dark) {
+		background-color: #FAF7F2;
+		color: #1D1A16;
+	}
+	html:not(.dark) body {
+		background-color: #FAF7F2;
+		color: #1D1A16;
+	}
+	
+	/* Dark Mode (Modern Workshop Midnight) */
+	html.dark {
+		background-color: #0C0E12;
+		color: #F5F3EF;
+	}
+	html.dark body {
+		background-color: #0C0E12;
+		color: #F5F3EF;
+	}
+
+	body {
+		font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+		overflow-x: hidden;
+		transition: background-color 0.3s ease, color 0.3s ease;
+	}
+	
+	/* Custom Art Nouveau / Workshop Scrollbars */
 	::-webkit-scrollbar {
-		width: 8px;
-		height: 8px;
+		width: 9px;
+		height: 9px;
 	}
-	::-webkit-scrollbar-track {
-		background: #0C0E11;
+	html:not(.dark) ::-webkit-scrollbar-track {
+		background: #F0EAE1;
 	}
-	::-webkit-scrollbar-thumb {
-		background: #28303F;
-		border-radius: 4px;
+	html:not(.dark) ::-webkit-scrollbar-thumb {
+		background: #D4C5B0;
+		border-radius: 2px;
 	}
-	::-webkit-scrollbar-thumb:hover {
+	html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+		background: #D9530F;
+	}
+
+	html.dark ::-webkit-scrollbar-track {
+		background: #0C0E12;
+	}
+	html.dark ::-webkit-scrollbar-thumb {
+		background: #2C3545;
+		border-radius: 2px;
+	}
+	html.dark ::-webkit-scrollbar-thumb:hover {
 		background: #FF6A1A;
 	}
 }
 
 @layer components {
-	.workshop-card {
-		background-color: #1A1F29;
-		border: 1px solid #28303F;
-		border-radius: 1rem;
+	/* Art Nouveau Whiplash Curve Cards - Replaces boring bubbly pills */
+	.workshop-card,
+	.nouveau-card {
+		border-radius: 28px 4px 28px 4px;
 		transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-	}
-	.workshop-card:hover {
-		border-color: rgba(255, 106, 26, 0.4);
-		transform: translateY(-2px);
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 106, 26, 0.12);
+		position: relative;
 	}
 	
+	html:not(.dark) .workshop-card,
+	html:not(.dark) .nouveau-card {
+		background-color: #FFFFFF;
+		border: 1.5px solid #E2D7C7;
+		box-shadow: 0 4px 20px rgba(180, 150, 120, 0.12);
+	}
+	html.dark .workshop-card,
+	html.dark .nouveau-card {
+		background-color: #1B202A;
+		border: 1.5px solid #2C3545;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+	}
+	
+	html:not(.dark) .workshop-card:hover,
+	html:not(.dark) .nouveau-card:hover {
+		border-color: #D9530F;
+		transform: translateY(-3px);
+		box-shadow: 0 12px 32px rgba(180, 150, 120, 0.22), 0 0 15px rgba(217, 83, 15, 0.18);
+	}
+	html.dark .workshop-card:hover,
+	html.dark .nouveau-card:hover {
+		border-color: rgba(255, 106, 26, 0.55);
+		transform: translateY(-3px);
+		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 106, 26, 0.22);
+	}
+
+	/* Stepped Art Nouveau Arch */
+	.nouveau-arch {
+		border-radius: 36px 36px 4px 4px;
+	}
+
+	/* Memphis Geometric Chamfered Card */
+	.memphis-card {
+		clip-path: polygon(0 14px, 14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px));
+		transition: all 0.3s ease;
+	}
+
+	/* Art Nouveau Buttons - Sharp dynamic curves */
 	.btn-filament {
 		background-color: #FF6A1A;
 		color: #FFFFFF;
 		font-weight: 600;
-		padding: 0.75rem 1.5rem;
-		border-radius: 0.5rem;
+		padding: 0.75rem 1.6rem;
+		border-radius: 16px 2px 16px 2px;
+		border: 1.5px solid #E0550B;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
-		transition: all 0.25s ease;
+		transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 		box-shadow: 0 4px 14px rgba(255, 106, 26, 0.35);
 	}
 	.btn-filament:hover {
 		background-color: #FF8038;
-		transform: translateY(-1px);
-		box-shadow: 0 6px 20px rgba(255, 106, 26, 0.5);
+		transform: translateY(-2px);
+		border-radius: 4px 16px 4px 16px;
+		box-shadow: 0 8px 24px rgba(255, 106, 26, 0.55);
 	}
 	
 	.btn-whatsapp {
 		background-color: #25D366;
 		color: #FFFFFF;
 		font-weight: 600;
-		padding: 0.75rem 1.5rem;
-		border-radius: 0.5rem;
+		padding: 0.75rem 1.6rem;
+		border-radius: 16px 2px 16px 2px;
+		border: 1.5px solid #128C7E;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
-		transition: all 0.25s ease;
+		transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 		box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
 	}
 	.btn-whatsapp:hover {
 		background-color: #20BA5A;
-		transform: translateY(-1px);
-		box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+		transform: translateY(-2px);
+		border-radius: 4px 16px 4px 16px;
+		box-shadow: 0 8px 24px rgba(37, 211, 102, 0.55);
 	}
 
 	.btn-secondary {
-		background-color: #14181F;
-		color: #F4F1EA;
-		border: 1px solid #28303F;
-		font-weight: 500;
-		padding: 0.75rem 1.5rem;
-		border-radius: 0.5rem;
+		font-weight: 600;
+		padding: 0.75rem 1.6rem;
+		border-radius: 16px 2px 16px 2px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
-		transition: all 0.25s ease;
+		transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 	}
-	.btn-secondary:hover {
-		background-color: #1A1F29;
+	html:not(.dark) .btn-secondary {
+		background-color: #F5EFEB;
+		color: #1D1A16;
+		border: 1.5px solid #E2D7C7;
+	}
+	html:not(.dark) .btn-secondary:hover {
+		background-color: #EAE1D4;
+		border-color: #D9530F;
+		color: #D9530F;
+		transform: translateY(-2px);
+		border-radius: 4px 16px 4px 16px;
+	}
+	html.dark .btn-secondary {
+		background-color: #181E27;
+		color: #F5F3EF;
+		border: 1.5px solid #2C3545;
+	}
+	html.dark .btn-secondary:hover {
+		background-color: #242B38;
 		border-color: #FF6A1A;
 		color: #FF6A1A;
+		transform: translateY(-2px);
+		border-radius: 4px 16px 4px 16px;
+	}
+
+	/* Art Nouveau / Memphis Badges */
+	.nouveau-badge {
+		border-radius: 12px 2px 12px 2px;
+		padding: 0.25rem 0.75rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+
+	/* Memphis Squiggle Underline for Section Titles */
+	.squiggle-underline {
+		background-repeat: repeat-x;
+		background-position: bottom;
+		background-size: 18px 6px;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 6'%3E%3Cpath d='M0 3 Q 5 0, 10 3 T 20 3' fill='none' stroke='%23FF6A1A' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+		padding-bottom: 6px;
+	}
+	.squiggle-underline-teal {
+		background-repeat: repeat-x;
+		background-position: bottom;
+		background-size: 18px 6px;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 6'%3E%3Cpath d='M0 3 Q 5 0, 10 3 T 20 3' fill='none' stroke='%2317C3B2' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+		padding-bottom: 6px;
+	}
+
+	/* Calligraphic Numerals & Figures */
+	.font-calligraphic {
+		font-family: 'Cinzel Decorative', 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+		letter-spacing: 0.02em;
+	}
+
+	.font-numeral {
+		font-family: 'Cormorant Garamond', 'Cinzel Decorative', 'Playfair Display', Georgia, serif;
+		font-variant-numeric: tabular-nums;
+		letter-spacing: 0.03em;
+	}
+
+	.font-numeral-italic {
+		font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+		font-style: italic;
+		font-weight: 700;
+		letter-spacing: 0.03em;
 	}
 }
 
@@ -114,16 +245,28 @@
 		transform: translateY(0);
 	}
 
-	.bg-grid-pattern {
+	/* Light & Dark Patterns */
+	html:not(.dark) .bg-grid-pattern {
+		background-size: 32px 32px;
+		background-image: 
+			linear-gradient(to right, rgba(200, 180, 150, 0.18) 1px, transparent 1px),
+			linear-gradient(to bottom, rgba(200, 180, 150, 0.18) 1px, transparent 1px);
+	}
+	html.dark .bg-grid-pattern {
 		background-size: 32px 32px;
 		background-image: 
 			linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
 			linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 	}
 
-	.bg-dots-pattern {
+	html:not(.dark) .bg-dots-pattern {
 		background-size: 24px 24px;
-		background-image: radial-gradient(rgba(255, 106, 26, 0.12) 1px, transparent 1px);
+		background-image: radial-gradient(#D9530F 1.2px, transparent 1.2px);
+		opacity: 0.25;
+	}
+	html.dark .bg-dots-pattern {
+		background-size: 24px 24px;
+		background-image: radial-gradient(rgba(255, 106, 26, 0.15) 1px, transparent 1px);
 	}
 
 	.pulse-glow {

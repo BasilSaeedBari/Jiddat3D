@@ -1,6 +1,6 @@
 {{ define "base" }}
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth bg-[#0C0E11] text-[#F4F1EA]">
+<html lang="en" class="scroll-smooth dark">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,13 +14,41 @@
 	<meta property="og:type" content="website">
 	<meta name="theme-color" content="#FF6A1A">
 
-	<!-- Fonts (Space Grotesk + Inter + JetBrains Mono) -->
+	<!-- Pre-render Theme Initialization (prevents FOUC) -->
+	<script>
+		(function() {
+			try {
+				const saved = localStorage.getItem('jiddat_theme');
+				if (saved === 'light') {
+					document.documentElement.classList.remove('dark');
+				} else if (saved === 'dark') {
+					document.documentElement.classList.add('dark');
+				} else {
+					document.documentElement.classList.add('dark');
+				}
+			} catch (e) {}
+		})();
+
+		function toggleTheme() {
+			const isDark = document.documentElement.classList.contains('dark');
+			if (isDark) {
+				document.documentElement.classList.remove('dark');
+				try { localStorage.setItem('jiddat_theme', 'light'); } catch (e) {}
+			} else {
+				document.documentElement.classList.add('dark');
+				try { localStorage.setItem('jiddat_theme', 'dark'); } catch (e) {}
+			}
+			window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: isDark ? 'light' : 'dark' } }));
+		}
+	</script>
+
+	<!-- Fonts: Space Grotesk + Inter + JetBrains Mono + Calligraphic Cormorant Garamond & Cinzel Decorative -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 	
 	<!-- Styles -->
-	<link rel="stylesheet" href="/static/css/output.css?v=4">
+	<link rel="stylesheet" href="/static/css/output.css?v=5">
 	
 	<!-- Inline Preloader Style & Logic -->
 	<style>
@@ -28,12 +56,19 @@
 			position: fixed;
 			inset: 0;
 			z-index: 9999;
-			background: #0C0E11;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
 			transition: opacity 0.35s ease, visibility 0.35s ease;
+		}
+		html:not(.dark) #preloader {
+			background-color: #FAF7F2;
+			color: #1D1A16;
+		}
+		html.dark #preloader {
+			background-color: #0C0E12;
+			color: #F5F3EF;
 		}
 		.preloader-glow {
 			filter: drop-shadow(0 0 20px rgba(255, 106, 26, 0.6));
@@ -55,7 +90,7 @@
 		document.addEventListener("DOMContentLoaded", () => {
 			const finishLoad = () => document.body.classList.add('loaded');
 			window.addEventListener("load", finishLoad);
-			setTimeout(finishLoad, 400); // Super snappy fallback
+			setTimeout(finishLoad, 400); // Snappy fallback
 		});
 	</script>
 	
@@ -65,11 +100,11 @@
 	<script src="/static/js/scroll-reveal.js" defer></script>
 	<script src="/static/js/sw-register.js" defer></script>
 </head>
-<body class="font-sans text-ink bg-workshop-bg antialiased flex flex-col min-h-screen selection:bg-filament selection:text-white pb-16 md:pb-0">
+<body class="font-sans text-parchment-ink dark:text-ink bg-parchment-bg dark:bg-workshop-bg antialiased flex flex-col min-h-screen selection:bg-filament selection:text-white pb-16 md:pb-0 transition-colors duration-200">
 	<!-- Preloader -->
 	<div id="preloader">
 		<img src="/static/img/logo/JiddatBrightTrasnparent-removebg-preview.png" alt="Jiddat3D Loading..." class="preloader-glow mb-4">
-		<p class="text-xs font-mono tracking-widest text-[#9DA3AF] uppercase animate-pulse">Warming up the nozzle...</p>
+		<p class="text-xs font-mono tracking-widest text-[#635D54] dark:text-[#9DA3AF] uppercase animate-pulse">Calibrating nozzle temperature...</p>
 	</div>
 
 	<!-- Global Header & Navigation -->
@@ -83,35 +118,35 @@
 	<!-- Global Footer -->
 	{{ template "footer" . }}
 
-	<!-- Floating Sticky WhatsApp Widget -->
+	<!-- Floating Sticky WhatsApp Widget with Art Nouveau Curves (No bubbly pill) -->
 	<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2 group" x-data="{ expanded: false }">
 		<!-- Tooltip / Callout bubble on desktop hover -->
-		<div x-show="expanded" x-transition.opacity.scale.origin.bottom.right @click.outside="expanded = false" class="bg-[#1A1F29] border border-[#28303F] text-xs p-3.5 rounded-xl shadow-2xl max-w-xs text-left mb-1 backdrop-blur-md">
+		<div x-show="expanded" x-transition.opacity.scale.origin.bottom.right @click.outside="expanded = false" class="bg-white dark:bg-[#1B202A] border-2 border-[#E2D7C7] dark:border-[#2C3545] text-xs p-4 rounded-nouveau shadow-2xl max-w-xs text-left mb-1 backdrop-blur-md">
 			<div class="flex items-center gap-2 mb-1.5">
 				<span class="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-ping"></span>
-				<span class="font-semibold text-white">WhatsApp Business</span>
+				<span class="font-semibold text-parchment-ink dark:text-white">WhatsApp Business Hotline</span>
 			</div>
-			<p class="text-[#9DA3AF] mb-2 leading-relaxed">Assalam o Alaikum! Have questions about 3D printer prices, school labs, or print orders? Chat with our engineers directly.</p>
+			<p class="text-[#635D54] dark:text-[#9DA3AF] mb-2 leading-relaxed">Assalam o Alaikum! Have questions regarding 3D printer prices, school STEAM packages, or print orders? Chat with our Karachi lab team directly.</p>
 			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum%20Jiddat3D.%20I%20have%20an%20inquiry%20about%20your%203D%20printers%20and%20services." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#25D366] hover:underline">
-				Chat 0300-1318112 &rarr;
+				Chat <span class="font-numeral">0300-1318112</span> &rarr;
 			</a>
 		</div>
 
-		<!-- The Floating WhatsApp Button -->
-		<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum%20Jiddat3D.%20I%20have%20an%20inquiry%20about%20your%203D%20printers%20and%20services." target="_blank" rel="noopener noreferrer" class="relative flex items-center justify-center w-14 h-14 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 group focus:outline-none" title="Chat on WhatsApp (0300-1318112)" aria-label="WhatsApp Business Contact">
-			<!-- Pulsing Ring -->
-			<span class="absolute inset-0 rounded-full bg-[#25D366] opacity-30 animate-ping pointer-events-none"></span>
+		<!-- Floating WhatsApp Action Button with Art Nouveau Curvature -->
+		<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum%20Jiddat3D.%20I%20have%20an%20inquiry%20about%20your%203D%20printers%20and%20services." target="_blank" rel="noopener noreferrer" class="relative flex items-center justify-center w-14 h-14 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-nouveau shadow-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 group focus:outline-none border-2 border-emerald-400/40" title="Chat on WhatsApp (0300-1318112)" aria-label="WhatsApp Business Contact">
+			<!-- Pulsing Ambient Ring -->
+			<span class="absolute inset-0 rounded-nouveau bg-[#25D366] opacity-30 animate-ping pointer-events-none"></span>
 			<!-- WhatsApp Icon SVG -->
 			<svg class="w-7 h-7 fill-current relative z-10" viewBox="0 0 24 24">
 				<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
 			</svg>
 			<!-- Online Indicator Dot -->
-			<span class="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-[#0C0E11]"></span>
+			<span class="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-white dark:border-[#0C0E12]"></span>
 		</a>
 	</div>
 
-	<!-- Mobile Thumb-Friendly Bottom Navigation Bar -->
-	<nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#14181F]/95 backdrop-blur-lg border-t border-[#28303F] px-2 py-2 flex items-center justify-around text-[11px] text-[#9DA3AF]">
+	<!-- Mobile Thumb-Friendly Bottom Navigation Bar (No bubbly shapes) -->
+	<nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#141820]/95 backdrop-blur-lg border-t border-[#E2D7C7] dark:border-[#28303F] px-2 py-2 flex items-center justify-around text-[11px] text-[#635D54] dark:text-[#9DA3AF]">
 		<a href="/" class="flex flex-col items-center gap-0.5 hover:text-[#FF6A1A] py-1 transition-colors">
 			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
 			<span>Home</span>
@@ -128,9 +163,15 @@
 			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
 			<span>Service</span>
 		</a>
+		<button onclick="toggleTheme()" class="flex flex-col items-center gap-0.5 hover:text-[#FF6A1A] py-1 transition-colors" aria-label="Toggle Theme">
+			<svg class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+			<svg class="w-5 h-5 block dark:hidden text-[#1D1A16]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+			<span class="dark:hidden">Dark</span>
+			<span class="hidden dark:inline">Light</span>
+		</button>
 		<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20inquire%20about%203D%20printers." target="_blank" rel="noopener noreferrer" class="flex flex-col items-center gap-0.5 text-[#25D366] font-semibold py-1">
 			<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-			<span>WhatsApp</span>
+			<span>Chat</span>
 		</a>
 	</nav>
 </body>

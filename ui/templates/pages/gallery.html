@@ -1,5 +1,5 @@
 {{ define "content" }}
-<div class="py-12 bg-[#0C0E11] text-[#F4F1EA] min-h-screen" x-data="{
+<div class="py-12 bg-parchment-bg dark:bg-[#0C0E12] text-parchment-ink dark:text-[#F4F1EA] min-h-screen transition-colors" x-data="{
 	activeFilter: 'all',
 	items: [
 		{ id: 1, category: 'fix', name: 'Pakistani Ceiling Fan Regulator Knob', desc: 'Exact replacement for brittle original knob. Features knurled grip and keyed D-shaft.', time: '35 mins', weight: '14g', plastic: 'PETG', cost: 'Rs 45', icon: '🎛️' },
@@ -19,19 +19,21 @@
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		
 		<!-- Breadcrumbs -->
-		<nav class="flex items-center gap-2 text-xs text-[#9DA3AF] mb-8 font-mono">
-			<a href="/" class="hover:text-white">Home</a>
+		<nav class="flex items-center gap-2 text-xs text-[#635D54] dark:text-[#9DA3AF] mb-8 font-mono">
+			<a href="/" class="hover:text-filament">Home</a>
 			<span>/</span>
-			<span class="text-white">Print Gallery</span>
+			<span class="text-parchment-ink dark:text-white font-semibold">Print Gallery</span>
 		</nav>
 
 		<!-- Header -->
-		<div class="border-b border-[#28303F] pb-12 mb-12">
+		<div class="border-b border-[#E2D7C7] dark:border-[#28303F] pb-12 mb-12">
 			<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
 				<div>
-					<span class="text-[#FF6A1A] font-mono text-xs uppercase tracking-wider">Authentic Lab Portfolio</span>
-					<h1 class="font-display text-h1 font-bold text-white tracking-tight mt-1">Things we've printed</h1>
-					<p class="text-[#9DA3AF] text-sm md:text-base mt-2 max-w-2xl leading-relaxed">
+					<span class="text-filament font-mono text-xs uppercase tracking-wider">Authentic Lab Portfolio</span>
+					<h1 class="font-display text-h1 font-bold text-parchment-ink dark:text-white tracking-tight mt-1">
+						<span class="squiggle-underline">Things we've printed</span>
+					</h1>
+					<p class="text-[#635D54] dark:text-[#9DA3AF] text-sm md:text-base mt-3 max-w-2xl leading-relaxed">
 						Real jobs completed in our Karachi workshop. Each print showcases the exact print duration, material used, weight in grams, and raw rupee cost.
 					</p>
 				</div>
@@ -44,22 +46,22 @@
 
 			<!-- Category Filter Chips -->
 			<div class="flex flex-wrap items-center gap-2 mt-8 text-xs font-mono">
-				<button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'bg-[#FF6A1A] text-white' : 'bg-[#14181F] text-[#9DA3AF] hover:text-white'" class="px-3 py-1.5 rounded-lg border border-[#28303F] transition-colors">
-					All Prints (9)
+				<button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'bg-filament text-white' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
+					All Prints (<span class="font-numeral font-bold">9</span>)
 				</button>
-				<button @click="activeFilter = 'fix'" :class="activeFilter === 'fix' ? 'bg-[#FF6A1A] text-white' : 'bg-[#14181F] text-[#9DA3AF] hover:text-white'" class="px-3 py-1.5 rounded-lg border border-[#28303F] transition-colors">
+				<button @click="activeFilter = 'fix'" :class="activeFilter === 'fix' ? 'bg-filament text-white' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
 					Fix & Replace
 				</button>
-				<button @click="activeFilter = 'fyp'" :class="activeFilter === 'fyp' ? 'bg-[#FF6A1A] text-white' : 'bg-[#14181F] text-[#9DA3AF] hover:text-white'" class="px-3 py-1.5 rounded-lg border border-[#28303F] transition-colors">
+				<button @click="activeFilter = 'fyp'" :class="activeFilter === 'fyp' ? 'bg-filament text-white' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
 					FYP & Engineering
 				</button>
-				<button @click="activeFilter = 'gifts'" :class="activeFilter === 'gifts' ? 'bg-[#FF6A1A] text-white' : 'bg-[#14181F] text-[#9DA3AF] hover:text-white'" class="px-3 py-1.5 rounded-lg border border-[#28303F] transition-colors">
+				<button @click="activeFilter = 'gifts'" :class="activeFilter === 'gifts' ? 'bg-filament text-white' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
 					Gifts & Urdu Art
 				</button>
-				<button @click="activeFilter = 'robotics'" :class="activeFilter === 'robotics' ? 'bg-[#FF6A1A] text-white' : 'bg-[#14181F] text-[#9DA3AF] hover:text-white'" class="px-3 py-1.5 rounded-lg border border-[#28303F] transition-colors">
+				<button @click="activeFilter = 'robotics'" :class="activeFilter === 'robotics' ? 'bg-filament text-white' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
 					Robotics & Drone
 				</button>
-				<button @click="activeFilter = 'enclosures'" :class="activeFilter === 'enclosures' ? 'bg-[#FF6A1A] text-white' : 'bg-[#14181F] text-[#9DA3AF] hover:text-white'" class="px-3 py-1.5 rounded-lg border border-[#28303F] transition-colors">
+				<button @click="activeFilter = 'enclosures'" :class="activeFilter === 'enclosures' ? 'bg-filament text-white' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
 					Enclosures & IoT
 				</button>
 			</div>
@@ -71,34 +73,34 @@
 				<div x-show="matches(item.category)" x-transition class="workshop-card p-6 flex flex-col justify-between group">
 					<div>
 						<!-- Part Mockup Card -->
-						<div class="h-44 bg-[#14181F] rounded-xl border border-[#28303F] flex flex-col items-center justify-center p-4 mb-4 relative overflow-hidden group-hover:border-[#FF6A1A]/40 transition-colors">
+						<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] flex flex-col items-center justify-center p-4 mb-4 relative overflow-hidden group-hover:border-filament/40 transition-colors">
 							<span class="text-5xl group-hover:scale-110 transition-transform duration-300" x-text="item.icon"></span>
-							<span class="absolute top-3 left-3 text-[10px] font-mono px-2 py-0.5 rounded bg-[#1A1F29] border border-[#28303F] text-[#9DA3AF]" x-text="item.plastic"></span>
+							<span class="absolute top-3 left-3 text-[10px] font-mono px-2 py-0.5 rounded-nouveau-sm bg-white dark:bg-[#1A1F29] border border-[#E2D7C7] dark:border-[#28303F] text-[#635D54] dark:text-[#9DA3AF]" x-text="item.plastic"></span>
 						</div>
 
-						<h3 class="font-display font-bold text-white text-lg group-hover:text-[#FF6A1A] transition-colors" x-text="item.name"></h3>
-						<p class="text-xs text-[#9DA3AF] mt-1.5 leading-relaxed" x-text="item.desc"></p>
+						<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg group-hover:text-filament transition-colors" x-text="item.name"></h3>
+						<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1.5 leading-relaxed" x-text="item.desc"></p>
 					</div>
 
-					<!-- Bottom Part Metrics (Signature Proof) -->
-					<div class="mt-6 pt-4 border-t border-[#28303F]">
-						<div class="grid grid-cols-3 gap-2 p-2.5 rounded-lg bg-[#14181F] border border-[#28303F] text-center font-mono text-[11px] mb-3">
+					<!-- Bottom Part Metrics (Signature Proof with Calligraphic Numbers) -->
+					<div class="mt-6 pt-4 border-t border-[#E2D7C7] dark:border-[#28303F]">
+						<div class="grid grid-cols-3 gap-2 p-2.5 rounded-nouveau-sm bg-parchment-subtle dark:bg-[#14181F] border border-[#E2D7C7] dark:border-[#28303F] text-center text-[11px] mb-3">
 							<div>
-								<span class="text-[#656D7D] block text-[9px]">TIME</span>
-								<span class="text-white font-medium" x-text="item.time"></span>
+								<span class="text-[#8A8175] dark:text-[#656D7D] block text-[9px] font-mono">TIME</span>
+								<span class="text-parchment-ink dark:text-white font-numeral font-bold" x-text="item.time"></span>
 							</div>
 							<div>
-								<span class="text-[#656D7D] block text-[9px]">WEIGHT</span>
-								<span class="text-white font-medium" x-text="item.weight"></span>
+								<span class="text-[#8A8175] dark:text-[#656D7D] block text-[9px] font-mono">WEIGHT</span>
+								<span class="text-parchment-ink dark:text-white font-numeral font-bold" x-text="item.weight"></span>
 							</div>
 							<div>
-								<span class="text-[#656D7D] block text-[9px]">RAW COST</span>
-								<span class="text-[#3DDC84] font-bold" x-text="item.cost"></span>
+								<span class="text-[#8A8175] dark:text-[#656D7D] block text-[9px] font-mono">RAW COST</span>
+								<span class="text-filament font-numeral-italic font-bold" x-text="item.cost"></span>
 							</div>
 						</div>
 
 						<a :href="'https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20saw%20the%20' + encodeURIComponent(item.name) + '%20in%20your%20gallery.%20Can%20I%20order%20one%20like%20this%3F'" target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2 justify-center">
-							Request Print Like This &rarr;
+							<span>Order Similar on WhatsApp</span>
 						</a>
 					</div>
 				</div>

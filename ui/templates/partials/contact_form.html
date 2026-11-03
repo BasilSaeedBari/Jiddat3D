@@ -2,31 +2,31 @@
 <div id="contact-form-container">
 	<form hx-post="/api/contact/submit" hx-target="#contact-form-container" hx-swap="outerHTML" class="space-y-4">
 		<div>
-			<label for="name" class="block text-xs font-mono text-[#9DA3AF] mb-1">Your Name</label>
-			<input type="text" name="name" id="name" placeholder="e.g. Tariq Khan" required class="w-full px-4 py-2.5 bg-[#1A1F29] border border-[#28303F] rounded-lg focus:outline-none focus:border-[#FF6A1A] transition-all text-sm text-white placeholder-[#656D7D]">
+			<label for="name" class="block text-xs font-mono text-[#635D54] dark:text-[#9DA3AF] mb-1">Your Name</label>
+			<input type="text" name="name" id="name" placeholder="e.g. Tariq Khan" required class="w-full px-4 py-2.5 bg-parchment-bg dark:bg-[#1A1F29] border border-[#E2D7C7] dark:border-[#28303F] rounded-[10px_2px_10px_2px] focus:outline-none focus:border-filament transition-all text-sm text-parchment-ink dark:text-white placeholder-[#8C827A] dark:placeholder-[#656D7D]">
 		</div>
 		
 		<div>
-			<label for="contact_method" class="block text-xs font-mono text-[#9DA3AF] mb-1">WhatsApp / Phone or Email</label>
-			<input type="text" name="contact_method" id="contact_method" placeholder="0300-XXXXXXX or email" required class="w-full px-4 py-2.5 bg-[#1A1F29] border border-[#28303F] rounded-lg focus:outline-none focus:border-[#FF6A1A] transition-all text-sm text-white placeholder-[#656D7D]">
+			<label for="contact_method" class="block text-xs font-mono text-[#635D54] dark:text-[#9DA3AF] mb-1">WhatsApp / Phone or Email</label>
+			<input type="text" name="contact_method" id="contact_method" placeholder="0300-XXXXXXX or email" required class="w-full px-4 py-2.5 bg-parchment-bg dark:bg-[#1A1F29] border border-[#E2D7C7] dark:border-[#28303F] rounded-[10px_2px_10px_2px] focus:outline-none focus:border-filament transition-all text-sm text-parchment-ink dark:text-white placeholder-[#8C827A] dark:placeholder-[#656D7D]">
 		</div>
 		
 		<div>
-			<label for="subject" class="block text-xs font-mono text-[#9DA3AF] mb-1">Inquiry Type</label>
-			<select name="subject" id="subject" class="w-full px-4 py-2.5 bg-[#1A1F29] border border-[#28303F] rounded-lg focus:outline-none focus:border-[#FF6A1A] transition-all text-sm text-white appearance-none cursor-pointer">
-				<option value="product-inquiry">Buy a 3D Printer (Price & Stock)</option>
-				<option value="partnership">School or University STEAM Lab Setup</option>
-				<option value="general">On-Demand Print Service or FYP</option>
-				<option value="support">Technical Support & Repair</option>
+			<label for="subject" class="block text-xs font-mono text-[#635D54] dark:text-[#9DA3AF] mb-1">Inquiry Type</label>
+			<select name="subject" id="subject" class="w-full px-4 py-2.5 bg-parchment-bg dark:bg-[#1A1F29] border border-[#E2D7C7] dark:border-[#28303F] rounded-[10px_2px_10px_2px] focus:outline-none focus:border-filament transition-all text-sm text-parchment-ink dark:text-white appearance-none cursor-pointer">
+				<option value="product-inquiry" class="bg-parchment-surface dark:bg-[#1A1F29]">Buy a 3D Printer (Price & Stock)</option>
+				<option value="partnership" class="bg-parchment-surface dark:bg-[#1A1F29]">School or University STEAM Lab Setup</option>
+				<option value="general" class="bg-parchment-surface dark:bg-[#1A1F29]">On-Demand Print Service or FYP</option>
+				<option value="support" class="bg-parchment-surface dark:bg-[#1A1F29]">Technical Support & Repair</option>
 			</select>
 		</div>
 		
 		<div>
-			<label for="message" class="block text-xs font-mono text-[#9DA3AF] mb-1">Message / Requirements</label>
-			<textarea name="message" id="message" rows="4" placeholder="Tell us about your project, school requirements, or printer question..." required class="w-full px-4 py-2.5 bg-[#1A1F29] border border-[#28303F] rounded-lg focus:outline-none focus:border-[#FF6A1A] transition-all text-sm text-white placeholder-[#656D7D] resize-y"></textarea>
+			<label for="message" class="block text-xs font-mono text-[#635D54] dark:text-[#9DA3AF] mb-1">Message / Requirements</label>
+			<textarea name="message" id="message" rows="4" placeholder="Tell us about your project, school requirements, or printer question..." required class="w-full px-4 py-2.5 bg-parchment-bg dark:bg-[#1A1F29] border border-[#E2D7C7] dark:border-[#28303F] rounded-[14px_3px_14px_3px] focus:outline-none focus:border-filament transition-all text-sm text-parchment-ink dark:text-white placeholder-[#8C827A] dark:placeholder-[#656D7D] resize-y"></textarea>
 		</div>
 		
-		<button type="submit" class="btn-filament w-full py-3 text-sm justify-center font-semibold">
+		<button type="submit" class="btn-filament w-full py-3.5 text-sm justify-center font-semibold shadow-lg">
 			Send Inquiry to Jiddat3D
 		</button>
 	</form>

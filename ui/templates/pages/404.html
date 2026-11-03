@@ -1,15 +1,17 @@
 {{ define "content" }}
-<div class="min-h-[70vh] flex items-center justify-center bg-[#0C0E11] text-center px-4 py-20">
+<div class="min-h-[70vh] flex items-center justify-center bg-parchment-bg dark:bg-[#0C0E11] text-center px-4 py-20 transition-colors">
 	<div class="max-w-md mx-auto relative z-10 text-center space-y-6">
-		<img src="/static/img/logo/JiddatBrightTrasnparent-removebg-preview.png" alt="Jiddat3D" class="h-14 object-contain mx-auto preloader-glow">
-		<h1 class="font-display text-7xl text-[#FF6A1A] font-bold">404</h1>
-		<h2 class="font-display text-xl font-bold text-white">Nozzle homed off the build plate</h2>
-		<p class="text-[#9DA3AF] text-sm leading-relaxed">
-			The page you are looking for has been moved or doesn't exist. Let's get you back to working machines and real prints.
+		<img src="/static/img/logo/JiddatBrightTrasnparent-removebg-preview.png" alt="Jiddat3D" class="h-16 object-contain mx-auto preloader-glow">
+		<h1 class="font-calligraphic text-8xl sm:text-9xl text-filament font-bold tracking-wider">404</h1>
+		<h2 class="font-display text-2xl font-bold text-parchment-ink dark:text-white">
+			Nozzle homed off the <span class="squiggle-underline">build plate</span>
+		</h2>
+		<p class="text-[#635D54] dark:text-[#9DA3AF] text-sm leading-relaxed">
+			The page you are looking for has been moved or doesn't exist. Let's get you back to working machines and real prints in Karachi.
 		</p>
 		<div class="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-			<a href="/" class="btn-filament text-sm py-3 px-6">Back to Home</a>
-			<a href="/printers" class="btn-secondary text-sm py-3 px-6">Explore 3D Printers</a>
+			<a href="/" class="btn-filament text-sm py-3 px-6 shadow-lg">Back to Home</a>
+			<a href="/printers" class="btn-secondary text-sm py-3 px-6 shadow-md">Explore 3D Printers</a>
 		</div>
 	</div>
 </div>
