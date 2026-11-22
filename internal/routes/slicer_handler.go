@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"bytes"
 	"fmt"
 	"html/template"
 	"io"
@@ -12,14 +11,16 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 	"jiddat3d/internal/compiler"
 	"jiddat3d/internal/slicer"
 )
 
 const (
-	maxModelUploadBytes = 40 << 20
-	maxMultipartBytes   = maxModelUploadBytes + (1 << 20)
+	maxModelUploadBytes = 100 << 20 // 100 MB (supports high-poly sculpted STLs up to ~2M triangles)
+	maxMultipartBytes   = maxModelUploadBytes + (2 << 20)
+	maxMultipartMemory  = 32 << 20 // spill uploads >32 MB to temp file instead of doubling RAM
 )
 
 // RegisterSlicerRoutes wires up the server-side instant slicer and HTMX endpoints
@@ -59,11 +60,11 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 	})
 
 	// 2. Preemptive / Speculative Upload Endpoint: POST /api/instant-slice
+	// Explicitly override PocketBase's 32 MB default BodyLimit middleware so large STLs up to 100 MB succeed.
 	e.Router.POST("/api/instant-slice", func(c *core.RequestEvent) error {
-		// Enforce hard 40MB upload cap at the HTTP body boundary
 		c.Request.Body = http.MaxBytesReader(c.Response, c.Request.Body, maxMultipartBytes)
-		if err := c.Request.ParseMultipartForm(maxModelUploadBytes); err != nil {
-			return c.HTML(http.StatusBadRequest, renderErrorCard("File too large. Maximum supported upload is 40MB."))
+		if err := c.Request.ParseMultipartForm(maxMultipartMemory); err != nil {
+			return c.HTML(http.StatusRequestEntityTooLarge, renderErrorCard("File too large. Maximum supported upload is 100MB."))
 		}
 		if c.Request.MultipartForm != nil {
 			defer c.Request.MultipartForm.RemoveAll()
@@ -81,18 +82,23 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 			return c.HTML(http.StatusBadRequest, renderErrorCard("Unsupported file extension ("+ext+"). Please upload a .3mf, .obj, or .stl file."))
 		}
 
-		// Read into memory buffer with hard size cap
-		buf := bytes.NewBuffer(nil)
-		if _, err := io.Copy(buf, io.LimitReader(file, maxModelUploadBytes+1)); err != nil {
-			return c.HTML(http.StatusInternalServerError, renderErrorCard("Failed to read uploaded file buffer."))
+		// Determine exact uploaded size via Seek without duplicating up to 100MB into a second buffer.
+		fileSize, err := file.Seek(0, io.SeekEnd)
+		if err != nil {
+			return c.HTML(http.StatusInternalServerError, renderErrorCard("Failed to inspect uploaded 3D model size."))
 		}
-		if buf.Len() > maxModelUploadBytes {
-			return c.HTML(http.StatusRequestEntityTooLarge, renderErrorCard("File too large. Maximum supported upload is 40MB."))
+		if _, err := file.Seek(0, io.SeekStart); err != nil {
+			return c.HTML(http.StatusInternalServerError, renderErrorCard("Failed to reset uploaded 3D model stream."))
 		}
-		fileBytes := buf.Bytes()
+		if fileSize <= 0 {
+			return c.HTML(http.StatusBadRequest, renderErrorCard("Uploaded file is empty. Please select a valid .3mf, .obj, or .stl file."))
+		}
+		if fileSize > maxModelUploadBytes {
+			return c.HTML(http.StatusRequestEntityTooLarge, renderErrorCard(fmt.Sprintf("File is %.1f MB. Maximum supported upload is 100MB.", float64(fileSize)/(1024*1024))))
+		}
 
-		// Parse 3D Geometry
-		mesh, err := slicer.ParseModel(filename, bytes.NewReader(fileBytes), int64(len(fileBytes)))
+		// Parse 3D Geometry directly from multipart.File (implements io.ReaderAt)
+		rawMesh, err := slicer.ParseModel(filename, file, fileSize)
 		if err != nil {
 			return c.HTML(http.StatusBadRequest, renderErrorCard("Could not parse 3D mesh: "+err.Error()))
 		}
@@ -118,12 +124,15 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 			}
 		}
 
-		// Run Slicing & LayerInvoice Calculation
-		result := slicer.SliceAndCalculate(*mesh, chosenFilament, cfg)
+		scale := parseScaleFactor(c.Request.FormValue("scale"))
+		scaledMesh := scaleMeshStats(*rawMesh, scale)
 
-		// Render the reactive HTMX Result Partial
-		return c.HTML(http.StatusOK, renderQuoteResultHTML(result, filaments, getWhatsAppNumber(app)))
-	})
+		// Run Slicing & LayerInvoice Calculation
+		result := slicer.SliceAndCalculate(scaledMesh, chosenFilament, cfg)
+
+		// Render the reactive HTMX Result Partial (preserving raw unscaled mesh for lossless rescaling)
+		return c.HTML(http.StatusOK, renderQuoteResultHTML(result, *rawMesh, scale, filaments, getWhatsAppNumber(app)))
+	}).Bind(apis.BodyLimit(maxMultipartBytes))
 
 	// 3. Reactive Recalculation Endpoint: POST /api/recalculate-quote
 	e.Router.POST("/api/recalculate-quote", func(c *core.RequestEvent) error {
@@ -131,7 +140,7 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 			return c.HTML(http.StatusBadRequest, renderErrorCard("Invalid parameters."))
 		}
 
-		// Rebuild and validate Mesh from hidden inputs
+		// Rebuild and validate unscaled Mesh from hidden inputs
 		sizeX, ok1 := parseNonNegFloat(c.Request.FormValue("mesh_size_x"))
 		sizeY, ok2 := parseNonNegFloat(c.Request.FormValue("mesh_size_y"))
 		sizeZ, ok3 := parseNonNegFloat(c.Request.FormValue("mesh_size_z"))
@@ -144,7 +153,7 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 		filename := c.Request.FormValue("mesh_filename")
 		format := c.Request.FormValue("mesh_format")
 
-		mesh := slicer.MeshStats{
+		rawMesh := slicer.MeshStats{
 			Filename:       filename,
 			Format:         format,
 			SizeX:          sizeX,
@@ -168,6 +177,12 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 			}
 		}
 
+		scaleStr := c.Request.URL.Query().Get("scale")
+		if scaleStr == "" {
+			scaleStr = c.Request.FormValue("scale")
+		}
+		scale := parseScaleFactor(scaleStr)
+
 		filamentID := c.Request.URL.Query().Get("filament")
 		if filamentID == "" {
 			filamentID = c.Request.FormValue("filament")
@@ -180,9 +195,34 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 			}
 		}
 
-		result := slicer.SliceAndCalculate(mesh, chosenFilament, cfg)
-		return c.HTML(http.StatusOK, renderQuoteResultHTML(result, filaments, getWhatsAppNumber(app)))
+		scaledMesh := scaleMeshStats(rawMesh, scale)
+		result := slicer.SliceAndCalculate(scaledMesh, chosenFilament, cfg)
+		return c.HTML(http.StatusOK, renderQuoteResultHTML(result, rawMesh, scale, filaments, getWhatsAppNumber(app)))
 	})
+}
+
+func parseScaleFactor(s string) float64 {
+	if s == "" {
+		return 1.0
+	}
+	v, err := strconv.ParseFloat(s, 64)
+	if err != nil || math.IsNaN(v) || math.IsInf(v, 0) || v < 0.01 || v > 1000 {
+		return 1.0
+	}
+	return v
+}
+
+func scaleMeshStats(raw slicer.MeshStats, scale float64) slicer.MeshStats {
+	if math.Abs(scale-1.0) < 1e-6 {
+		return raw
+	}
+	scaled := raw
+	scaled.SizeX = raw.SizeX * scale
+	scaled.SizeY = raw.SizeY * scale
+	scaled.SizeZ = raw.SizeZ * scale
+	scaled.SurfaceAreaCm2 = raw.SurfaceAreaCm2 * scale * scale
+	scaled.VolumeCm3 = raw.VolumeCm3 * scale * scale * scale
+	return scaled
 }
 
 func parseNonNegFloat(s string) (float64, bool) {
@@ -269,29 +309,44 @@ func getActiveFilaments(app core.App) []slicer.FilamentProfile {
 
 func renderErrorCard(message string) string {
 	return fmt.Sprintf(`
-		<div class="nouveau-card p-6 bg-red-500/10 border border-red-500/40 text-red-500 dark:text-red-400 space-y-2 animate-fade-in">
+		<div class="nouveau-card p-6 bg-red-500/10 border border-red-500/40 text-red-600 dark:text-red-400 space-y-2 animate-fade-in">
 			<div class="flex items-center gap-2 font-display font-bold text-sm">
-				<span>⚠️ Slicing Error</span>
+				<span>Slicing Error</span>
 			</div>
 			<p class="text-xs leading-relaxed">%s</p>
-			<p class="text-[11px] text-[#635D54] dark:text-[#9DA3AF]">Make sure the model is not corrupted, is a valid .3mf, .obj, or .stl file, and has watertight faces.</p>
+			<p class="text-[11px] text-parchment-muted dark:text-ink-muted">Make sure the model is under 100MB, is a valid .3mf, .obj, or .stl file, and is not corrupted.</p>
 		</div>
 	`, template.HTMLEscapeString(message))
 }
 
-func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.FilamentProfile, waNumber string) string {
+func scaleLabel(scale float64) string {
+	switch {
+	case math.Abs(scale-10.0) < 0.05:
+		return "cm (10x)"
+	case math.Abs(scale-25.4) < 0.05:
+		return "in (25.4x)"
+	case math.Abs(scale-100.0) < 0.05:
+		return "100x"
+	default:
+		return "mm (1x)"
+	}
+}
+
+func renderQuoteResultHTML(res slicer.SlicedQuoteResult, rawMesh slicer.MeshStats, scale float64, filaments []slicer.FilamentProfile, waNumber string) string {
 	infillPct := int(math.Round(res.Config.InfillPercentage))
 	preset := res.Config.Preset
+	scaleStr := strconv.FormatFloat(scale, 'f', -1, 64)
+
 	whatsappMsg := fmt.Sprintf(
 		"Assalam o Alaikum Jiddat3D! I just used your instant server slicer (%s) for my model: %s\n"+
-			"• Dimensions: %.1f x %.1f x %.1f mm\n"+
+			"• Dimensions: %.1f x %.1f x %.1f mm (Scale: %s)\n"+
 			"• Filament: %s [%.1fg, %d%% %s infill]\n"+
 			"• Estimated Print Time: %s\n"+
 			"• Instant Quote: Rs %d (Prepaid)\n"+
 			"I want to proceed with this print!",
 		preset.Name,
 		res.Mesh.Filename,
-		res.Mesh.SizeX, res.Mesh.SizeY, res.Mesh.SizeZ,
+		res.Mesh.SizeX, res.Mesh.SizeY, res.Mesh.SizeZ, scaleLabel(scale),
 		res.Filament.Name, res.BufferedGrams, infillPct, preset.InfillPattern,
 		res.FormattedTime,
 		res.FinalPrice,
@@ -299,6 +354,18 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 
 	waURL := "https://wa.me/" + url.PathEscape(waNumber) + "?text=" + url.QueryEscape(whatsappMsg)
 	escapedFilamentIDQuery := url.QueryEscape(res.Filament.ID)
+
+	// Warn if model is suspiciously tiny (e.g. exported in inches/cm/meters instead of mm)
+	unitHintBanner := ""
+	maxDim := math.Max(res.Mesh.SizeX, math.Max(res.Mesh.SizeY, res.Mesh.SizeZ))
+	if maxDim > 0 && maxDim < 5.0 && math.Abs(scale-1.0) < 1e-6 {
+		unitHintBanner = fmt.Sprintf(`
+			<div class="mt-4 p-3 rounded-[6px] bg-plum-mist dark:bg-plum-dark/80 border border-plum/40 dark:border-plum-light/40 text-xs text-parchment-ink dark:text-ink flex items-start gap-2.5">
+				<span class="font-mono text-gold-focal font-bold shrink-0">UNITS</span>
+				<p class="leading-relaxed">Very small dimensions detected (<strong>%.2f &times; %.2f &times; %.2f mm</strong>). STL files don't embed units — if exported in inches, cm, or meters, pick the unit scale below.</p>
+			</div>
+		`, res.Mesh.SizeX, res.Mesh.SizeY, res.Mesh.SizeZ)
+	}
 
 	buildVolBanner := ""
 	if res.ExceedsBuildVolume {
@@ -344,17 +411,18 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 	return fmt.Sprintf(`
 	<div class="space-y-6 animate-fade-in" id="quote-card">
 		
-		<!-- Hidden params for reactive HTMX recalculations -->
+		<!-- Hidden unscaled params for lossless reactive HTMX recalculations -->
 		<form id="recalc-params">
 			<input type="hidden" name="mesh_filename" value="%s">
 			<input type="hidden" name="mesh_format" value="%s">
-			<input type="hidden" name="mesh_size_x" value="%.4f">
-			<input type="hidden" name="mesh_size_y" value="%.4f">
-			<input type="hidden" name="mesh_size_z" value="%.4f">
-			<input type="hidden" name="mesh_vol_cm3" value="%.4f">
-			<input type="hidden" name="mesh_area_cm2" value="%.4f">
+			<input type="hidden" name="mesh_size_x" value="%.10g">
+			<input type="hidden" name="mesh_size_y" value="%.10g">
+			<input type="hidden" name="mesh_size_z" value="%.10g">
+			<input type="hidden" name="mesh_vol_cm3" value="%.10g">
+			<input type="hidden" name="mesh_area_cm2" value="%.10g">
 			<input type="hidden" name="mesh_tri_count" value="%d">
 			<input type="hidden" name="infill" value="%d">
+			<input type="hidden" name="scale" value="%s">
 		</form>
 
 		<!-- Model Diagnostics & Geometry Card -->
@@ -390,6 +458,45 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 				</div>
 			</div>
 			%s
+			%s
+
+			<!-- Interactive Unit / Scale Selector -->
+			<div class="mt-4 pt-4 border-t border-parchment-border dark:border-workshop-border">
+				<div class="flex items-center justify-between mb-2">
+					<span class="text-xs font-semibold text-parchment-ink dark:text-ink">Model Units / Scale:</span>
+					<span class="text-[11px] font-mono font-bold text-plum dark:text-plum-light">%s</span>
+				</div>
+				<div class="grid grid-cols-4 gap-2 text-xs font-mono">
+					<button type="button"
+						hx-post="/api/recalculate-quote?scale=1&infill=%d&filament=%s"
+						hx-include="#recalc-params"
+						hx-target="#quote-result"
+						class="py-1.5 px-2 rounded border text-center transition-all %s">
+						mm (1&times;)
+					</button>
+					<button type="button"
+						hx-post="/api/recalculate-quote?scale=10&infill=%d&filament=%s"
+						hx-include="#recalc-params"
+						hx-target="#quote-result"
+						class="py-1.5 px-2 rounded border text-center transition-all %s">
+						cm (10&times;)
+					</button>
+					<button type="button"
+						hx-post="/api/recalculate-quote?scale=25.4&infill=%d&filament=%s"
+						hx-include="#recalc-params"
+						hx-target="#quote-result"
+						class="py-1.5 px-2 rounded border text-center transition-all %s">
+						in (25.4&times;)
+					</button>
+					<button type="button"
+						hx-post="/api/recalculate-quote?scale=100&infill=%d&filament=%s"
+						hx-include="#recalc-params"
+						hx-target="#quote-result"
+						class="py-1.5 px-2 rounded border text-center transition-all %s">
+						100&times;
+					</button>
+				</div>
+			</div>
 		</div>
 
 		<!-- Sliced Toolpath & Material Estimation Box -->
@@ -437,28 +544,28 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 				</div>
 				<div class="grid grid-cols-4 gap-2 text-xs font-mono">
 					<button type="button" 
-						hx-post="/api/recalculate-quote?infill=10&filament=%s" 
+						hx-post="/api/recalculate-quote?infill=10&filament=%s&scale=%s" 
 						hx-include="#recalc-params" 
 						hx-target="#quote-result" 
 						class="py-1.5 px-2 rounded border text-center transition-all %s">
 						10%% (V11)
 					</button>
 					<button type="button" 
-						hx-post="/api/recalculate-quote?infill=20&filament=%s" 
+						hx-post="/api/recalculate-quote?infill=20&filament=%s&scale=%s" 
 						hx-include="#recalc-params" 
 						hx-target="#quote-result" 
 						class="py-1.5 px-2 rounded border text-center transition-all %s">
 						20%% (Std)
 					</button>
 					<button type="button" 
-						hx-post="/api/recalculate-quote?infill=40&filament=%s" 
+						hx-post="/api/recalculate-quote?infill=40&filament=%s&scale=%s" 
 						hx-include="#recalc-params" 
 						hx-target="#quote-result" 
 						class="py-1.5 px-2 rounded border text-center transition-all %s">
 						40%% (Tough)
 					</button>
 					<button type="button" 
-						hx-post="/api/recalculate-quote?infill=100&filament=%s" 
+						hx-post="/api/recalculate-quote?infill=100&filament=%s&scale=%s" 
 						hx-include="#recalc-params" 
 						hx-target="#quote-result" 
 						class="py-1.5 px-2 rounded border text-center transition-all %s">
@@ -528,19 +635,27 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 
 	</div>
 	`,
-		template.HTMLEscapeString(res.Mesh.Filename),
-		template.HTMLEscapeString(res.Mesh.Format),
-		res.Mesh.SizeX, res.Mesh.SizeY, res.Mesh.SizeZ,
-		res.Mesh.VolumeCm3, res.Mesh.SurfaceAreaCm2,
-		res.Mesh.TriangleCount,
+		template.HTMLEscapeString(rawMesh.Filename),
+		template.HTMLEscapeString(rawMesh.Format),
+		rawMesh.SizeX, rawMesh.SizeY, rawMesh.SizeZ,
+		rawMesh.VolumeCm3, rawMesh.SurfaceAreaCm2,
+		rawMesh.TriangleCount,
 		infillPct,
+		scaleStr,
 
 		template.HTMLEscapeString(res.Mesh.Filename),
 		template.HTMLEscapeString(res.Mesh.Format),
 		res.Mesh.TriangleCount,
 
 		res.Mesh.SizeX, res.Mesh.SizeY, res.Mesh.SizeZ,
+		unitHintBanner,
 		buildVolBanner,
+
+		scaleLabel(scale),
+		infillPct, escapedFilamentIDQuery, getScaleBtnClass(scale, 1.0),
+		infillPct, escapedFilamentIDQuery, getScaleBtnClass(scale, 10.0),
+		infillPct, escapedFilamentIDQuery, getScaleBtnClass(scale, 25.4),
+		infillPct, escapedFilamentIDQuery, getScaleBtnClass(scale, 100.0),
 
 		template.HTMLEscapeString(preset.Name),
 		res.Config.LayerHeightMm, res.Config.WallPerimeters,
@@ -557,10 +672,10 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 		template.HTMLEscapeString(preset.InfillPattern),
 		infillPct,
 
-		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 10),
-		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 20),
-		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 40),
-		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 100),
+		escapedFilamentIDQuery, scaleStr, getInfillBtnClass(res.Config.InfillPercentage, 10),
+		escapedFilamentIDQuery, scaleStr, getInfillBtnClass(res.Config.InfillPercentage, 20),
+		escapedFilamentIDQuery, scaleStr, getInfillBtnClass(res.Config.InfillPercentage, 40),
+		escapedFilamentIDQuery, scaleStr, getInfillBtnClass(res.Config.InfillPercentage, 100),
 
 		filamentRadios,
 
@@ -579,4 +694,11 @@ func getInfillBtnClass(currentInfill, targetInfill float64) string {
 		return "bg-filament text-[#131217] border-filament font-bold"
 	}
 	return "bg-parchment-surface dark:bg-workshop-surface text-parchment-muted dark:text-ink-muted border-parchment-border dark:border-workshop-border hover:border-filament"
+}
+
+func getScaleBtnClass(currentScale, targetScale float64) string {
+	if math.Abs(currentScale-targetScale) < 0.05 {
+		return "bg-plum text-[#F2EFE9] border-plum font-bold"
+	}
+	return "bg-parchment-bg dark:bg-workshop-bg text-parchment-muted dark:text-ink-muted border-parchment-border dark:border-workshop-border hover:border-plum"
 }

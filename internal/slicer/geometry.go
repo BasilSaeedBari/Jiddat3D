@@ -144,10 +144,11 @@ func parseBinarySTL(header []byte, r io.Reader, filename string) (*MeshStats, er
 
 	var totalVol float64
 	var totalArea float64
+	br := bufio.NewReaderSize(r, 256*1024)
 	buf := make([]byte, 50)
 
 	for i := 0; i < numTriangles; i++ {
-		if _, err := io.ReadFull(r, buf); err != nil {
+		if _, err := io.ReadFull(br, buf); err != nil {
 			if err == io.EOF || err == io.ErrUnexpectedEOF {
 				return nil, fmt.Errorf("truncated binary STL: expected %d triangles, read %d", numTriangles, i)
 			}
@@ -467,9 +468,12 @@ func finalizeMeshStats(stats *MeshStats, rawVol float64, rawArea float64) {
 	// Surface area in mm^2 converted to cm^2 (1 cm^2 = 100 mm^2)
 	stats.SurfaceAreaCm2 = rawArea / 100.0
 
-	// Sanity safeguard: if mesh is non-manifold or planar, approximate minimum volume from bounding box
-	if stats.VolumeCm3 < 0.01 && stats.SizeX > 0 && stats.SizeY > 0 && stats.SizeZ > 0 {
+	// Sanity safeguard: if mesh is non-manifold or planar (near-zero volume relative to its bbox),
+	// approximate minimum volume from bounding box without corrupting tiny/meter-exported watertight meshes.
+	if stats.SizeX > 0 && stats.SizeY > 0 && stats.SizeZ > 0 {
 		bboxVolCm3 := (stats.SizeX * stats.SizeY * stats.SizeZ) / 1000.0
-		stats.VolumeCm3 = bboxVolCm3 * 0.35 // 35% bounding envelope approximation
+		if stats.VolumeCm3 < bboxVolCm3*0.005 {
+			stats.VolumeCm3 = bboxVolCm3 * 0.35 // 35% bounding envelope approximation
+		}
 	}
 }

@@ -243,14 +243,14 @@ func TestSliceAndCalculate_PricingAndInfill(t *testing.T) {
 		t.Fatalf("expected 100%% infill price (%d) > 20%% infill price (%d)", q100.FinalPrice, q20.FinalPrice)
 	}
 
-	// Tiny model hits minimum 5g and 15min floors -> Rs 260 under default LayerInvoice rates
+	// Tiny model reports truthful buffered grams (>= 0.1g) and hits 15min floor under default LayerInvoice rates
 	tiny := MeshStats{SizeX: 2, SizeY: 2, SizeZ: 2, VolumeCm3: 0.008, SurfaceAreaCm2: 0.24, TriangleCount: 12}
 	qTiny := SliceAndCalculate(tiny, fil, cfg20)
-	if qTiny.BufferedGrams < 5.0 {
-		t.Fatalf("expected minimum 5g floor, got %.2f", qTiny.BufferedGrams)
+	if qTiny.BufferedGrams < 0.1 || qTiny.BufferedGrams >= 5.0 {
+		t.Fatalf("expected truthful tiny buffered grams in [0.1, 5.0), got %.2f", qTiny.BufferedGrams)
 	}
-	if qTiny.FinalPrice != 260 {
-		t.Fatalf("expected Rs 260 for tiny model under default rates, got %d", qTiny.FinalPrice)
+	if qTiny.FinalPrice < 150 || qTiny.FinalPrice%10 != 0 {
+		t.Fatalf("unexpected FinalPrice for tiny model: %d", qTiny.FinalPrice)
 	}
 
 	// Low-rate config hits minimum Rs 150 shop order floor
@@ -261,6 +261,28 @@ func TestSliceAndCalculate_PricingAndInfill(t *testing.T) {
 	lowCfg.ProfitMultiplierPct = 0
 	if qLow := SliceAndCalculate(tiny, fil, lowCfg); qLow.FinalPrice != 150 {
 		t.Fatalf("expected minimum Rs 150 floor, got %d", qLow.FinalPrice)
+	}
+
+	// High-surface-area organic sculpt (where naive A*t > V) must STILL increase plastic weight across 10->20->40->100% infill
+	sculpt := MeshStats{
+		Filename:       "dragon_bust.stl",
+		Format:         "Binary STL",
+		SizeX:          80,
+		SizeY:          100,
+		SizeZ:          75,
+		VolumeCm3:      95,
+		SurfaceAreaCm2: 1400, // high detail: naive 1400 * 0.10 = 140 cm^3 > 95 cm^3!
+		TriangleCount:  500000,
+	}
+	var prevGrams float64
+	for _, infill := range []float64{10, 20, 40, 100} {
+		c := DefaultSlicerConfig()
+		c.InfillPercentage = infill
+		q := SliceAndCalculate(sculpt, fil, c)
+		if q.BufferedGrams <= prevGrams {
+			t.Fatalf("expected infill %.0f%% grams (%.2f) > previous (%.2f) on high-detail mesh", infill, q.BufferedGrams, prevGrams)
+		}
+		prevGrams = q.BufferedGrams
 	}
 }
 

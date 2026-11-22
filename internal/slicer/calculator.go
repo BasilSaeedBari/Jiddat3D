@@ -522,19 +522,25 @@ func SliceAndCalculate(mesh MeshStats, fil FilamentProfile, cfg SlicerConfig) Sl
 	internalSolidMm := math.Max(0, topThicknessMm-cfg.LayerHeightMm) + bottomThicknessMm
 	internalSolidVolCm3 := horizontalAreaCm2 * (internalSolidMm / 10.0)
 
+	// Smooth 3D offset-shell saturation:
+	// Flat-plate area*thickness overcounts inward corners, ridges, and sculpted details
+	// (which otherwise clamps interior volume to 0 on organic meshes).
+	// Using V_shell = V * (1 - exp(-V_slab / V)) matches exact cube/sphere shells within ~1-2%
+	// while preserving a realistic infill core on high-surface-area meshes.
 	rawShellVolCm3 := outerWallVolCm3 + innerWallVolCm3 + topSurfaceVolCm3 + internalSolidVolCm3
-	if rawShellVolCm3 > mesh.VolumeCm3 && rawShellVolCm3 > 0 {
-		scale := mesh.VolumeCm3 / rawShellVolCm3
+	effectiveShellVolCm3 := 0.0
+	if mesh.VolumeCm3 > 0 && rawShellVolCm3 > 0 {
+		effectiveShellVolCm3 = mesh.VolumeCm3 * (1.0 - math.Exp(-rawShellVolCm3/mesh.VolumeCm3))
+		scale := effectiveShellVolCm3 / rawShellVolCm3
 		outerWallVolCm3 *= scale
 		innerWallVolCm3 *= scale
 		topSurfaceVolCm3 *= scale
 		internalSolidVolCm3 *= scale
-		rawShellVolCm3 = mesh.VolumeCm3
 	}
 
-	// Sparse infill volume: interior remainder * infill ratio
+	// Sparse infill volume: interior core * infill ratio
 	infillRatio := cfg.InfillPercentage / 100.0
-	sparseInfillVolCm3 := (mesh.VolumeCm3 - rawShellVolCm3) * infillRatio
+	sparseInfillVolCm3 := (mesh.VolumeCm3 - effectiveShellVolCm3) * infillRatio
 	if sparseInfillVolCm3 < 0 {
 		sparseInfillVolCm3 = 0
 	}
@@ -553,13 +559,13 @@ func SliceAndCalculate(mesh MeshStats, fil FilamentProfile, cfg SlicerConfig) Sl
 	adhesionVolCm3 := ((brimLenMm + skirtLenMm) * preset.InitialLayerLineWidthMm * preset.InitialLayerHeightMm) / 1000.0
 
 	// Apply calibrated filament flow ratio (0.979 for Cbot CN-1 White PLA)
-	extrudedVolCm3 := (rawShellVolCm3 + sparseInfillVolCm3 + adhesionVolCm3) * fil.FlowRatio
+	extrudedVolCm3 := (effectiveShellVolCm3 + sparseInfillVolCm3 + adhesionVolCm3) * fil.FlowRatio
 
-	// Raw filament mass & 1.5x shop buffer
+	// Raw filament mass & 1.5x shop buffer (display truthful weight down to 0.1g; shop floor enforced via Rs 150 min order)
 	rawGrams := extrudedVolCm3 * fil.DensityGCm3
 	bufferedGrams := rawGrams * cfg.WeightMultiplier
-	if bufferedGrams < 5.0 && mesh.VolumeCm3 > 0 {
-		bufferedGrams = 5.0 // minimum 5g threshold for functional print
+	if bufferedGrams < 0.1 && mesh.VolumeCm3 > 0 {
+		bufferedGrams = 0.1
 	}
 
 	// --- 2. Kinematics-Driven Print Time (Speeds + Accelerations + Jerks + Volumetric Cap) ---

@@ -35,10 +35,32 @@
 					hx-encoding="multipart/form-data" 
 					hx-target="#quote-result" 
 					hx-indicator="#slicing-indicator" 
-					x-data="{ isDragging: false, fileName: '', status: '' }"
-					@htmx:before-request="status = 'slicing'"
-					@htmx:after-request="status = $event.detail.successful ? 'done' : 'error'"
-					@htmx:send-error="status = 'error'"
+					x-data="{
+						isDragging: false,
+						fileName: '',
+						status: '',
+						errorMsg: '',
+						maxBytes: 100 * 1024 * 1024,
+						submitFile(file) {
+							this.fileName = file.name;
+							this.errorMsg = '';
+							if (file.size > this.maxBytes) {
+								this.status = 'error';
+								this.errorMsg = 'File is ' + (file.size / (1024 * 1024)).toFixed(1) + ' MB (max 100MB)';
+								const target = document.getElementById('quote-result');
+								if (target) {
+									target.innerHTML = '<div class=\'nouveau-card p-6 bg-red-500/10 border border-red-500/40 text-red-600 dark:text-red-400 space-y-2\'><div class=\'font-display font-bold text-sm\'>File Too Large</div><p class=\'text-xs leading-relaxed\'>' + this.errorMsg + '. Please decimate the mesh or send it directly on WhatsApp.</p></div>';
+								}
+								return;
+							}
+							this.status = 'slicing';
+							htmx.trigger('#slicer-upload-form', 'submit');
+						}
+					}"
+					@htmx:before-request="status = 'slicing'; errorMsg = ''"
+					@htmx:before-swap.window="if ($event.detail.target && $event.detail.target.id === 'quote-result' && $event.detail.xhr.status >= 400) { $event.detail.shouldSwap = true; $event.detail.isError = false; if ($event.detail.xhr.status === 413 && !$event.detail.serverResponse.includes('nouveau-card')) { $event.detail.serverResponse = '<div class=\'nouveau-card p-6 bg-red-500/10 border border-red-500/40 text-red-600 dark:text-red-400 space-y-2\'><div class=\'font-display font-bold text-sm\'>File Too Large</div><p class=\'text-xs leading-relaxed\'>Maximum supported upload is 100MB.</p></div>'; } }"
+					@htmx:after-request="if ($event.detail.xhr && $event.detail.xhr.status >= 400) { status = 'error'; errorMsg = ($event.detail.xhr.status === 413 ? 'Too large (max 100MB)' : 'Upload failed'); } else { status = $event.detail.successful ? 'done' : 'error'; }"
+					@htmx:send-error="status = 'error'; errorMsg = 'Network error'"
 					class="nouveau-card p-6 bg-parchment-surface dark:bg-workshop-surface border-2 transition-all space-y-4 shadow-xl"
 					:class="isDragging ? 'border-filament bg-filament/[0.04]' : 'border-parchment-border dark:border-workshop-border'">
 					
@@ -54,7 +76,7 @@
 						aria-label="Upload 3D model (.3mf, .obj, or .stl)"
 						@dragover.prevent="isDragging = true" 
 						@dragleave.prevent="isDragging = false" 
-						@drop.prevent="isDragging = false; if ($event.dataTransfer.files.length) { $refs.fileInput.files = $event.dataTransfer.files; fileName = $event.dataTransfer.files[0].name; status = 'slicing'; htmx.trigger('#slicer-upload-form', 'submit'); }"
+						@drop.prevent="isDragging = false; if ($event.dataTransfer.files.length) { $refs.fileInput.files = $event.dataTransfer.files; submitFile($event.dataTransfer.files[0]); }"
 						@keydown.enter.prevent="$refs.fileInput.click()"
 						@keydown.space.prevent="$refs.fileInput.click()"
 						class="border-2 border-dashed rounded-[8px] p-8 text-center transition-all cursor-pointer hover:border-filament hover:bg-parchment-hover/40 dark:hover:bg-workshop-hover/40"
@@ -66,7 +88,7 @@
 							x-ref="fileInput" 
 							accept=".3mf,.obj,.stl" 
 							class="hidden" 
-							@change="if ($refs.fileInput.files.length) { fileName = $refs.fileInput.files[0].name; status = 'slicing'; htmx.trigger('#slicer-upload-form', 'submit'); }">
+							@change="if ($refs.fileInput.files.length) { submitFile($refs.fileInput.files[0]); }">
 
 						<div class="w-12 h-12 mx-auto rounded-[6px] bg-plum-mist dark:bg-plum-dark/80 border border-plum/30 dark:border-plum-light/30 text-gold-focal flex items-center justify-center mb-3">
 							<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
@@ -81,7 +103,7 @@
 						</p>
 
 						<div class="mt-4 pt-3 border-t border-parchment-border dark:border-workshop-border flex items-center justify-center gap-3 text-[10px] font-mono text-parchment-muted dark:text-ink-dim">
-							<span>Max: 40MB</span>
+							<span>Max: 100MB</span>
 							<span>&bull;</span>
 							<span>Instant Server Compute</span>
 						</div>
@@ -92,7 +114,7 @@
 						<span class="text-parchment-ink dark:text-ink truncate max-w-[200px]" x-text="fileName"></span>
 						<span x-show="status === 'slicing'" class="text-[10px] text-gold-focal font-bold">Uploading &amp; Slicing...</span>
 						<span x-show="status === 'done'" class="text-[10px] text-[#3DDC84] font-bold">✓ Sliced</span>
-						<span x-show="status === 'error'" class="text-[10px] text-red-500 dark:text-red-400 font-bold">Error — try another file</span>
+						<span x-show="status === 'error'" class="text-[10px] text-red-500 dark:text-red-400 font-bold" x-text="errorMsg || 'Error — try another file'"></span>
 					</div>
 
 					<p class="text-[11px] text-parchment-muted dark:text-ink-muted leading-relaxed italic">
