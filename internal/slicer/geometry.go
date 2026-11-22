@@ -78,7 +78,7 @@ func ParseModel(filename string, r io.ReaderAt, size int64) (*MeshStats, error) 
 
 	switch ext {
 	case ".stl":
-		return parseSTL(io.NewSectionReader(r, 0, size), filename)
+		return parseSTL(io.NewSectionReader(r, 0, size), size, filename)
 	case ".obj":
 		return parseOBJ(io.NewSectionReader(r, 0, size), filename)
 	case ".3mf":
@@ -88,8 +88,14 @@ func ParseModel(filename string, r io.ReaderAt, size int64) (*MeshStats, error) 
 	}
 }
 
+func isFinitePoint(p Point3D) bool {
+	return !math.IsNaN(p.X) && !math.IsInf(p.X, 0) &&
+		!math.IsNaN(p.Y) && !math.IsInf(p.Y, 0) &&
+		!math.IsNaN(p.Z) && !math.IsInf(p.Z, 0)
+}
+
 // parseSTL parses both binary and ASCII STL streams
-func parseSTL(r io.Reader, filename string) (*MeshStats, error) {
+func parseSTL(r io.Reader, size int64, filename string) (*MeshStats, error) {
 	// Read first 84 bytes to inspect binary vs ascii
 	header := make([]byte, 84)
 	n, err := io.ReadFull(r, header)
@@ -97,31 +103,22 @@ func parseSTL(r io.Reader, filename string) (*MeshStats, error) {
 		return nil, fmt.Errorf("failed to read STL header: %w", err)
 	}
 
-	// Fallback to ASCII if "solid" keyword is present and file doesn't match binary length formula
-	isAscii := false
-	if n >= 5 && strings.HasPrefix(strings.ToLower(string(header[:5])), "solid") {
-		numTriangles := binary.LittleEndian.Uint32(header[80:84])
-		expectedBinarySize := int64(84 + numTriangles*50)
-		// If binary triangle count is unrealistic or doesn't match stream, assume ASCII
-		if numTriangles == 0 || numTriangles > 50000000 {
-			isAscii = true
-		} else {
-			// Check if file is purely printable text
-			printableCount := 0
-			for i := 0; i < n; i++ {
-				if (header[i] >= 32 && header[i] <= 126) || header[i] == '\n' || header[i] == '\r' || header[i] == '\t' {
-					printableCount++
-				}
-			}
-			if printableCount > 80 && expectedBinarySize < 84 {
-				isAscii = true
-			}
+	// A valid binary STL has exact byte length 84 + numTriangles*50.
+	isBinary := false
+	if n == 84 {
+		numTriangles := uint64(binary.LittleEndian.Uint32(header[80:84]))
+		if numTriangles <= 50000000 && uint64(size) == 84+numTriangles*50 {
+			isBinary = true
 		}
 	}
 
-	combinedReader := io.MultiReader(bytes.NewReader(header[:n]), r)
-	if isAscii {
-		return parseAsciiSTL(combinedReader, filename)
+	if !isBinary {
+		trimmed := strings.TrimSpace(string(header[:n]))
+		if strings.HasPrefix(strings.ToLower(trimmed), "solid") {
+			combinedReader := io.MultiReader(bytes.NewReader(header[:n]), r)
+			return parseAsciiSTL(combinedReader, filename)
+		}
+		return nil, fmt.Errorf("invalid or truncated STL file")
 	}
 
 	return parseBinarySTL(header, r, filename)
@@ -152,7 +149,7 @@ func parseBinarySTL(header []byte, r io.Reader, filename string) (*MeshStats, er
 	for i := 0; i < numTriangles; i++ {
 		if _, err := io.ReadFull(r, buf); err != nil {
 			if err == io.EOF || err == io.ErrUnexpectedEOF {
-				break
+				return nil, fmt.Errorf("truncated binary STL: expected %d triangles, read %d", numTriangles, i)
 			}
 			return nil, err
 		}
@@ -173,6 +170,9 @@ func parseBinarySTL(header []byte, r io.Reader, filename string) (*MeshStats, er
 			Y: float64(math.Float32frombits(binary.LittleEndian.Uint32(buf[40:44]))),
 			Z: float64(math.Float32frombits(binary.LittleEndian.Uint32(buf[44:48]))),
 		}
+		if !isFinitePoint(v1) || !isFinitePoint(v2) || !isFinitePoint(v3) {
+			return nil, fmt.Errorf("invalid binary STL: non-finite vertex coordinate")
+		}
 
 		updateBounds(stats, v1)
 		updateBounds(stats, v2)
@@ -188,6 +188,7 @@ func parseBinarySTL(header []byte, r io.Reader, filename string) (*MeshStats, er
 
 func parseAsciiSTL(r io.Reader, filename string) (*MeshStats, error) {
 	scanner := bufio.NewScanner(r)
+	scanner.Buffer(make([]byte, 0, 64*1024), 1024*1024)
 	stats := &MeshStats{
 		Filename: filename,
 		Format:   "ASCII STL",
@@ -201,25 +202,28 @@ func parseAsciiSTL(r io.Reader, filename string) (*MeshStats, error) {
 	triangleCount := 0
 
 	for scanner.Scan() {
-		line := strings.TrimSpace(scanner.Text())
-		if strings.HasPrefix(line, "vertex ") {
-			fields := strings.Fields(line)
-			if len(fields) >= 4 {
-				x, _ := strconv.ParseFloat(fields[1], 64)
-				y, _ := strconv.ParseFloat(fields[2], 64)
-				z, _ := strconv.ParseFloat(fields[3], 64)
-				pt := Point3D{X: x, Y: y, Z: z}
-				vertices = append(vertices, pt)
-				updateBounds(stats, pt)
+		fields := strings.Fields(scanner.Text())
+		if len(fields) >= 4 && strings.EqualFold(fields[0], "vertex") {
+			x, errX := strconv.ParseFloat(fields[1], 64)
+			y, errY := strconv.ParseFloat(fields[2], 64)
+			z, errZ := strconv.ParseFloat(fields[3], 64)
+			pt := Point3D{X: x, Y: y, Z: z}
+			if errX != nil || errY != nil || errZ != nil || !isFinitePoint(pt) {
+				return nil, fmt.Errorf("invalid ASCII STL vertex coordinates")
+			}
+			vertices = append(vertices, pt)
+			updateBounds(stats, pt)
 
-				if len(vertices) == 3 {
-					totalVol += signedVolumeOfTriangle(vertices[0], vertices[1], vertices[2])
-					totalArea += areaOfTriangle(vertices[0], vertices[1], vertices[2])
-					triangleCount++
-					vertices = vertices[:0]
-				}
+			if len(vertices) == 3 {
+				totalVol += signedVolumeOfTriangle(vertices[0], vertices[1], vertices[2])
+				totalArea += areaOfTriangle(vertices[0], vertices[1], vertices[2])
+				triangleCount++
+				vertices = vertices[:0]
 			}
 		}
+	}
+	if err := scanner.Err(); err != nil {
+		return nil, fmt.Errorf("failed to read ASCII STL: %w", err)
 	}
 
 	stats.TriangleCount = triangleCount
@@ -229,6 +233,7 @@ func parseAsciiSTL(r io.Reader, filename string) (*MeshStats, error) {
 
 func parseOBJ(r io.Reader, filename string) (*MeshStats, error) {
 	scanner := bufio.NewScanner(r)
+	scanner.Buffer(make([]byte, 0, 64*1024), 1024*1024)
 	stats := &MeshStats{
 		Filename: filename,
 		Format:   "Wavefront OBJ",
@@ -255,10 +260,13 @@ func parseOBJ(r io.Reader, filename string) (*MeshStats, error) {
 		switch fields[0] {
 		case "v":
 			if len(fields) >= 4 {
-				x, _ := strconv.ParseFloat(fields[1], 64)
-				y, _ := strconv.ParseFloat(fields[2], 64)
-				z, _ := strconv.ParseFloat(fields[3], 64)
+				x, errX := strconv.ParseFloat(fields[1], 64)
+				y, errY := strconv.ParseFloat(fields[2], 64)
+				z, errZ := strconv.ParseFloat(fields[3], 64)
 				pt := Point3D{X: x, Y: y, Z: z}
+				if errX != nil || errY != nil || errZ != nil || !isFinitePoint(pt) {
+					return nil, fmt.Errorf("invalid OBJ vertex coordinates")
+				}
 				vertices = append(vertices, pt)
 				updateBounds(stats, pt)
 			}
@@ -268,14 +276,22 @@ func parseOBJ(r io.Reader, filename string) (*MeshStats, error) {
 			for i := 1; i < len(fields); i++ {
 				parts := strings.Split(fields[i], "/")
 				idx, err := strconv.Atoi(parts[0])
-				if err == nil {
-					// OBJ 1-based indexing, or negative for relative
-					if idx > 0 {
-						faceIndices = append(faceIndices, idx-1)
-					} else if idx < 0 {
-						faceIndices = append(faceIndices, len(vertices)+idx)
-					}
+				if err != nil {
+					return nil, fmt.Errorf("invalid OBJ face vertex index '%s'", parts[0])
 				}
+				// OBJ 1-based indexing, or negative for relative
+				var resolved int
+				if idx > 0 {
+					resolved = idx - 1
+				} else if idx < 0 {
+					resolved = len(vertices) + idx
+				} else {
+					return nil, fmt.Errorf("invalid OBJ face vertex index 0")
+				}
+				if resolved < 0 || resolved >= len(vertices) {
+					return nil, fmt.Errorf("OBJ face vertex index %d out of range", idx)
+				}
+				faceIndices = append(faceIndices, resolved)
 			}
 
 			if len(faceIndices) >= 3 {
@@ -289,6 +305,9 @@ func parseOBJ(r io.Reader, filename string) (*MeshStats, error) {
 				}
 			}
 		}
+	}
+	if err := scanner.Err(); err != nil {
+		return nil, fmt.Errorf("failed to read OBJ: %w", err)
 	}
 
 	stats.VertexCount = len(vertices)
@@ -338,6 +357,8 @@ type Triangle3MF struct {
 	V3 int `xml:"v3,attr"`
 }
 
+const max3MFModelBytes = 64 << 20 // 64 MB uncompressed XML cap against zip bombs
+
 func parse3MF(r io.ReaderAt, size int64, filename string) (*MeshStats, error) {
 	zipReader, err := zip.NewReader(r, size)
 	if err != nil {
@@ -355,6 +376,9 @@ func parse3MF(r io.ReaderAt, size int64, filename string) (*MeshStats, error) {
 	if modelFile == nil {
 		return nil, fmt.Errorf("invalid 3MF: missing .model XML geometry file")
 	}
+	if modelFile.UncompressedSize64 > max3MFModelBytes {
+		return nil, fmt.Errorf("3MF model XML exceeds maximum uncompressed size of 64MB")
+	}
 
 	rc, err := modelFile.Open()
 	if err != nil {
@@ -362,10 +386,17 @@ func parse3MF(r io.ReaderAt, size int64, filename string) (*MeshStats, error) {
 	}
 	defer rc.Close()
 
+	limited := &io.LimitedReader{R: rc, N: max3MFModelBytes + 1}
 	var model Model3MF
-	decoder := xml.NewDecoder(rc)
+	decoder := xml.NewDecoder(limited)
 	if err := decoder.Decode(&model); err != nil {
+		if limited.N == 0 {
+			return nil, fmt.Errorf("3MF model XML exceeds maximum uncompressed size of 64MB")
+		}
 		return nil, fmt.Errorf("failed to parse 3MF XML structure: %w", err)
+	}
+	if limited.N == 0 {
+		return nil, fmt.Errorf("3MF model XML exceeds maximum uncompressed size of 64MB")
 	}
 
 	stats := &MeshStats{
@@ -385,19 +416,24 @@ func parse3MF(r io.ReaderAt, size int64, filename string) (*MeshStats, error) {
 		vertexCount += len(verts)
 
 		for _, v := range verts {
-			updateBounds(stats, Point3D{X: v.X, Y: v.Y, Z: v.Z})
+			pt := Point3D{X: v.X, Y: v.Y, Z: v.Z}
+			if !isFinitePoint(pt) {
+				return nil, fmt.Errorf("invalid 3MF: non-finite vertex coordinate")
+			}
+			updateBounds(stats, pt)
 		}
 
 		for _, t := range obj.Mesh.Triangles.Triangles {
-			if t.V1 < len(verts) && t.V2 < len(verts) && t.V3 < len(verts) {
-				p1 := Point3D{X: verts[t.V1].X, Y: verts[t.V1].Y, Z: verts[t.V1].Z}
-				p2 := Point3D{X: verts[t.V2].X, Y: verts[t.V2].Y, Z: verts[t.V2].Z}
-				p3 := Point3D{X: verts[t.V3].X, Y: verts[t.V3].Y, Z: verts[t.V3].Z}
-
-				totalVol += signedVolumeOfTriangle(p1, p2, p3)
-				totalArea += areaOfTriangle(p1, p2, p3)
-				triangleCount++
+			if t.V1 < 0 || t.V2 < 0 || t.V3 < 0 || t.V1 >= len(verts) || t.V2 >= len(verts) || t.V3 >= len(verts) {
+				return nil, fmt.Errorf("invalid 3MF: triangle vertex index out of range")
 			}
+			p1 := Point3D{X: verts[t.V1].X, Y: verts[t.V1].Y, Z: verts[t.V1].Z}
+			p2 := Point3D{X: verts[t.V2].X, Y: verts[t.V2].Y, Z: verts[t.V2].Z}
+			p3 := Point3D{X: verts[t.V3].X, Y: verts[t.V3].Y, Z: verts[t.V3].Z}
+
+			totalVol += signedVolumeOfTriangle(p1, p2, p3)
+			totalArea += areaOfTriangle(p1, p2, p3)
+			triangleCount++
 		}
 	}
 

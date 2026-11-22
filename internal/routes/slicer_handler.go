@@ -8,12 +8,18 @@ import (
 	"math"
 	"net/http"
 	"net/url"
+	"path/filepath"
 	"strconv"
 	"strings"
 
 	"github.com/pocketbase/pocketbase/core"
 	"jiddat3d/internal/compiler"
 	"jiddat3d/internal/slicer"
+)
+
+const (
+	maxModelUploadBytes = 40 << 20
+	maxMultipartBytes   = maxModelUploadBytes + (1 << 20)
 )
 
 // RegisterSlicerRoutes wires up the server-side instant slicer and HTMX endpoints
@@ -25,10 +31,12 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 		filaments := getActiveFilaments(app)
 
 		siteMap := map[string]any{
-			"whatsapp_business_number": "03001318112",
+			"whatsapp_business_number": "923001318112",
 		}
 		if siteRec, err := app.FindFirstRecordByFilter("site_settings", "1=1"); err == nil && siteRec != nil {
-			siteMap["whatsapp_business_number"] = siteRec.GetString("whatsapp_business_number")
+			if num := siteRec.GetString("whatsapp_business_number"); num != "" {
+				siteMap["whatsapp_business_number"] = num
+			}
 		}
 
 		data := compiler.TemplateData{
@@ -52,9 +60,13 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 
 	// 2. Preemptive / Speculative Upload Endpoint: POST /api/instant-slice
 	e.Router.POST("/api/instant-slice", func(c *core.RequestEvent) error {
-		// Limit upload to 40 MB
-		if err := c.Request.ParseMultipartForm(40 << 20); err != nil {
+		// Enforce hard 40MB upload cap at the HTTP body boundary
+		c.Request.Body = http.MaxBytesReader(c.Response, c.Request.Body, maxMultipartBytes)
+		if err := c.Request.ParseMultipartForm(maxModelUploadBytes); err != nil {
 			return c.HTML(http.StatusBadRequest, renderErrorCard("File too large. Maximum supported upload is 40MB."))
+		}
+		if c.Request.MultipartForm != nil {
+			defer c.Request.MultipartForm.RemoveAll()
 		}
 
 		file, header, err := c.Request.FormFile("model")
@@ -64,15 +76,18 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 		defer file.Close()
 
 		filename := header.Filename
-		ext := strings.ToLower(filename[strings.LastIndex(filename, "."):])
+		ext := strings.ToLower(filepath.Ext(filename))
 		if ext != ".3mf" && ext != ".obj" && ext != ".stl" {
 			return c.HTML(http.StatusBadRequest, renderErrorCard("Unsupported file extension ("+ext+"). Please upload a .3mf, .obj, or .stl file."))
 		}
 
-		// Read into memory buffer for parsing
+		// Read into memory buffer with hard size cap
 		buf := bytes.NewBuffer(nil)
-		if _, err := io.Copy(buf, file); err != nil {
+		if _, err := io.Copy(buf, io.LimitReader(file, maxModelUploadBytes+1)); err != nil {
 			return c.HTML(http.StatusInternalServerError, renderErrorCard("Failed to read uploaded file buffer."))
+		}
+		if buf.Len() > maxModelUploadBytes {
+			return c.HTML(http.StatusRequestEntityTooLarge, renderErrorCard("File too large. Maximum supported upload is 40MB."))
 		}
 		fileBytes := buf.Bytes()
 
@@ -107,7 +122,7 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 		result := slicer.SliceAndCalculate(*mesh, chosenFilament, cfg)
 
 		// Render the reactive HTMX Result Partial
-		return c.HTML(http.StatusOK, renderQuoteResultHTML(result, filaments))
+		return c.HTML(http.StatusOK, renderQuoteResultHTML(result, filaments, getWhatsAppNumber(app)))
 	})
 
 	// 3. Reactive Recalculation Endpoint: POST /api/recalculate-quote
@@ -116,13 +131,16 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 			return c.HTML(http.StatusBadRequest, renderErrorCard("Invalid parameters."))
 		}
 
-		// Rebuild Mesh from hidden inputs
-		sizeX, _ := strconv.ParseFloat(c.Request.FormValue("mesh_size_x"), 64)
-		sizeY, _ := strconv.ParseFloat(c.Request.FormValue("mesh_size_y"), 64)
-		sizeZ, _ := strconv.ParseFloat(c.Request.FormValue("mesh_size_z"), 64)
-		volCm3, _ := strconv.ParseFloat(c.Request.FormValue("mesh_vol_cm3"), 64)
-		areaCm2, _ := strconv.ParseFloat(c.Request.FormValue("mesh_area_cm2"), 64)
-		triCount, _ := strconv.Atoi(c.Request.FormValue("mesh_tri_count"))
+		// Rebuild and validate Mesh from hidden inputs
+		sizeX, ok1 := parseNonNegFloat(c.Request.FormValue("mesh_size_x"))
+		sizeY, ok2 := parseNonNegFloat(c.Request.FormValue("mesh_size_y"))
+		sizeZ, ok3 := parseNonNegFloat(c.Request.FormValue("mesh_size_z"))
+		volCm3, ok4 := parseNonNegFloat(c.Request.FormValue("mesh_vol_cm3"))
+		areaCm2, ok5 := parseNonNegFloat(c.Request.FormValue("mesh_area_cm2"))
+		triCount, errTri := strconv.Atoi(c.Request.FormValue("mesh_tri_count"))
+		if !ok1 || !ok2 || !ok3 || !ok4 || !ok5 || errTri != nil || triCount < 0 {
+			return c.HTML(http.StatusBadRequest, renderErrorCard("Invalid mesh parameters. Please re-upload your 3D model."))
+		}
 		filename := c.Request.FormValue("mesh_filename")
 		format := c.Request.FormValue("mesh_format")
 
@@ -140,13 +158,20 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 		cfg := getActiveSlicerConfig(app)
 		filaments := getActiveFilaments(app)
 
-		if infillStr := c.Request.FormValue("infill"); infillStr != "" {
+		infillStr := c.Request.URL.Query().Get("infill")
+		if infillStr == "" {
+			infillStr = c.Request.FormValue("infill")
+		}
+		if infillStr != "" {
 			if infillVal, err := strconv.ParseFloat(infillStr, 64); err == nil && infillVal >= 5 && infillVal <= 100 {
 				cfg.InfillPercentage = infillVal
 			}
 		}
 
-		filamentID := c.Request.FormValue("filament")
+		filamentID := c.Request.URL.Query().Get("filament")
+		if filamentID == "" {
+			filamentID = c.Request.FormValue("filament")
+		}
 		chosenFilament := filaments[0]
 		for _, f := range filaments {
 			if f.ID == filamentID {
@@ -156,8 +181,25 @@ func RegisterSlicerRoutes(app core.App, e *core.ServeEvent) {
 		}
 
 		result := slicer.SliceAndCalculate(mesh, chosenFilament, cfg)
-		return c.HTML(http.StatusOK, renderQuoteResultHTML(result, filaments))
+		return c.HTML(http.StatusOK, renderQuoteResultHTML(result, filaments, getWhatsAppNumber(app)))
 	})
+}
+
+func parseNonNegFloat(s string) (float64, bool) {
+	v, err := strconv.ParseFloat(s, 64)
+	if err != nil || math.IsNaN(v) || math.IsInf(v, 0) || v < 0 || v > 1e7 {
+		return 0, false
+	}
+	return v, true
+}
+
+func getWhatsAppNumber(app core.App) string {
+	if siteRec, err := app.FindFirstRecordByFilter("site_settings", "1=1"); err == nil && siteRec != nil {
+		if num := strings.TrimPrefix(strings.TrimSpace(siteRec.GetString("whatsapp_business_number")), "+"); num != "" {
+			return num
+		}
+	}
+	return "923001318112"
 }
 
 func getActiveSlicerConfig(app core.App) slicer.SlicerConfig {
@@ -237,22 +279,24 @@ func renderErrorCard(message string) string {
 	`, template.HTMLEscapeString(message))
 }
 
-func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.FilamentProfile) string {
+func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.FilamentProfile, waNumber string) string {
+	infillPct := int(math.Round(res.Config.InfillPercentage))
 	whatsappMsg := fmt.Sprintf(
 		"Assalam o Alaikum Jiddat3D! I just used your instant server slicer for my model: %s\n"+
 			"• Dimensions: %.1f x %.1f x %.1f mm\n"+
-			"• Filament: %s [%.1fg]\n"+
+			"• Filament: %s [%.1fg, %d%% infill]\n"+
 			"• Estimated Print Time: %s\n"+
 			"• Instant Quote: Rs %d (Prepaid)\n"+
 			"I want to proceed with this print!",
 		res.Mesh.Filename,
 		res.Mesh.SizeX, res.Mesh.SizeY, res.Mesh.SizeZ,
-		res.Filament.Name, res.BufferedGrams,
+		res.Filament.Name, res.BufferedGrams, infillPct,
 		res.FormattedTime,
 		res.FinalPrice,
 	)
 
-	waURL := "https://wa.me/923001318112?text=" + url.QueryEscape(whatsappMsg)
+	waURL := "https://wa.me/" + url.PathEscape(waNumber) + "?text=" + url.QueryEscape(whatsappMsg)
+	escapedFilamentIDQuery := url.QueryEscape(res.Filament.ID)
 
 	// Build Filament Radio Options HTML
 	filamentRadios := ""
@@ -282,7 +326,7 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 				</div>
 				<span class="text-[11px] font-mono text-filament font-bold">Rs %d/g</span>
 			</label>
-		`, activeClasses, f.ID, checked, f.ColorHex, f.Name, f.Material, f.PricePerGram, f.PricePerGram)
+		`, activeClasses, template.HTMLEscapeString(f.ID), checked, template.HTMLEscapeString(f.ColorHex), template.HTMLEscapeString(f.Name), template.HTMLEscapeString(f.Material), f.PricePerGram, f.PricePerGram)
 	}
 
 	return fmt.Sprintf(`
@@ -298,6 +342,7 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 			<input type="hidden" name="mesh_vol_cm3" value="%.4f">
 			<input type="hidden" name="mesh_area_cm2" value="%.4f">
 			<input type="hidden" name="mesh_tri_count" value="%d">
+			<input type="hidden" name="infill" value="%d">
 		</form>
 
 		<!-- Model Diagnostics & Geometry Card -->
@@ -359,7 +404,7 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 					</div>
 					<div class="text-3xl font-display font-bold text-[#17C3B2] font-numeral">%.1fg</div>
 					<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight pt-1">
-						Extruded shell + 20%% infill (%s)
+						Extruded shell + %d%% infill (%s)
 					</div>
 				</div>
 
@@ -469,6 +514,7 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 		res.Mesh.SizeX, res.Mesh.SizeY, res.Mesh.SizeZ,
 		res.Mesh.VolumeCm3, res.Mesh.SurfaceAreaCm2,
 		res.Mesh.TriangleCount,
+		infillPct,
 
 		template.HTMLEscapeString(res.Mesh.Filename),
 		template.HTMLEscapeString(res.Mesh.Format),
@@ -480,14 +526,14 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 		res.LayerCount,
 
 		res.BufferedGrams,
-		res.Filament.Name,
+		infillPct, template.HTMLEscapeString(res.Filament.Name),
 
-		int(math.Round(res.Config.InfillPercentage)),
+		infillPct,
 
-		res.Filament.ID, getInfillBtnClass(res.Config.InfillPercentage, 15),
-		res.Filament.ID, getInfillBtnClass(res.Config.InfillPercentage, 20),
-		res.Filament.ID, getInfillBtnClass(res.Config.InfillPercentage, 40),
-		res.Filament.ID, getInfillBtnClass(res.Config.InfillPercentage, 100),
+		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 15),
+		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 20),
+		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 40),
+		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 100),
 
 		filamentRadios,
 
