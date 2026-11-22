@@ -28,7 +28,7 @@ func init() {
 
 		// Seed Default Slicer Setting Record
 		defaultSetting := core.NewRecord(slicerSettings)
-		defaultSetting.Set("name", "Jiddat CoreXY / Mark-1 0.20mm Production Profile")
+		defaultSetting.Set("name", "Cbot CN-1 0.4mm Nozzle (V11 Production Profile)")
 		defaultSetting.Set("time_multiplier", 1.5)
 		defaultSetting.Set("weight_multiplier", 1.5)
 		defaultSetting.Set("machine_hourly_rate", 250)

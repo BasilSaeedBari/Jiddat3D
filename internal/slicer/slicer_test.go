@@ -263,3 +263,67 @@ func TestSliceAndCalculate_PricingAndInfill(t *testing.T) {
 		t.Fatalf("expected minimum Rs 150 floor, got %d", qLow.FinalPrice)
 	}
 }
+
+func TestCbotCN1Preset_RulesSpeedsAccelerationsAndLimits(t *testing.T) {
+	cfg := DefaultSlicerConfig()
+	p := cfg.Preset
+
+	// Verify exact Cbot CN-1 0.4 nozzle + V11 preset specs
+	if p.NozzleDiameterMm != 0.4 || p.BuildXMm != 200 || p.BuildYMm != 200 || p.BuildZMm != 200 {
+		t.Fatalf("unexpected nozzle/build volume: %.2fmm, %.0fx%.0fx%.0f", p.NozzleDiameterMm, p.BuildXMm, p.BuildYMm, p.BuildZMm)
+	}
+	if p.OuterWallSpeedMmS != 50 || p.InnerWallSpeedMmS != 80 || p.SparseInfillSpeedMmS != 150 || p.TopSurfaceSpeedMmS != 40 || p.TravelSpeedMmS != 150 {
+		t.Fatalf("unexpected V11 process speeds: %+v", p)
+	}
+	if p.OuterWallAccelMmS2 != 800 || p.InnerWallAccelMmS2 != 1200 || p.SparseInfillAccelMmS2 != 1500 || p.MaxAccelXMmS2 != 2000 || p.MaxAccelExtrudingMmS2 != 1500 {
+		t.Fatalf("unexpected V11 accelerations: %+v", p)
+	}
+	if p.RetractionLengthMm != 6.0 || p.RetractionSpeedMmS != 35 || p.ZHopMm != 0.4 || p.PrepareCompensationSec != 260 {
+		t.Fatalf("unexpected retraction/zhop/prepare values: %+v", p)
+	}
+	if cfg.InfillPercentage != 10.0 || cfg.WallPerimeters != 2 {
+		t.Fatalf("expected V11 default 10%% infill & 2 walls, got %.1f%% & %d walls", cfg.InfillPercentage, cfg.WallPerimeters)
+	}
+
+	// Verify volumetric flow clamping: 150 mm/s sparse infill @ 0.45 x 0.20mm = 13.5 mm^3/s
+	// must clamp to <= 12.0 / (0.45 * 0.20) = 133.33 mm/s under White PLA 12 mm^3/s cap.
+	clampedSpeed := effectiveSegmentSpeedMmS(150, 200, 1500, 1500, 20, 35, 0.45, 0.20, 12.0, 500)
+	if clampedSpeed > 133.34 {
+		t.Fatalf("expected volumetric-clamped speed <= 133.33 mm/s, got %.2f mm/s", clampedSpeed)
+	}
+
+	// Verify kinematics sensitivity: halving accelerations must strictly increase RawHours.
+	mesh := MeshStats{
+		Filename:       "bracket.stl",
+		Format:         "Binary STL",
+		SizeX:          50,
+		SizeY:          50,
+		SizeZ:          50,
+		VolumeCm3:      125,
+		SurfaceAreaCm2: 150,
+		TriangleCount:  12,
+	}
+	fil := DefaultFilaments()[0]
+	baseQuote := SliceAndCalculate(mesh, fil, cfg)
+
+	slowAccelCfg := DefaultSlicerConfig()
+	slowAccelCfg.Preset.OuterWallAccelMmS2 = 400
+	slowAccelCfg.Preset.InnerWallAccelMmS2 = 600
+	slowAccelCfg.Preset.SparseInfillAccelMmS2 = 750
+	slowAccelCfg.Preset.MaxAccelExtrudingMmS2 = 750
+	slowQuote := SliceAndCalculate(mesh, fil, slowAccelCfg)
+	if slowQuote.RawHours <= baseQuote.RawHours {
+		t.Fatalf("expected lower acceleration to increase print time (slow=%.3fh <= base=%.3fh)", slowQuote.RawHours, baseQuote.RawHours)
+	}
+
+	// Verify build volume boundary check (200x200x200mm)
+	if baseQuote.ExceedsBuildVolume {
+		t.Fatalf("50mm cube should fit within 200x200x200mm build volume")
+	}
+	oversize := mesh
+	oversize.SizeX = 240
+	overQuote := SliceAndCalculate(oversize, fil, cfg)
+	if !overQuote.ExceedsBuildVolume {
+		t.Fatalf("240mm wide part should flag ExceedsBuildVolume for 200mm Cbot CN-1 bed")
+	}
+}

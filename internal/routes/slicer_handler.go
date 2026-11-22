@@ -281,16 +281,18 @@ func renderErrorCard(message string) string {
 
 func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.FilamentProfile, waNumber string) string {
 	infillPct := int(math.Round(res.Config.InfillPercentage))
+	preset := res.Config.Preset
 	whatsappMsg := fmt.Sprintf(
-		"Assalam o Alaikum Jiddat3D! I just used your instant server slicer for my model: %s\n"+
+		"Assalam o Alaikum Jiddat3D! I just used your instant server slicer (%s) for my model: %s\n"+
 			"• Dimensions: %.1f x %.1f x %.1f mm\n"+
-			"• Filament: %s [%.1fg, %d%% infill]\n"+
+			"• Filament: %s [%.1fg, %d%% %s infill]\n"+
 			"• Estimated Print Time: %s\n"+
 			"• Instant Quote: Rs %d (Prepaid)\n"+
 			"I want to proceed with this print!",
+		preset.Name,
 		res.Mesh.Filename,
 		res.Mesh.SizeX, res.Mesh.SizeY, res.Mesh.SizeZ,
-		res.Filament.Name, res.BufferedGrams, infillPct,
+		res.Filament.Name, res.BufferedGrams, infillPct, preset.InfillPattern,
 		res.FormattedTime,
 		res.FinalPrice,
 	)
@@ -298,18 +300,28 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 	waURL := "https://wa.me/" + url.PathEscape(waNumber) + "?text=" + url.QueryEscape(whatsappMsg)
 	escapedFilamentIDQuery := url.QueryEscape(res.Filament.ID)
 
+	buildVolBanner := ""
+	if res.ExceedsBuildVolume {
+		buildVolBanner = fmt.Sprintf(`
+			<div class="mt-4 p-3 rounded-[6px] bg-filament/10 border border-filament/40 text-xs text-parchment-ink dark:text-ink flex items-start gap-2.5">
+				<span class="font-mono text-gold-focal font-bold shrink-0">NOTE</span>
+				<p class="leading-relaxed">Part exceeds the standard <strong>%s</strong> envelope (%.0f &times; %.0f &times; %.0f mm). We can split-print or route this to our large-format <strong>Jiddat L-500</strong> on WhatsApp confirmation.</p>
+			</div>
+		`, template.HTMLEscapeString(preset.PrinterModel), preset.BuildXMm, preset.BuildYMm, preset.BuildZMm)
+	}
+
 	// Build Filament Radio Options HTML
 	filamentRadios := ""
 	for _, f := range filaments {
 		checked := ""
-		activeClasses := "border-[#E5DEC9] dark:border-[#28303F] bg-white/70 dark:bg-[#14181F]/70"
+		activeClasses := "border-parchment-border dark:border-workshop-border bg-parchment-bg dark:bg-workshop-bg hover:border-filament/60"
 		if f.ID == res.Filament.ID {
 			checked = "checked"
-			activeClasses = "border-filament bg-filament/10 dark:bg-filament/15 shadow-sm ring-1 ring-filament"
+			activeClasses = "border-filament bg-filament/10 dark:bg-filament/20 shadow-sm ring-1 ring-filament"
 		}
 
 		filamentRadios += fmt.Sprintf(`
-			<label class="p-3 rounded-[12px_2px_12px_2px] border cursor-pointer transition-all flex items-center justify-between text-xs %s">
+			<label class="p-3 rounded-[8px] border cursor-pointer transition-all flex items-center justify-between text-xs focus-within:ring-2 focus-within:ring-filament %s">
 				<div class="flex items-center gap-2.5">
 					<input type="radio" name="filament" value="%s" %s 
 						hx-post="/api/recalculate-quote" 
@@ -317,14 +329,14 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 						hx-target="#quote-result" 
 						class="accent-filament">
 					<div>
-						<div class="font-semibold text-parchment-ink dark:text-white flex items-center gap-1.5">
+						<div class="font-semibold text-parchment-ink dark:text-ink flex items-center gap-1.5">
 							<span class="w-2.5 h-2.5 rounded-full inline-block border border-black/20" style="background-color: %s;"></span>
 							<span>%s</span>
 						</div>
-						<div class="text-[10px] text-[#635D54] dark:text-[#9DA3AF]">%s &bull; Rs %d/g</div>
+						<div class="text-[10px] text-parchment-muted dark:text-ink-muted">%s &bull; Rs %d/g</div>
 					</div>
 				</div>
-				<span class="text-[11px] font-mono text-filament font-bold">Rs %d/g</span>
+				<span class="text-[11px] font-mono text-gold-focal font-bold">Rs %d/g</span>
 			</label>
 		`, activeClasses, template.HTMLEscapeString(f.ID), checked, template.HTMLEscapeString(f.ColorHex), template.HTMLEscapeString(f.Name), template.HTMLEscapeString(f.Material), f.PricePerGram, f.PricePerGram)
 	}
@@ -346,90 +358,97 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 		</form>
 
 		<!-- Model Diagnostics & Geometry Card -->
-		<div class="nouveau-card p-6 bg-parchment-surface dark:bg-[#14181F] border border-[#E5DEC9] dark:border-[#28303F] shadow-lg">
-			<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E2D7C7] dark:border-[#28303F] pb-4 mb-4">
+		<div class="nouveau-card p-6 bg-parchment-surface dark:bg-workshop-surface border border-parchment-border dark:border-workshop-border shadow-lg">
+			<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-parchment-border dark:border-workshop-border pb-4 mb-4">
 				<div class="flex items-center gap-3">
-					<div class="w-10 h-10 rounded-[10px_2px_10px_2px] bg-filament/10 text-filament flex items-center justify-center text-xl shrink-0">
-						📦
+					<div class="w-10 h-10 rounded-[6px] bg-plum-mist dark:bg-plum-dark border border-plum/30 dark:border-plum-light/30 text-gold-focal flex items-center justify-center font-mono text-xs font-bold shrink-0">
+						3D
 					</div>
 					<div>
-						<div class="font-display font-bold text-base text-parchment-ink dark:text-white line-clamp-1">%s</div>
-						<div class="text-[11px] font-mono text-[#635D54] dark:text-[#9DA3AF]">%s &bull; <span class="font-numeral font-bold">%d</span> triangles</div>
+						<div class="font-display font-bold text-base text-parchment-ink dark:text-ink line-clamp-1">%s</div>
+						<div class="text-[11px] font-mono text-parchment-muted dark:text-ink-muted">%s &bull; <span class="font-numeral font-bold">%d</span> triangles</div>
 					</div>
 				</div>
-				<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[8px_2px_8px_2px] bg-[#3DDC84]/10 text-[#3DDC84] border border-[#3DDC84]/30 text-[10px] font-mono font-bold uppercase self-start sm:self-auto">
+				<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[4px] bg-[#3DDC84]/10 text-[#169C49] dark:text-[#3DDC84] border border-[#3DDC84]/30 text-[10px] font-mono font-bold uppercase self-start sm:self-auto">
 					✓ Geometry Verified
 				</span>
 			</div>
 
 			<!-- Bounding Dimensions Matrix -->
 			<div class="grid grid-cols-3 gap-3 text-center">
-				<div class="p-2.5 rounded-[10px_2px_10px_2px] bg-white/60 dark:bg-[#0C0E11]/60 border border-[#E5DEC9] dark:border-[#28303F]">
-					<span class="text-[10px] font-mono text-[#635D54] dark:text-[#9DA3AF] block uppercase">Width (X)</span>
-					<span class="text-sm font-bold font-numeral text-parchment-ink dark:text-white">%.1f mm</span>
+				<div class="p-2.5 rounded-[6px] bg-parchment-bg dark:bg-workshop-bg border border-plum/25 dark:border-plum-light/20">
+					<span class="text-[10px] font-mono text-parchment-muted dark:text-ink-muted block uppercase">Width (X)</span>
+					<span class="text-sm font-bold font-numeral text-parchment-ink dark:text-ink">%.1f mm</span>
 				</div>
-				<div class="p-2.5 rounded-[10px_2px_10px_2px] bg-white/60 dark:bg-[#0C0E11]/60 border border-[#E5DEC9] dark:border-[#28303F]">
-					<span class="text-[10px] font-mono text-[#635D54] dark:text-[#9DA3AF] block uppercase">Depth (Y)</span>
-					<span class="text-sm font-bold font-numeral text-parchment-ink dark:text-white">%.1f mm</span>
+				<div class="p-2.5 rounded-[6px] bg-parchment-bg dark:bg-workshop-bg border border-plum/25 dark:border-plum-light/20">
+					<span class="text-[10px] font-mono text-parchment-muted dark:text-ink-muted block uppercase">Depth (Y)</span>
+					<span class="text-sm font-bold font-numeral text-parchment-ink dark:text-ink">%.1f mm</span>
 				</div>
-				<div class="p-2.5 rounded-[10px_2px_10px_2px] bg-white/60 dark:bg-[#0C0E11]/60 border border-[#E5DEC9] dark:border-[#28303F]">
-					<span class="text-[10px] font-mono text-[#635D54] dark:text-[#9DA3AF] block uppercase">Height (Z)</span>
-					<span class="text-sm font-bold font-numeral text-parchment-ink dark:text-white">%.1f mm</span>
+				<div class="p-2.5 rounded-[6px] bg-parchment-bg dark:bg-workshop-bg border border-plum/25 dark:border-plum-light/20">
+					<span class="text-[10px] font-mono text-parchment-muted dark:text-ink-muted block uppercase">Height (Z)</span>
+					<span class="text-sm font-bold font-numeral text-parchment-ink dark:text-ink">%.1f mm</span>
 				</div>
 			</div>
+			%s
 		</div>
 
 		<!-- Sliced Toolpath & Material Estimation Box -->
-		<div class="nouveau-card p-6 bg-gradient-to-br from-parchment-surface via-[#FAF5EC] to-parchment-surface dark:from-[#14181F] dark:via-[#191524] dark:to-[#14181F] border-2 border-filament/40 shadow-xl space-y-6">
+		<div class="nouveau-card p-6 bg-parchment-surface dark:bg-workshop-surface border-2 border-filament/40 shadow-xl space-y-6">
 			
+			<!-- Active OrcaSlicer Preset Strip -->
+			<div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-plum/25 dark:border-plum-light/20 text-[11px] font-mono">
+				<span class="text-plum dark:text-plum-light font-bold uppercase tracking-wider">%s</span>
+				<span class="text-parchment-muted dark:text-ink-muted">%.2fmm &middot; %d walls &middot; %.0f/%.0f/%.0f mm/s &middot; %.0f mm/s&sup2;</span>
+			</div>
+
 			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 				
 				<!-- Estimated Print Time -->
-				<div class="p-5 rounded-[14px_3px_14px_3px] bg-white/80 dark:bg-[#0C0E11]/80 border border-[#E5DEC9] dark:border-[#28303F] space-y-1">
+				<div class="p-5 rounded-[8px] bg-parchment-bg dark:bg-workshop-bg border border-plum/25 dark:border-plum-light/20 space-y-1">
 					<div class="flex items-center justify-between">
-						<span class="text-[11px] font-mono uppercase tracking-wider text-[#635D54] dark:text-[#9DA3AF]">Estimated Print Time</span>
-						<span class="text-[9px] font-mono bg-filament/10 text-filament px-1.5 py-0.5 rounded font-bold">Calibrated Speed</span>
+						<span class="text-[11px] font-mono uppercase tracking-wider text-parchment-muted dark:text-ink-muted">Estimated Print Time</span>
+						<span class="text-[9px] font-mono bg-filament/15 text-gold-focal px-1.5 py-0.5 rounded font-bold">V11 Kinematics</span>
 					</div>
-					<div class="text-3xl font-display font-bold text-filament font-numeral">%s</div>
-					<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight pt-1">
-						Calculated for <span class="font-numeral font-bold">%d</span> layers @ 0.20mm standard resolution
+					<div class="text-3xl font-display font-bold text-gold-focal font-numeral">%s</div>
+					<div class="text-[11px] text-parchment-muted dark:text-ink-muted leading-tight pt-1">
+						Calculated for <span class="font-numeral font-bold">%d</span> layers @ %.2fmm (incl. heat/prime &amp; Z-hop)
 					</div>
 				</div>
 
 				<!-- Estimated Filament Weight -->
-				<div class="p-5 rounded-[14px_3px_14px_3px] bg-white/80 dark:bg-[#0C0E11]/80 border border-[#E5DEC9] dark:border-[#28303F] space-y-1">
+				<div class="p-5 rounded-[8px] bg-parchment-bg dark:bg-workshop-bg border border-plum/25 dark:border-plum-light/20 space-y-1">
 					<div class="flex items-center justify-between">
-						<span class="text-[11px] font-mono uppercase tracking-wider text-[#635D54] dark:text-[#9DA3AF]">Plastic Required</span>
-						<span class="text-[9px] font-mono bg-[#17C3B2]/10 text-[#17C3B2] px-1.5 py-0.5 rounded font-bold">Density Matched</span>
+						<span class="text-[11px] font-mono uppercase tracking-wider text-parchment-muted dark:text-ink-muted">Plastic Required</span>
+						<span class="text-[9px] font-mono bg-plum-mist dark:bg-plum-dark text-plum dark:text-plum-light px-1.5 py-0.5 rounded font-bold">Flow %.3f</span>
 					</div>
-					<div class="text-3xl font-display font-bold text-[#17C3B2] font-numeral">%.1fg</div>
-					<div class="text-[11px] text-[#635D54] dark:text-[#9DA3AF] leading-tight pt-1">
-						Extruded shell + %d%% infill (%s)
+					<div class="text-3xl font-display font-bold text-plum dark:text-plum-light font-numeral">%.1fg</div>
+					<div class="text-[11px] text-parchment-muted dark:text-ink-muted leading-tight pt-1">
+						%d walls + %d%% %s infill (%s)
 					</div>
 				</div>
 
 			</div>
 
-			<!-- Interactive Infill Density Slider -->
-			<div class="p-4 rounded-[12px_2px_12px_2px] bg-white/60 dark:bg-[#0C0E11]/60 border border-[#E5DEC9] dark:border-[#28303F]">
+			<!-- Interactive Infill Density Selector -->
+			<div class="p-4 rounded-[8px] bg-parchment-bg dark:bg-workshop-bg border border-parchment-border dark:border-workshop-border">
 				<div class="flex items-center justify-between mb-2">
-					<label class="text-xs font-semibold text-parchment-ink dark:text-white">Internal Infill Density:</label>
-					<span class="text-xs font-mono font-bold text-filament"><span class="font-numeral">%d</span>%% Infill</span>
+					<label class="text-xs font-semibold text-parchment-ink dark:text-ink">Internal Infill Density (%s):</label>
+					<span class="text-xs font-mono font-bold text-gold-focal"><span class="font-numeral">%d</span>%% Infill</span>
 				</div>
 				<div class="grid grid-cols-4 gap-2 text-xs font-mono">
 					<button type="button" 
-						hx-post="/api/recalculate-quote?infill=15&filament=%s" 
+						hx-post="/api/recalculate-quote?infill=10&filament=%s" 
 						hx-include="#recalc-params" 
 						hx-target="#quote-result" 
 						class="py-1.5 px-2 rounded border text-center transition-all %s">
-						15%% (Light)
+						10%% (V11)
 					</button>
 					<button type="button" 
 						hx-post="/api/recalculate-quote?infill=20&filament=%s" 
 						hx-include="#recalc-params" 
 						hx-target="#quote-result" 
 						class="py-1.5 px-2 rounded border text-center transition-all %s">
-						20%% (Standard)
+						20%% (Std)
 					</button>
 					<button type="button" 
 						hx-post="/api/recalculate-quote?infill=40&filament=%s" 
@@ -451,8 +470,8 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 			<!-- Selectable Filament Material Choices -->
 			<div>
 				<div class="flex items-center justify-between mb-2">
-					<span class="text-xs font-semibold text-parchment-ink dark:text-white">Choose Production Filament:</span>
-					<span class="text-[10px] font-mono text-[#635D54] dark:text-[#9DA3AF]">Default: White Basic PLA</span>
+					<span class="text-xs font-semibold text-parchment-ink dark:text-ink">Choose Production Filament:</span>
+					<span class="text-[10px] font-mono text-parchment-muted dark:text-ink-muted">Default: White Basic PLA (12 mm&sup3;/s)</span>
 				</div>
 				<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
 					%s
@@ -460,35 +479,35 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 			</div>
 
 			<!-- Comprehensive LayerInvoice Price Breakdown -->
-			<div class="border-t border-[#E2D7C7] dark:border-[#28303F] pt-5 space-y-3">
+			<div class="border-t border-parchment-border dark:border-workshop-border pt-5 space-y-3">
 				
-				<div class="flex items-center justify-between text-xs text-[#635D54] dark:text-[#9DA3AF]">
+				<div class="flex items-center justify-between text-xs text-parchment-muted dark:text-ink-muted">
 					<span>Filament Material Cost (%.1fg @ Rs %d/g):</span>
 					<span class="font-mono font-numeral">Rs %d</span>
 				</div>
-				<div class="flex items-center justify-between text-xs text-[#635D54] dark:text-[#9DA3AF]">
+				<div class="flex items-center justify-between text-xs text-parchment-muted dark:text-ink-muted">
 					<span>Machine Time Cost (%.1f hrs @ Rs %d/hr):</span>
 					<span class="font-mono font-numeral">Rs %d</span>
 				</div>
-				<div class="flex items-center justify-between text-xs text-[#635D54] dark:text-[#9DA3AF]">
-					<span>Electricity & Bench Preparation:</span>
+				<div class="flex items-center justify-between text-xs text-parchment-muted dark:text-ink-muted">
+					<span>Electricity &amp; Bench Preparation:</span>
 					<span class="font-mono font-numeral">Rs %d</span>
 				</div>
-				<div class="flex items-center justify-between text-xs text-[#635D54] dark:text-[#9DA3AF]">
-					<span>Quality Assurance & Risk Buffer (%d%%):</span>
+				<div class="flex items-center justify-between text-xs text-parchment-muted dark:text-ink-muted">
+					<span>Quality Assurance &amp; Risk Buffer (%d%%):</span>
 					<span class="font-mono font-numeral">Rs %d</span>
 				</div>
 
-				<div class="p-4 rounded-[12px_2px_12px_2px] bg-white dark:bg-[#0C0E11] border border-filament/40 flex items-center justify-between mt-3">
+				<div class="p-4 rounded-[8px] bg-parchment-bg dark:bg-workshop-bg border border-filament/45 flex items-center justify-between mt-3">
 					<div>
-						<span class="text-[10px] font-mono uppercase tracking-wider text-[#635D54] dark:text-[#9DA3AF] block">Total Prepaid Estimate</span>
-						<span class="text-3xl font-display font-bold text-parchment-ink dark:text-white font-numeral-italic">Rs %d</span>
+						<span class="text-[10px] font-mono uppercase tracking-wider text-parchment-muted dark:text-ink-muted block">Total Prepaid Estimate</span>
+						<span class="text-3xl font-display font-bold text-gold-focal font-numeral">Rs %d</span>
 					</div>
 					<div class="text-right">
-						<span class="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#3DDC84]/15 text-[#3DDC84] border border-[#3DDC84]/30 uppercase">
+						<span class="inline-block px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#3DDC84]/15 text-[#169C49] dark:text-[#3DDC84] border border-[#3DDC84]/30 uppercase">
 							100%% Prepaid Order
 						</span>
-						<span class="block text-[10px] text-[#635D54] dark:text-[#9DA3AF] mt-0.5">Karachi Dispatch</span>
+						<span class="block text-[10px] text-parchment-muted dark:text-ink-muted mt-0.5">Karachi Dispatch</span>
 					</div>
 				</div>
 
@@ -498,7 +517,7 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 						<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
 						<span>Lock In Order on WhatsApp (<span class="font-numeral">0300-1318112</span>)</span>
 					</a>
-					<p class="text-[11px] text-center text-[#635D54] dark:text-[#9DA3AF] mt-2">
+					<p class="text-[11px] text-center text-parchment-muted dark:text-ink-muted mt-2">
 						Your quote specs are copied to WhatsApp. Send your file for immediate engineer confirmation.
 					</p>
 				</div>
@@ -521,16 +540,24 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 		res.Mesh.TriangleCount,
 
 		res.Mesh.SizeX, res.Mesh.SizeY, res.Mesh.SizeZ,
+		buildVolBanner,
+
+		template.HTMLEscapeString(preset.Name),
+		res.Config.LayerHeightMm, res.Config.WallPerimeters,
+		preset.OuterWallSpeedMmS, preset.InnerWallSpeedMmS, preset.SparseInfillSpeedMmS,
+		preset.DefaultAccelMmS2,
 
 		res.FormattedTime,
-		res.LayerCount,
+		res.LayerCount, res.Config.LayerHeightMm,
 
+		res.Filament.FlowRatio,
 		res.BufferedGrams,
-		infillPct, template.HTMLEscapeString(res.Filament.Name),
+		res.Config.WallPerimeters, infillPct, template.HTMLEscapeString(preset.InfillPattern), template.HTMLEscapeString(res.Filament.Name),
 
+		template.HTMLEscapeString(preset.InfillPattern),
 		infillPct,
 
-		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 15),
+		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 10),
 		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 20),
 		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 40),
 		escapedFilamentIDQuery, getInfillBtnClass(res.Config.InfillPercentage, 100),
@@ -549,7 +576,7 @@ func renderQuoteResultHTML(res slicer.SlicedQuoteResult, filaments []slicer.Fila
 
 func getInfillBtnClass(currentInfill, targetInfill float64) string {
 	if math.Abs(currentInfill-targetInfill) < 1.0 {
-		return "bg-filament text-white border-filament font-bold"
+		return "bg-filament text-[#131217] border-filament font-bold"
 	}
-	return "bg-white/80 dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] border-[#E5DEC9] dark:border-[#28303F] hover:border-filament"
+	return "bg-parchment-surface dark:bg-workshop-surface text-parchment-muted dark:text-ink-muted border-parchment-border dark:border-workshop-border hover:border-filament"
 }
