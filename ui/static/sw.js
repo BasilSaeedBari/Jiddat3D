@@ -1,11 +1,11 @@
-const CACHE_NAME = 'jiddat3d-cache-v3';
+const CACHE_NAME = 'jiddat3d-cache-v4';
 
 const STATIC_ASSETS = [
-	'/static/css/output.css?v=3',
+	'/static/css/output.css?v=5',
 	'/static/js/htmx.min.js',
 	'/static/js/alpine.min.js',
 	'/static/js/scroll-reveal.js',
-	'/static/img/logo/JiddatBrightTrasnparent.png'
+	'/static/img/logo/JiddatBrightTrasnparent-removebg-preview.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -34,13 +34,18 @@ self.addEventListener('fetch', (event) => {
 	if (event.request.method !== 'GET') return;
 	
 	const url = new URL(event.request.url);
+
+	// Ignore cross-origin requests (e.g. Google Fonts, CDNs)
+	if (url.origin !== self.location.origin) {
+		return;
+	}
 	
 	// API and Admin UI should never be cached
 	if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/_/')) {
 		return;
 	}
 
-	// Static assets: Cache-first
+	// Static assets: Cache-first (only cache successful responses)
 	if (url.pathname.startsWith('/static/')) {
 		event.respondWith(
 			caches.match(event.request).then((cachedResponse) => {
@@ -48,24 +53,26 @@ self.addEventListener('fetch', (event) => {
 					return cachedResponse;
 				}
 				return fetch(event.request).then((networkResponse) => {
-					return caches.open(CACHE_NAME).then((cache) => {
-						cache.put(event.request, networkResponse.clone());
-						return networkResponse;
-					});
+					if (networkResponse && networkResponse.ok) {
+						const copy = networkResponse.clone();
+						caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+					}
+					return networkResponse;
 				});
 			})
 		);
 		return;
 	}
 
-	// HTML Pages: Network-first, fallback to cache
+	// HTML Pages: Network-first, fallback to cache (only cache successful responses)
 	event.respondWith(
 		fetch(event.request)
 			.then((networkResponse) => {
-				return caches.open(CACHE_NAME).then((cache) => {
-					cache.put(event.request, networkResponse.clone());
-					return networkResponse;
-				});
+				if (networkResponse && networkResponse.ok) {
+					const copy = networkResponse.clone();
+					caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+				}
+				return networkResponse;
 			})
 			.catch(() => {
 				return caches.match(event.request);

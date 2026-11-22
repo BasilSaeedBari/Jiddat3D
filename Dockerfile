@@ -24,8 +24,8 @@ RUN CGO_ENABLED=0 go build -ldflags="-s -w" -o /jiddat3d ./cmd/jiddat
 FROM alpine:3.20
 WORKDIR /app
 
-# Install runtime dependencies (cwebp for image processing, ca-certificates for TLS, mailcap for mime types)
-RUN apk add --no-cache libwebp-tools ca-certificates tzdata mailcap
+# Install runtime dependencies (ca-certificates for TLS, tzdata for timezone, mailcap for mime types)
+RUN apk add --no-cache ca-certificates tzdata mailcap
 
 COPY --from=builder /jiddat3d /app/jiddat3d
 COPY --from=builder /app/ui /app/ui

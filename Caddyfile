@@ -1,33 +1,22 @@
 # Caddyfile for Jiddat3D
-# Serves static assets, routes API traffic to PocketBase, handles SSL.
+# Serves static assets and reverse proxies dynamic routes, API, and Admin UI to PocketBase.
 
 {
-	email your-email@example.com
+	email info@jiddat3d.com
 }
 
 jiddat3d.com, www.jiddat3d.com {
-	# Reverse proxy API and Admin UI to PocketBase backend
-	handle_path /api/* {
-		reverse_proxy localhost:8080
-	}
-	handle_path /_/* {
-		reverse_proxy localhost:8080
-	}
-
-	# Serve /static from /app/ui/static
+	# Serve /static directly from /app/ui/static
 	handle_path /static/* {
 		root * /app/ui/static
 		file_server
 	}
 
-	# Serve cached HTML from pb_public
-	root * /app/pb_public
-	
-	# Try to serve raw path, then path + .html, then fallback to /home.html, then 404
-	try_files {path} {path}.html /cached{path} /cached{path}.html /cached/content{path} /cached/content{path}.html /cached/products{path} /cached/products{path}.html /404.html
-	
-	file_server
-	
+	# Reverse proxy API, Admin UI, and dynamic Go pages to PocketBase (port 8090)
+	handle {
+		reverse_proxy localhost:8090
+	}
+
 	# Enable compression
 	encode gzip zstd
 }
