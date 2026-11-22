@@ -8,7 +8,6 @@ import (
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 
-	"jiddat3d/internal/hooks"
 	"jiddat3d/internal/routes"
 	_ "jiddat3d/pb_migrations"
 )
@@ -29,9 +28,7 @@ func main() {
 	routes.RegisterPublicRoutes(app)
 
 	app.OnServe().BindFunc(func(e *core.ServeEvent) error {
-		hooks.RegisterContentHooks(app)
-		
-		// Register placeholder healthz route
+		// Register healthz route
 		e.Router.GET("/healthz", func(e *core.RequestEvent) error {
 			return e.String(200, "OK")
 		})

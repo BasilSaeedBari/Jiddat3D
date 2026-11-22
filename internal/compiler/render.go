@@ -2,10 +2,12 @@ package compiler
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 )
 
 // TemplateData holds the data passed to templates
@@ -18,23 +20,40 @@ type TemplateData struct {
 	List        []map[string]any
 }
 
+var (
+	tmplCacheMu sync.RWMutex
+	tmplCache   = make(map[string]*template.Template)
+)
+
 // SafeHTML helper
 func SafeHTML(s string) template.HTML {
 	return template.HTML(s)
 }
 
-// RenderTemplate parses the required templates and executes the specified page template
-func RenderTemplate(pageName string, data TemplateData) (string, error) {
-	// Parse all layouts and partials
+func loadTemplate(pageName string) (*template.Template, error) {
+	if filepath.Base(pageName) != pageName || strings.Contains(pageName, "..") {
+		return nil, fmt.Errorf("invalid template name: %s", pageName)
+	}
+
+	useCache := os.Getenv("ENV") != "development"
+	if useCache {
+		tmplCacheMu.RLock()
+		if cached, ok := tmplCache[pageName]; ok {
+			tmplCacheMu.RUnlock()
+			return cached, nil
+		}
+		tmplCacheMu.RUnlock()
+	}
+
 	layouts, err := filepath.Glob("ui/templates/layouts/*.html")
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	partials, err := filepath.Glob("ui/templates/partials/*.html")
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	
+
 	pagePath := filepath.Join("ui/templates/pages", pageName)
 
 	var allFiles []string
@@ -42,37 +61,32 @@ func RenderTemplate(pageName string, data TemplateData) (string, error) {
 	allFiles = append(allFiles, partials...)
 	allFiles = append(allFiles, pagePath)
 
-	tmpl, err := template.New(filepath.Base(pagePath)).Funcs(template.FuncMap{
-		"safeHTML": func(s string) template.HTML {
-			return template.HTML(s)
-		},
-		"hasPrefix": strings.HasPrefix,
-	}).ParseFiles(allFiles...)
+	tmpl, err := template.New(filepath.Base(pagePath)).ParseFiles(allFiles...)
+	if err != nil {
+		return nil, err
+	}
+
+	if useCache {
+		tmplCacheMu.Lock()
+		tmplCache[pageName] = tmpl
+		tmplCacheMu.Unlock()
+	}
+
+	return tmpl, nil
+}
+
+// RenderTemplate parses (and caches) the required templates and executes the specified page template
+func RenderTemplate(pageName string, data TemplateData) (string, error) {
+	tmpl, err := loadTemplate(pageName)
 	if err != nil {
 		return "", err
 	}
 
 	var buf bytes.Buffer
-	// Execute the "base" layout, which should embed the page content
+	// Execute the "base" layout, which embeds the page content
 	if err := tmpl.ExecuteTemplate(&buf, "base", data); err != nil {
 		return "", err
 	}
 
 	return buf.String(), nil
-}
-
-// WriteStaticPage writes the generated HTML to the pb_public/cached path
-func WriteStaticPage(collection, slug, html string) error {
-	path := filepath.Join("pb_public", "cached", collection)
-	if err := os.MkdirAll(path, 0755); err != nil {
-		return err
-	}
-	
-	filePath := filepath.Join(path, slug+".html")
-	return os.WriteFile(filePath, []byte(html), 0644)
-}
-
-func DeleteStaticPage(collection, slug string) error {
-	filePath := filepath.Join("pb_public", "cached", collection, slug+".html")
-	return os.Remove(filePath)
 }
