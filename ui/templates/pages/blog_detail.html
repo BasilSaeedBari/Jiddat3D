@@ -1,7 +1,7 @@
 {{ define "content" }}
 <article class="py-16 bg-parchment-bg dark:bg-[#0C0E11] text-parchment-ink dark:text-[#F4F1EA] min-h-screen transition-colors">
 	<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-		<a href="/blog" class="inline-flex items-center gap-2 text-filament hover:text-[#FF8038] font-mono text-xs mb-8 transition-colors">
+		<a href="/blog" class="inline-flex items-center gap-2 text-gold-focal hover:text-filament-hover font-mono text-xs mb-8 transition-colors">
 			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
 			Back to Blog
 		</a>
@@ -24,7 +24,7 @@
 		{{ end }}
 
 		<!-- Markdown Content Body -->
-		<div class="prose dark:prose-invert prose-orange max-w-none mb-16 leading-relaxed text-[#2D2A26] dark:text-[#D1D5DB]">
+		<div class="prose dark:prose-invert prose-amber max-w-none mb-16 leading-relaxed text-[#2D2A26] dark:text-[#D1D5DB]">
 			{{ .Body }}
 		</div>
 

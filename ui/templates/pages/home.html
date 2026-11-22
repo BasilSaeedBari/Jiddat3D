@@ -1,885 +1,572 @@
 {{ define "content" }}
-<!-- Hero Section (Light: Warm Artisan Parchment / Dark: Workshop Midnight) -->
-<section class="relative overflow-hidden pt-12 pb-20 md:py-24 bg-parchment-bg dark:bg-gradient-to-b dark:from-[#0C0E12] dark:via-[#141820] dark:to-[#0C0E12] border-b border-[#E2D7C7] dark:border-[#28303F] transition-colors">
-	<!-- Subtle Decorative Lattice Pattern Overlay -->
-	<div class="absolute inset-0 opacity-[0.04] dark:opacity-[0.035] pointer-events-none bg-grid-pattern"></div>
-	<div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-filament/10 blur-[130px] pointer-events-none"></div>
-	
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-		<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-			
-			<!-- Left Column: Copy & CTAs -->
-			<div class="lg:col-span-7 text-center lg:text-left space-y-6">
-				<!-- Live Stock Art Nouveau Badge -->
-				<div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-nouveau-sm bg-white dark:bg-[#1A1F29] border border-[#E2D7C7] dark:border-[#28303F] text-xs font-medium text-[#635D54] dark:text-[#9DA3AF] shadow-sm">
-					<span class="w-2.5 h-2.5 rounded-sm bg-[#3DDC84] animate-pulse"></span>
-					<span class="text-parchment-ink dark:text-white font-semibold">In Stock in Karachi Lab (Same-Day Dispatch)</span>
-					<span class="text-filament">&bull;</span>
-					<span>Nationwide Delivery</span>
-				</div>
+<!-- BAND 1: Editorial Asymmetric Hero (Machined Graphite in Dark / Warm Stone in Light) -->
+<section class="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-20 bg-parchment-bg dark:bg-workshop-bg border-b border-parchment-border dark:border-workshop-border transition-colors">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-end">
 
-				<h1 class="font-display text-hero font-bold text-parchment-ink dark:text-white leading-[1.08] tracking-tight">
+			<!-- Left Column: Bold Editorial Display Typography -->
+			<div class="lg:col-span-7 space-y-6" data-enter>
+				<h1 class="font-display text-hero font-extrabold text-parchment-ink dark:text-ink leading-[0.98] tracking-tight">
 					3D printers for Pakistan.<br>
-					<span class="text-transparent bg-clip-text bg-gradient-to-r from-filament via-[#FF8038] to-[#E5A93C]">Bought here. Fixed here. Taught here.</span>
+					<span class="font-editorial-italic text-gold-focal font-normal">Built here.</span> Fixed here.
 				</h1>
 
-				<p class="text-lg md:text-xl text-[#635D54] dark:text-[#9DA3AF] leading-relaxed max-w-2xl mx-auto lg:mx-0">
-					We sell genuine 3D printers you can trust, fix them in our Karachi lab with local spare parts, and teach students or engineering teams how to turn digital ideas into real plastic parts.
+				<p class="text-lg md:text-xl text-parchment-muted dark:text-ink-muted leading-relaxed max-w-2xl">
+					In-house CoreXY and Cartesian 3D printers designed, bench-calibrated, and supported from our Karachi engineering lab — plus an instant server-side 3D slicer that prices your CAD parts in rupees in seconds.
 				</p>
 
-				<!-- Urdu Tagline -->
-				<p class="text-base text-teal font-medium tracking-wide">
-					ڈیزائن کریں۔ پرنٹ کریں۔ ہاتھ میں پکڑیں۔
+				<!-- Urdu Tagline in Nastaliq -->
+				<p class="font-urdu text-lg text-plum dark:text-plum-light leading-loose pt-1 text-left" dir="rtl" lang="ur">
+					ڈیزائن کریں۔ پرنٹ کریں۔ اپنا بنائیں۔
 				</p>
 
-				<!-- CTAs (Art Nouveau Angled/Whiplash Buttons) -->
-				<div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-					<a href="/printers" class="btn-filament w-full sm:w-auto text-base px-7 py-3.5">
-						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-						<span>Explore 3D Printers</span>
+				<!-- Two Disciplined Hero Actions -->
+				<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2" data-enter data-enter-delay="1">
+					<a href="/instant-quote" class="btn-filament text-base px-7 py-3.5">
+						<span>Upload CAD for Instant Quote</span>
+						<span aria-hidden="true">&rarr;</span>
 					</a>
-					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20am%20interested%20in%20buying%20a%203D%20printer.%20Can%20you%20guide%20me%3F" target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full sm:w-auto text-base px-6 py-3.5">
-						<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-						<span>Chat <span class="font-numeral">0300-1318112</span></span>
-					</a>
-					<a href="/instant-quote" class="btn-secondary w-full sm:w-auto text-base px-6 py-3.5 flex items-center justify-center gap-1.5 border border-filament/30 hover:border-filament">
-						<span class="text-filament font-bold">⚡</span>
-						<span>Instant 3D Slicer &rarr;</span>
+					<a href="/printers" class="btn-secondary text-base px-7 py-3.5">
+						<span>Explore 6 Machines</span>
 					</a>
 				</div>
 
-				<!-- Quick Badges -->
-				<div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs text-[#635D54] dark:text-[#9DA3AF]">
-					<span class="flex items-center gap-1.5"><strong class="text-filament font-bold">✓</strong> <span class="font-numeral">6</span>-Month & Edu Warranty</span>
-					<span class="flex items-center gap-1.5"><strong class="text-filament font-bold">✓</strong> 100% Open Source Architecture</span>
-					<span class="flex items-center gap-1.5"><strong class="text-filament font-bold">✓</strong> Prepaid Custom Builds (IBFT/Raast)</span>
-				</div>
+				<p class="text-xs font-mono text-parchment-muted dark:text-ink-muted pt-1">
+					Questions or FYP urgent print? <a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20have%20an%20inquiry%20about%20Jiddat3D." target="_blank" rel="noopener noreferrer" class="text-parchment-ink dark:text-ink underline decoration-filament underline-offset-4 hover:text-gold-focal transition-colors">Message Karachi engineers on WhatsApp (0300-1318112)</a>
+				</p>
 			</div>
 
-			<!-- Right Column: Interactive 3D Machine Simulation Card with Art Nouveau Cartouche Frame -->
-			<div class="lg:col-span-5">
-				<div class="workshop-card p-6 relative overflow-hidden bg-white dark:bg-gradient-to-b dark:from-[#1B202A] dark:to-[#12161D] border-2 border-[#E2D7C7] dark:border-[#2C3545] shadow-xl">
-					<!-- Top Machine Status Bar -->
-					<div class="flex items-center justify-between pb-4 border-b border-[#E2D7C7] dark:border-[#28303F] text-xs font-mono">
-						<div class="flex items-center gap-2 text-[#3DDC84]">
-							<span class="w-2.5 h-2.5 rounded-sm bg-[#3DDC84] animate-pulse"></span>
-							<span class="font-semibold uppercase tracking-wider">Jiddat Karachi Lab Printing</span>
-						</div>
-						<span class="text-[#635D54] dark:text-[#9DA3AF]">Bench #<span class="font-numeral">01</span></span>
+			<!-- Right Column: Architectural Hardware Elevation Dossier -->
+			<div class="lg:col-span-5" data-enter data-enter-delay="2">
+				<div class="rounded-[8px] border border-plum/30 dark:border-plum/45 bg-parchment-surface dark:bg-workshop-surface overflow-hidden">
+					<!-- Dossier Header -->
+					<div class="px-5 py-3.5 bg-plum-mist/60 dark:bg-plum-dark/80 border-b border-plum/25 dark:border-plum/45 flex items-center justify-between text-[11px] font-mono">
+						<span class="uppercase tracking-widest text-parchment-ink dark:text-ink font-semibold">SPEC SHEET // JIDDAT-APEX</span>
+						<span class="text-gold-focal font-semibold">KARACHI LAB</span>
 					</div>
 
-					<!-- Visual 3D Printer Graphical Simulation -->
-					<div class="my-6 relative h-64 bg-[#F2EDE4] dark:bg-[#0C0E12] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] overflow-hidden flex flex-col justify-end p-4">
-						<!-- Grid Bed -->
-						<div class="absolute inset-0 bg-grid-pattern opacity-40"></div>
-						
-						<!-- Gantry Light / Hotend simulation -->
-						<div class="absolute top-12 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-filament to-transparent opacity-80"></div>
-						<div class="absolute top-10 left-1/2 -translate-x-1/2 w-8 h-8 rounded-nouveau-sm bg-white dark:bg-[#1A1F29] border border-filament flex items-center justify-center shadow-[0_0_15px_rgba(255,106,26,0.8)]">
-							<div class="w-2.5 h-2.5 rounded-sm bg-[#FF8038] animate-ping"></div>
+					<!-- Precision CAD Elevation Viewport -->
+					<div class="relative h-60 bg-parchment-subtle dark:bg-[#0F0E13] bg-grid-pattern border-b border-plum/20 dark:border-plum/35 p-5 flex flex-col justify-between">
+						<!-- Corner CAD crosshairs -->
+						<div class="flex items-center justify-between text-[10px] font-mono text-parchment-muted dark:text-ink-muted">
+							<span>X: 300 mm</span>
+							<span>Y: 300 mm</span>
+							<span>Z: 330 mm</span>
 						</div>
 
-						<!-- Extrusion Glow Beam -->
-						<div class="absolute top-16 left-1/2 -translate-x-1/2 w-0.5 h-24 bg-gradient-to-b from-filament to-transparent"></div>
-
-						<!-- Layer-by-layer Building Model Representation -->
-						<div class="relative z-10 mx-auto w-32 h-28 bg-gradient-to-t from-filament/90 via-[#FF8038]/70 to-[#FFA066]/50 rounded-t-nouveau-sm border-t-2 border-[#FFE3D1] shadow-[0_0_25px_rgba(255,106,26,0.4)] flex flex-col items-center justify-center text-center p-2">
-							<span class="text-[10px] font-mono text-white/90 uppercase tracking-wider font-semibold">Functional Part</span>
-							<span class="text-xs font-display font-bold text-white mt-1">Robotics Bracket</span>
-							<span class="text-[11px] font-numeral text-white font-bold"><span class="font-numeral">78%</span> Complete</span>
+						<!-- Clean Technical Wireframe CoreXY Schematic SVG (Charcoal + Dusty Purple + Gold focal) -->
+						<div class="my-auto flex items-center justify-center">
+							<svg class="w-44 h-32 text-parchment-ink dark:text-ink" viewBox="0 0 220 150" fill="none" aria-label="Jiddat Apex CoreXY technical gantry schematic">
+								<!-- Outer Rigid Frame -->
+								<rect x="28" y="14" width="164" height="122" stroke="currentColor" stroke-width="1.5"/>
+								<rect x="38" y="24" width="144" height="102" stroke="#8F7CA0" stroke-opacity="0.45" stroke-dasharray="3 3" stroke-width="1"/>
+								<!-- Linear Rail Gantry (Burnished Gold) -->
+								<line x1="38" y1="54" x2="182" y2="54" stroke="#D4A843" stroke-width="2"/>
+								<!-- Printhead Carriage (Burnished Gold) -->
+								<rect x="96" y="42" width="28" height="24" rx="2" fill="#D4A843"/>
+								<path d="M107 66 L110 74 L113 66 Z" fill="#D4A843"/>
+								<!-- Heated Bed Platform -->
+								<line x1="56" y1="108" x2="164" y2="108" stroke="currentColor" stroke-width="2.5"/>
+								<!-- Printed Part Silhouette -->
+								<path d="M84 108 L84 82 L100 82 L100 92 L120 92 L120 78 L136 78 L136 108 Z" fill="#D4A843" fill-opacity="0.22" stroke="#D4A843" stroke-width="1.5"/>
+								<!-- Dimension Tick Marks -->
+								<line x1="16" y1="14" x2="16" y2="136" stroke="#8F7CA0" stroke-opacity="0.6" stroke-width="1"/>
+								<line x1="12" y1="14" x2="20" y2="14" stroke="#8F7CA0" stroke-opacity="0.6" stroke-width="1"/>
+								<line x1="12" y1="136" x2="20" y2="136" stroke="#8F7CA0" stroke-opacity="0.6" stroke-width="1"/>
+							</svg>
 						</div>
 
-						<!-- Live Part Label Overlay (The Signature Jiddat Proof) -->
-						<div class="absolute bottom-3 left-3 right-3 bg-white/95 dark:bg-[#1A1F29]/95 backdrop-blur-md border border-[#E2D7C7] dark:border-[#28303F] rounded-nouveau-sm p-2.5 flex items-center justify-between text-xs">
-							<div>
-								<span class="text-[#635D54] dark:text-[#9DA3AF]">Print Time:</span>
-								<span class="text-parchment-ink dark:text-white font-numeral font-bold ml-1">42 mins</span>
-							</div>
-							<div class="h-3 w-px bg-[#E2D7C7] dark:bg-[#28303F]"></div>
-							<div>
-								<span class="text-[#635D54] dark:text-[#9DA3AF]">Plastic:</span>
-								<span class="text-parchment-ink dark:text-white font-numeral font-bold ml-1">16g PETG</span>
-							</div>
-							<div class="h-3 w-px bg-[#E2D7C7] dark:bg-[#28303F]"></div>
-							<div>
-								<span class="text-[#635D54] dark:text-[#9DA3AF]">Cost:</span>
-								<span class="text-filament font-numeral-italic text-sm font-bold ml-1">Rs 45</span>
-							</div>
+						<div class="flex items-center justify-between text-[10px] font-mono text-parchment-muted dark:text-ink-muted">
+							<span>KLIPPER OS &middot; OPEN CAD</span>
+							<span class="text-gold-focal font-semibold">320&deg;C ALL-METAL</span>
 						</div>
 					</div>
 
-					<!-- Bottom Machine Info -->
-					<div class="space-y-3">
-						<div class="flex justify-between items-center text-xs">
-							<span class="text-[#635D54] dark:text-[#9DA3AF]">Machine in demonstration:</span>
-							<span class="text-parchment-ink dark:text-white font-semibold">Jiddat Apex CoreXY (Enclosed)</span>
+					<!-- Dossier Footer -->
+					<div class="p-5 flex items-center justify-between gap-4">
+						<div>
+							<div class="font-display font-bold text-lg text-parchment-ink dark:text-ink leading-tight">Jiddat Apex CoreXY</div>
+							<div class="font-numeral text-sm text-gold-focal font-semibold mt-0.5">Rs 245,000 <span class="text-[11px] font-sans font-normal text-parchment-muted dark:text-ink-muted">&middot; Built to order</span></div>
 						</div>
-						<div class="flex gap-2">
-							<a href="/printers/jiddat-apex-corexy" class="flex-1 py-2 px-3 text-center rounded-nouveau-sm bg-parchment-subtle dark:bg-[#14181F] border border-[#E2D7C7] dark:border-[#28303F] hover:border-filament text-xs font-semibold text-parchment-ink dark:text-white transition-colors">
-								View Machine Specs
-							</a>
-							<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20saw%20the%20Jiddat%20Apex%20CoreXY%20on%20your%20site.%20Please%20share%20build%20details." target="_blank" rel="noopener noreferrer" class="py-2 px-3 rounded-nouveau-sm bg-[#25D366]/15 border border-[#25D366]/40 hover:bg-[#25D366] text-[#25D366] hover:text-white text-xs font-semibold transition-colors flex items-center justify-center gap-1">
-								<svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-								Ask Details
-							</a>
-						</div>
+						<a href="/printers/jiddat-apex-corexy" class="px-4 py-2 rounded-[6px] border border-plum/40 hover:border-filament text-xs font-semibold text-parchment-ink dark:text-ink hover:text-gold-focal transition-colors whitespace-nowrap">
+							Full Specs &rarr;
+						</a>
 					</div>
 				</div>
 			</div>
+		</div>
 
+		<!-- Full-bleed Ruled Telemetry Strip -->
+		<div class="mt-14 pt-8 border-t border-parchment-border dark:border-workshop-border grid grid-cols-2 lg:grid-cols-4 gap-6 text-xs">
+			<div>
+				<span class="font-mono text-[10px] uppercase tracking-widest text-parchment-muted dark:text-ink-muted block">Origin</span>
+				<span class="font-display font-bold text-base text-parchment-ink dark:text-ink mt-0.5 block">100% Built in Karachi</span>
+			</div>
+			<div>
+				<span class="font-mono text-[10px] uppercase tracking-widest text-parchment-muted dark:text-ink-muted block">Architecture</span>
+				<span class="font-display font-bold text-base text-parchment-ink dark:text-ink mt-0.5 block">Open CAD &amp; Klipper</span>
+			</div>
+			<div>
+				<span class="font-mono text-[10px] uppercase tracking-widest text-parchment-muted dark:text-ink-muted block">Coverage</span>
+				<span class="font-display font-bold text-base text-parchment-ink dark:text-ink mt-0.5 block">6-Month + Edu Warranty</span>
+			</div>
+			<div>
+				<span class="font-mono text-[10px] uppercase tracking-widest text-parchment-muted dark:text-ink-muted block">Terms</span>
+				<span class="font-display font-bold text-base text-parchment-ink dark:text-ink mt-0.5 block">Prepaid IBFT / Raast</span>
+			</div>
 		</div>
 	</div>
 </section>
 
-<!-- Memphis Squiggle Divider -->
-<div class="w-full text-filament/40 overflow-hidden" aria-hidden="true">
-	<svg class="w-full h-4" viewBox="0 0 1200 16" preserveAspectRatio="none" fill="none">
-		<path d="M0 8 Q 30 0, 60 8 T 120 8 T 180 8 T 240 8 T 300 8 T 360 8 T 420 8 T 480 8 T 540 8 T 600 8 T 660 8 T 720 8 T 780 8 T 840 8 T 900 8 T 960 8 T 1020 8 T 1080 8 T 1140 8 T 1200 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-	</svg>
-</div>
-
-<!-- Section 1: "Made Here This Week" (Real Parts, Real Prices) -->
-<section class="py-20 bg-parchment-subtle dark:bg-[#0C0E12] border-b border-[#E2D7C7] dark:border-[#28303F] transition-colors">
+<!-- BAND 2: Contrasting Inverted Band — Machine Lineup as Architectural Spec Ledger -->
+<section class="band-inverted py-20 md:py-24 transition-colors" id="popular-printers">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
-			<div>
-				<div class="inline-flex items-center gap-2 text-filament font-mono text-xs uppercase tracking-wider mb-2">
-					<span>📍 Real Lab Output &bull; Karachi</span>
-				</div>
-				<h2 class="font-display text-h2 font-bold text-parchment-ink dark:text-white tracking-tight">
-					<span class="squiggle-underline">Real parts. Real rupee prices.</span>
+
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pb-12 border-b border-current/15">
+			<div class="lg:col-span-8">
+				<h2 class="font-display text-h1 font-extrabold tracking-tight leading-[1.04]">
+					Five specialized machines.<br>
+					<span class="font-editorial-italic font-normal text-gold-inv">Zero imported resells.</span>
 				</h2>
-				<p class="text-[#635D54] dark:text-[#9DA3AF] mt-3 max-w-xl text-sm md:text-base">
-					Everything below was printed in our Karachi lab. Tap any part to see how long it took to print, which plastic was used, and what it cost in raw materials.
-				</p>
 			</div>
-			<div class="mt-4 md:mt-0">
-				<a href="/gallery" class="text-sm font-semibold text-filament hover:underline inline-flex items-center gap-1.5">
-					<span>Browse Full Gallery (<span class="font-numeral">50+</span> Parts)</span> &rarr;
+			<div class="lg:col-span-4 lg:text-right space-y-3">
+				<p class="text-sm opacity-75 leading-relaxed">
+					Every chassis is engineered, wired, and test-printed on our Karachi bench. Standard off-the-shelf industrial hardware with local spare parts.
+				</p>
+				<a href="/printers" class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-gold-inv font-semibold hover:underline">
+					<span>Compare All Models</span> &rarr;
 				</a>
 			</div>
 		</div>
 
-		<!-- Grid of 6 Real Local Prints (Art Nouveau Whiplash Curve Cards) -->
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-			
-			<!-- Card 1: Fan Knob -->
-			<div class="workshop-card p-6 group flex flex-col justify-between">
-				<div>
-					<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
-						<svg class="w-20 h-20 text-filament/80 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
-						<span class="absolute top-3 left-3 px-2 py-0.5 rounded-nouveau-sm text-[10px] font-mono bg-white dark:bg-[#1E2532] text-[#635D54] dark:text-[#9DA3AF] border border-[#E2D7C7] dark:border-[#28303F]">Replacement</span>
-					</div>
-					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg group-hover:text-filament transition-colors">Fan Regulator Knob</h3>
-					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1 leading-relaxed">Exact replacement for broken Pakistani ceiling fan regulator. Sturdy grip, heat-resistant PETG.</p>
-				</div>
-				<div class="mt-4 pt-3 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-between text-xs">
-					<span class="text-[#635D54] dark:text-[#9DA3AF] font-numeral"><span class="font-bold">35</span> min &bull; <span class="font-bold">14g</span> PETG</span>
-					<span class="text-filament font-numeral-italic font-bold text-base">Rs 45</span>
-				</div>
-			</div>
+		<!-- Architectural Horizontal Spec Ledger -->
+		<div class="divide-y divide-current/15">
 
-			<!-- Card 2: Civil FYP Bridge -->
-			<div class="workshop-card p-6 group flex flex-col justify-between">
-				<div>
-					<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
-						<svg class="w-20 h-20 text-teal/80 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-						<span class="absolute top-3 left-3 px-2 py-0.5 rounded-nouveau-sm text-[10px] font-mono bg-white dark:bg-[#1E2532] text-teal border border-[#E2D7C7] dark:border-[#28303F]">NED / NUST FYP</span>
-					</div>
-					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg group-hover:text-filament transition-colors">Civil Engineering Truss Bridge</h3>
-					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1 leading-relaxed">Structural scale model for final year engineering project. Tested to hold up to <span class="font-numeral">12 kg</span> weight.</p>
+			<!-- Row 1: Jiddat Apex CoreXY -->
+			<a href="/printers/jiddat-apex-corexy" class="ledger-row py-7 grid grid-cols-1 md:grid-cols-12 gap-4 items-center group">
+				<div class="md:col-span-1 font-mono text-xs opacity-50">01</div>
+				<div class="md:col-span-4">
+					<div class="font-display font-bold text-xl group-hover:text-gold-inv transition-colors">Jiddat Apex CoreXY</div>
+					<div class="text-xs opacity-70 mt-0.5">Enclosed high-speed industrial FDM &middot; ABS, Nylon, PC</div>
 				</div>
-				<div class="mt-4 pt-3 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-between text-xs">
-					<span class="text-[#635D54] dark:text-[#9DA3AF] font-numeral"><span class="font-bold">9</span> hrs &bull; <span class="font-bold">180g</span> PLA+</span>
-					<span class="text-filament font-numeral-italic font-bold text-base">Rs 480</span>
+				<div class="md:col-span-3 font-mono text-xs opacity-80">
+					300 &times; 300 &times; 330 mm &middot; Klipper
 				</div>
-			</div>
+				<div class="md:col-span-2 font-numeral text-base font-bold text-gold-inv">Rs 245,000</div>
+				<div class="md:col-span-2 md:text-right font-mono text-xs text-gold-inv font-semibold">
+					View Specs &rarr;
+				</div>
+			</a>
 
-			<!-- Card 3: Urdu Calligraphy Plate -->
-			<div class="workshop-card p-6 group flex flex-col justify-between">
-				<div>
-					<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
-						<div class="text-3xl font-bold text-accent-gold tracking-wider font-calligraphic">بِسْمِ اللَّهِ</div>
-						<span class="absolute top-3 left-3 px-2 py-0.5 rounded-nouveau-sm text-[10px] font-mono bg-white dark:bg-[#1E2532] text-accent-gold border border-[#E2D7C7] dark:border-[#28303F]">Custom Gift</span>
-					</div>
-					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg group-hover:text-filament transition-colors">Urdu Calligraphy Wall Relief</h3>
-					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1 leading-relaxed">Dual-color 3D relief art piece with wall mounting bracket. Popular wedding and Eid gift.</p>
+			<!-- Row 2: Jiddat Mark-1 Desktop -->
+			<a href="/printers/jiddat-mark-1" class="ledger-row py-7 grid grid-cols-1 md:grid-cols-12 gap-4 items-center group">
+				<div class="md:col-span-1 font-mono text-xs opacity-50">02</div>
+				<div class="md:col-span-4">
+					<div class="font-display font-bold text-xl group-hover:text-gold-inv transition-colors">Jiddat Mark-1 Desktop</div>
+					<div class="text-xs opacity-70 mt-0.5">CNC rigid frame &middot; Direct-drive 300&deg;C all-metal hotend</div>
 				</div>
-				<div class="mt-4 pt-3 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-between text-xs">
-					<span class="text-[#635D54] dark:text-[#9DA3AF] font-numeral"><span class="font-bold">2</span> hrs &bull; <span class="font-bold">48g</span> PLA</span>
-					<span class="text-filament font-numeral-italic font-bold text-base">Rs 130</span>
+				<div class="md:col-span-3 font-mono text-xs opacity-80">
+					235 &times; 235 &times; 250 mm &middot; PLA / PETG / TPU
 				</div>
-			</div>
+				<div class="md:col-span-2 font-numeral text-base font-bold text-gold-inv">Rs 145,000</div>
+				<div class="md:col-span-2 md:text-right font-mono text-xs text-gold-inv font-semibold">
+					View Specs &rarr;
+				</div>
+			</a>
 
-			<!-- Card 4: Bike Lever Guard -->
-			<div class="workshop-card p-6 group flex flex-col justify-between">
-				<div>
-					<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
-						<svg class="w-20 h-20 text-[#3DDC84]/80 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-						<span class="absolute top-3 left-3 px-2 py-0.5 rounded-nouveau-sm text-[10px] font-mono bg-white dark:bg-[#1E2532] text-[#3DDC84] border border-[#E2D7C7] dark:border-[#28303F]">Automotive</span>
-					</div>
-					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg group-hover:text-filament transition-colors">Bike Brake Lever Guard</h3>
-					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1 leading-relaxed">Custom replacement guard for 150cc motorcycles. Printed in tough heat-resistant ABS plastic.</p>
+			<!-- Row 3: Jiddat Edu-Maker V2 -->
+			<a href="/printers/jiddat-edu-maker" class="ledger-row py-7 grid grid-cols-1 md:grid-cols-12 gap-4 items-center group">
+				<div class="md:col-span-1 font-mono text-xs opacity-50">03</div>
+				<div class="md:col-span-4">
+					<div class="font-display font-bold text-xl group-hover:text-gold-inv transition-colors">Jiddat Edu-Maker V2</div>
+					<div class="text-xs opacity-70 mt-0.5">Classroom-safe &lt; 48 dB silent STEAM machine</div>
 				</div>
-				<div class="mt-4 pt-3 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-between text-xs">
-					<span class="text-[#635D54] dark:text-[#9DA3AF] font-numeral"><span class="font-bold">1</span> hr <span class="font-bold">20m</span> &bull; <span class="font-bold">38g</span> ABS</span>
-					<span class="text-filament font-numeral-italic font-bold text-base">Rs 110</span>
+				<div class="md:col-span-3 font-mono text-xs opacity-80">
+					220 &times; 220 &times; 220 mm &middot; Edu Warranty
 				</div>
-			</div>
+				<div class="md:col-span-2 font-numeral text-base font-bold text-gold-inv">Rs 98,000</div>
+				<div class="md:col-span-2 md:text-right font-mono text-xs text-gold-inv font-semibold">
+					View Specs &rarr;
+				</div>
+			</a>
 
-			<!-- Card 5: Electronics Snap Enclosure -->
-			<div class="workshop-card p-6 group flex flex-col justify-between">
-				<div>
-					<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
-						<svg class="w-20 h-20 text-accent-blue/80 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
-						<span class="absolute top-3 left-3 px-2 py-0.5 rounded-nouveau-sm text-[10px] font-mono bg-white dark:bg-[#1E2532] text-accent-blue border border-[#E2D7C7] dark:border-[#28303F]">Prototyping</span>
-					</div>
-					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg group-hover:text-filament transition-colors">ESP32 IoT Case with Snap Lid</h3>
-					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1 leading-relaxed">Ventilated PCB housing with screw standoffs and wire ports for solar monitoring installation.</p>
+			<!-- Row 4: Jiddat L-500 Large-Format -->
+			<a href="/printers/jiddat-l500-workstation" class="ledger-row py-7 grid grid-cols-1 md:grid-cols-12 gap-4 items-center group">
+				<div class="md:col-span-1 font-mono text-xs opacity-50">04</div>
+				<div class="md:col-span-4">
+					<div class="font-display font-bold text-xl group-hover:text-gold-inv transition-colors">Jiddat L-500 Workstation</div>
+					<div class="text-xs opacity-70 mt-0.5">Large-format industrial tooling &amp; full-scale prototypes</div>
 				</div>
-				<div class="mt-4 pt-3 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-between text-xs">
-					<span class="text-[#635D54] dark:text-[#9DA3AF] font-numeral"><span class="font-bold">3</span> hrs &bull; <span class="font-bold">75g</span> PETG</span>
-					<span class="text-filament font-numeral-italic font-bold text-base">Rs 220</span>
+				<div class="md:col-span-3 font-mono text-xs opacity-80">
+					500 &times; 500 &times; 500 mm &middot; Built to Order
 				</div>
-			</div>
-
-			<!-- Card 6: Drone Camera Bracket -->
-			<div class="workshop-card p-6 group flex flex-col justify-between">
-				<div>
-					<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] overflow-hidden flex items-center justify-center relative p-4 mb-4">
-						<svg class="w-20 h-20 text-accent-magenta/80 group-hover:scale-105 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-						<span class="absolute top-3 left-3 px-2 py-0.5 rounded-nouveau-sm text-[10px] font-mono bg-white dark:bg-[#1E2532] text-accent-magenta border border-[#E2D7C7] dark:border-[#28303F]">Robotics</span>
-					</div>
-					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg group-hover:text-filament transition-colors">Flexible TPU Action-Cam Mount</h3>
-					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1 leading-relaxed">Vibration-dampening rubber mount for FPV drone. Survives high-speed crashes without snapping.</p>
+				<div class="md:col-span-2 font-numeral text-base font-bold text-gold-inv">Rs 385,000</div>
+				<div class="md:col-span-2 md:text-right font-mono text-xs text-gold-inv font-semibold">
+					View Specs &rarr;
 				</div>
-				<div class="mt-4 pt-3 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-between text-xs">
-					<span class="text-[#635D54] dark:text-[#9DA3AF] font-numeral"><span class="font-bold">1</span> hr <span class="font-bold">45m</span> &bull; <span class="font-bold">32g</span> TPU</span>
-					<span class="text-filament font-numeral-italic font-bold text-base">Rs 140</span>
+			</a>
+
+			<!-- Row 5: Jiddat CoreXY Maker Kit -->
+			<a href="/printers/jiddat-corexy" class="ledger-row py-7 grid grid-cols-1 md:grid-cols-12 gap-4 items-center group">
+				<div class="md:col-span-1 font-mono text-xs opacity-50">05</div>
+				<div class="md:col-span-4">
+					<div class="font-display font-bold text-xl group-hover:text-gold-inv transition-colors">Jiddat CoreXY Maker Edition</div>
+					<div class="text-xs opacity-70 mt-0.5">100% open RepRap DIY assembly kit with full CAD</div>
 				</div>
-			</div>
-
-		</div>
-	</div>
-</section>
-
-<!-- Memphis Squiggle Divider -->
-<div class="w-full text-teal/40 overflow-hidden" aria-hidden="true">
-	<svg class="w-full h-4" viewBox="0 0 1200 16" preserveAspectRatio="none" fill="none">
-		<path d="M0 8 Q 30 0, 60 8 T 120 8 T 180 8 T 240 8 T 300 8 T 360 8 T 420 8 T 480 8 T 540 8 T 600 8 T 660 8 T 720 8 T 780 8 T 840 8 T 900 8 T 960 8 T 1020 8 T 1080 8 T 1140 8 T 1200 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-	</svg>
-</div>
-
-<!-- Section 2: Six Things People Make with a 3D Printer (Art Nouveau Cartouches & Calligraphic Numerals) -->
-<section class="py-20 bg-parchment-bg dark:bg-[#141820] border-b border-[#E2D7C7] dark:border-[#28303F] transition-colors">
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="text-center max-w-3xl mx-auto mb-16">
-			<span class="text-teal font-mono text-xs uppercase tracking-wider">Unleash Everyday Creation</span>
-			<h2 class="font-display text-h2 font-bold text-parchment-ink dark:text-white mt-1">
-				<span class="squiggle-underline-teal">Six things you can make with a 3D printer</span>
-			</h2>
-			<p class="text-[#635D54] dark:text-[#9DA3AF] text-sm md:text-base mt-3">
-				From replacing broken Pakistani household fixtures to running an e-commerce craft shop right from home.
-			</p>
+				<div class="md:col-span-3 font-mono text-xs opacity-80">
+					DIY Kit &middot; Open BOM &amp; Schematics
+				</div>
+				<div class="md:col-span-2 font-numeral text-base font-bold text-gold-inv">Rs 78,000</div>
+				<div class="md:col-span-2 md:text-right font-mono text-xs text-gold-inv font-semibold">
+					View Specs &rarr;
+				</div>
+			</a>
 		</div>
 
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-			<!-- 01 -->
-			<div class="workshop-card p-6">
-				<div class="w-14 h-14 rounded-nouveau-sm bg-filament/10 border-2 border-filament/40 text-filament flex items-center justify-center text-3xl mb-4 font-calligraphic font-bold">
-					01
-				</div>
-				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg mb-2">Fix Broken Things</h3>
-				<p class="text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">Don't throw away appliances just because a plastic clip or gear snapped. Measure it, model it, and print a replacement for <span class="font-numeral-italic font-bold">Rs 30–50</span>.</p>
+		<!-- Restrained R&D Notice (MSLA Resin) -->
+		<div class="mt-8 pt-6 border-t border-current/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+			<div class="space-y-0.5">
+				<span class="font-mono uppercase tracking-wider text-gold-inv font-semibold">In Active R&amp;D &middot; Waitlist Only</span>
+				<p class="opacity-80">Jiddat Precision Resin (MSLA) for jewelry and dental casting is currently in Karachi lab development.</p>
 			</div>
-
-			<!-- 02 -->
-			<div class="workshop-card p-6">
-				<div class="w-14 h-14 rounded-nouveau-sm bg-teal/10 border-2 border-teal/40 text-teal flex items-center justify-center text-3xl mb-4 font-calligraphic font-bold">
-					02
-				</div>
-				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg mb-2">Build Working Models</h3>
-				<p class="text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">Engineering FYPs, robotics gear trains, mosque architectural mockups, and science fair projects brought to life in hours.</p>
-			</div>
-
-			<!-- 03 -->
-			<div class="workshop-card p-6">
-				<div class="w-14 h-14 rounded-nouveau-sm bg-accent-gold/10 border-2 border-accent-gold/40 text-accent-gold flex items-center justify-center text-3xl mb-4 font-calligraphic font-bold">
-					03
-				</div>
-				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg mb-2">Make Custom Gifts</h3>
-				<p class="text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">Personalized Urdu calligraphy desk plaques, lithophane photo lamps that glow with family memories, and custom sports trophies.</p>
-			</div>
-
-			<!-- 04 -->
-			<div class="workshop-card p-6">
-				<div class="w-14 h-14 rounded-nouveau-sm bg-[#3DDC84]/10 border-2 border-[#3DDC84]/40 text-[#3DDC84] flex items-center justify-center text-3xl mb-4 font-calligraphic font-bold">
-					04
-				</div>
-				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg mb-2">Test Product Prototypes</h3>
-				<p class="text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">Validate ergonomics and enclosure snap fits before spending lakhs on steel injection molds. Iterate rapidly in your workshop.</p>
-			</div>
-
-			<!-- 05 -->
-			<div class="workshop-card p-6">
-				<div class="w-14 h-14 rounded-nouveau-sm bg-accent-blue/10 border-2 border-accent-blue/40 text-accent-blue flex items-center justify-center text-3xl mb-4 font-calligraphic font-bold">
-					05
-				</div>
-				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg mb-2">Teach Hands-On Science</h3>
-				<p class="text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">Bring geometry, physics, biology, and mechanics off flat textbook pages. Students hold DNA double-helixes and gears in their hands.</p>
-			</div>
-
-			<!-- 06 -->
-			<div class="workshop-card p-6">
-				<div class="w-14 h-14 rounded-nouveau-sm bg-accent-magenta/10 border-2 border-accent-magenta/40 text-accent-magenta flex items-center justify-center text-3xl mb-4 font-calligraphic font-bold">
-					06
-				</div>
-				<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg mb-2">Start a Print Business</h3>
-				<p class="text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">Sell specialized drone parts, cookie cutters, custom keychains, or miniature figurines on Daraz and Instagram. High profit margin on raw filament.</p>
-			</div>
-		</div>
-	</div>
-</section>
-
-<!-- Memphis Squiggle Divider -->
-<div class="w-full text-filament/40 overflow-hidden" aria-hidden="true">
-	<svg class="w-full h-4" viewBox="0 0 1200 16" preserveAspectRatio="none" fill="none">
-		<path d="M0 8 Q 30 0, 60 8 T 120 8 T 180 8 T 240 8 T 300 8 T 360 8 T 420 8 T 480 8 T 540 8 T 600 8 T 660 8 T 720 8 T 780 8 T 840 8 T 900 8 T 960 8 T 1020 8 T 1080 8 T 1140 8 T 1200 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-	</svg>
-</div>
-
-<!-- Section 3: Specialized 3D Printers Designed by Jiddat3D -->
-<section class="py-20 bg-parchment-subtle dark:bg-[#0C0E12] border-b border-[#E2D7C7] dark:border-[#28303F] transition-colors" id="popular-printers">
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		
-		<div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
-			<div>
-				<span class="text-filament font-mono text-xs uppercase tracking-wider font-semibold">In-House Engineering &bull; FDM / FFM</span>
-				<h2 class="font-display text-h2 font-bold text-parchment-ink dark:text-white mt-1">
-					<span class="squiggle-underline">Specialized 3D Printers Built in Karachi</span>
-				</h2>
-				<p class="text-[#635D54] dark:text-[#9DA3AF] text-sm md:text-base mt-3 max-w-2xl leading-relaxed">
-					We do not resell generic ready-made international imports. We design, calibrate, and hand-assemble specialized, 100% open-source FDM/FFM machines in our Karachi lab. Built to order on a prepaid basis with local warranty and zero vendor lock-in.
-				</p>
-			</div>
-			<div class="mt-4 md:mt-0 flex gap-2">
-				<a href="/printers" class="btn-filament text-xs py-2.5 px-4 shadow-sm">
-					View All Models &rarr;
-				</a>
-			</div>
-		</div>
-
-		<!-- Printer Cards Grid -->
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-			<!-- Machine 1: Jiddat Mark-1 Desktop -->
-			<div class="workshop-card p-6 flex flex-col justify-between group">
-				<div>
-					<div class="flex items-center justify-between mb-4">
-						<span class="px-2.5 py-1 rounded-nouveau-sm bg-filament/10 text-filament border border-filament/30 text-xs font-semibold uppercase tracking-wider">Flagship Desktop</span>
-						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1 font-semibold">
-							<span class="w-2 h-2 rounded-sm bg-[#3DDC84]"></span> Built in Karachi
-						</span>
-					</div>
-					<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-center p-4 mb-4">
-						<div class="text-center">
-							<span class="text-4xl">🖨️</span>
-							<p class="font-display font-bold text-parchment-ink dark:text-white text-base mt-2">Jiddat Mark-1 Desktop</p>
-							<p class="text-[11px] font-mono text-[#635D54] dark:text-[#9DA3AF]">Direct-Drive FDM &bull; CNC Aluminum Frame</p>
-						</div>
-					</div>
-					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-xl">Jiddat Mark-1 Desktop</h3>
-					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1.5 leading-relaxed">
-						Rigid precision FDM/FFM machine engineered for Pakistani makers and engineers. All-metal 300°C hotend, dual Z-axis, and magnetic PEI flex bed.
-					</p>
-
-					<!-- Spec Badges -->
-					<div class="grid grid-cols-2 gap-2 my-4 text-xs">
-						<div class="p-2 rounded-nouveau-sm bg-white dark:bg-[#14181F] border border-[#E2D7C7] dark:border-[#28303F]">
-							<span class="text-[#8A8175] dark:text-[#656D7D] block text-[10px] font-mono">BUILD VOLUME</span>
-							<span class="text-parchment-ink dark:text-white font-numeral font-bold">235 x 235 x 250 mm</span>
-						</div>
-						<div class="p-2 rounded-nouveau-sm bg-white dark:bg-[#14181F] border border-[#E2D7C7] dark:border-[#28303F]">
-							<span class="text-[#8A8175] dark:text-[#656D7D] block text-[10px] font-mono">HOTEND TEMP</span>
-							<span class="text-parchment-ink dark:text-white font-numeral font-bold">300°C All-Metal</span>
-						</div>
-					</div>
-
-					<p class="text-xs text-teal"><strong class="text-parchment-ink dark:text-white">Good for:</strong> Engineers, makers, rapid prototyping, and flexible TPU prints.</p>
-				</div>
-
-				<div class="mt-6 pt-4 border-t border-[#E2D7C7] dark:border-[#28303F]">
-					<div class="flex items-baseline justify-between mb-4">
-						<div>
-							<span class="text-2xl font-numeral-italic font-bold text-parchment-ink dark:text-white">Rs 145,000</span>
-							<span class="text-[10px] text-[#635D54] dark:text-[#9DA3AF] block font-mono">Prepaid Build &bull; 6-Month Warranty</span>
-						</div>
-						<a href="/printers/jiddat-mark-1" class="text-xs font-semibold text-filament hover:underline">Specs &rarr;</a>
-					</div>
-					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20order%20the%20Jiddat%20Mark-1%20Desktop%203D%20Printer%20(Rs%20145,000)." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
-						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-						<span>Order Custom Build</span>
-					</a>
-				</div>
-			</div>
-
-			<!-- Machine 2: Jiddat Apex CoreXY Enclosed -->
-			<div class="workshop-card p-6 flex flex-col justify-between group">
-				<div>
-					<div class="flex items-center justify-between mb-4">
-						<span class="px-2.5 py-1 rounded-nouveau-sm bg-teal/10 text-teal border border-teal/30 text-xs font-semibold uppercase tracking-wider">Industrial &bull; CoreXY</span>
-						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1 font-semibold">
-							<span class="w-2 h-2 rounded-sm bg-[#3DDC84]"></span> Built in Karachi
-						</span>
-					</div>
-					<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-center p-4 mb-4">
-						<div class="text-center">
-							<span class="text-4xl">📦</span>
-							<p class="font-display font-bold text-parchment-ink dark:text-white text-base mt-2">Jiddat Apex CoreXY</p>
-							<p class="text-[11px] font-mono text-[#635D54] dark:text-[#9DA3AF]">Fully Enclosed &bull; Klipper OS &bull; 320°C</p>
-						</div>
-					</div>
-					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-xl">Jiddat Apex CoreXY</h3>
-					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1.5 leading-relaxed">
-						Fully enclosed high-speed FDM/FFM workhorse for engineering polymers: ABS, Carbon Fiber Nylon, and Polycarbonate. 100% open Klipper firmware.
-					</p>
-
-					<!-- Spec Badges -->
-					<div class="grid grid-cols-2 gap-2 my-4 text-xs">
-						<div class="p-2 rounded-nouveau-sm bg-white dark:bg-[#14181F] border border-[#E2D7C7] dark:border-[#28303F]">
-							<span class="text-[#8A8175] dark:text-[#656D7D] block text-[10px] font-mono">BUILD VOLUME</span>
-							<span class="text-parchment-ink dark:text-white font-numeral font-bold">300 x 300 x 330 mm</span>
-						</div>
-						<div class="p-2 rounded-nouveau-sm bg-white dark:bg-[#14181F] border border-[#E2D7C7] dark:border-[#28303F]">
-							<span class="text-[#8A8175] dark:text-[#656D7D] block text-[10px] font-mono">KINEMATICS</span>
-							<span class="text-parchment-ink dark:text-white font-numeral font-bold">CoreXY Linear Rails</span>
-						</div>
-					</div>
-
-					<p class="text-xs text-teal"><strong class="text-parchment-ink dark:text-white">Good for:</strong> Industrial R&D, functional automotive parts, high-temperature university labs.</p>
-				</div>
-
-				<div class="mt-6 pt-4 border-t border-[#E2D7C7] dark:border-[#28303F]">
-					<div class="flex items-baseline justify-between mb-4">
-						<div>
-							<span class="text-2xl font-numeral-italic font-bold text-parchment-ink dark:text-white">Rs 245,000</span>
-							<span class="text-[10px] text-[#635D54] dark:text-[#9DA3AF] block font-mono">Prepaid Build &bull; 6-Month Warranty</span>
-						</div>
-						<a href="/printers/jiddat-apex-corexy" class="text-xs font-semibold text-filament hover:underline">Specs &rarr;</a>
-					</div>
-					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20order%20the%20Jiddat%20Apex%20CoreXY%20Printer%20(Rs%20245,000)." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
-						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-						<span>Order Custom Build</span>
-					</a>
-				</div>
-			</div>
-
-			<!-- Machine 3: Jiddat Edu-Maker V2 -->
-			<div class="workshop-card p-6 flex flex-col justify-between group">
-				<div>
-					<div class="flex items-center justify-between mb-4">
-						<span class="px-2.5 py-1 rounded-nouveau-sm bg-accent-gold/10 text-accent-gold border border-accent-gold/30 text-xs font-semibold uppercase tracking-wider">Classroom & STEM</span>
-						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1 font-semibold">
-							<span class="w-2 h-2 rounded-sm bg-[#3DDC84]"></span> Built in Karachi
-						</span>
-					</div>
-					<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-center p-4 mb-4">
-						<div class="text-center">
-							<span class="text-4xl">🎓</span>
-							<p class="font-display font-bold text-parchment-ink dark:text-white text-base mt-2">Jiddat Edu-Maker V2</p>
-							<p class="text-[11px] font-mono text-[#635D54] dark:text-[#9DA3AF]">Student Safe &bull; Ultra Quiet &bull; Edu Warranty</p>
-						</div>
-					</div>
-					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-xl">Jiddat Edu-Maker V2</h3>
-					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1.5 leading-relaxed">
-						Protected gantry wiring, silent stepper drivers, and auto-compensation. Tailored specifically for school STEAM classrooms and university students.
-					</p>
-
-					<!-- Spec Badges -->
-					<div class="grid grid-cols-2 gap-2 my-4 text-xs">
-						<div class="p-2 rounded-nouveau-sm bg-white dark:bg-[#14181F] border border-[#E2D7C7] dark:border-[#28303F]">
-							<span class="text-[#8A8175] dark:text-[#656D7D] block text-[10px] font-mono">BUILD VOLUME</span>
-							<span class="text-parchment-ink dark:text-white font-numeral font-bold">220 x 220 x 220 mm</span>
-						</div>
-						<div class="p-2 rounded-nouveau-sm bg-white dark:bg-[#14181F] border border-[#E2D7C7] dark:border-[#28303F]">
-							<span class="text-[#8A8175] dark:text-[#656D7D] block text-[10px] font-mono">ACOUSTICS</span>
-							<span class="text-parchment-ink dark:text-white font-numeral font-bold">&lt; 48 dB (Silent)</span>
-						</div>
-					</div>
-
-					<p class="text-xs text-teal"><strong class="text-parchment-ink dark:text-white">Good for:</strong> School STEAM labs, university students, colleges, and libraries.</p>
-				</div>
-
-				<div class="mt-6 pt-4 border-t border-[#E2D7C7] dark:border-[#28303F]">
-					<div class="flex items-baseline justify-between mb-4">
-						<div>
-							<span class="text-2xl font-numeral-italic font-bold text-parchment-ink dark:text-white">Rs 98,000</span>
-							<span class="text-[10px] text-[#635D54] dark:text-[#9DA3AF] block font-mono">Under <span class="font-numeral">1</span> Lakh &bull; Edu Warranty</span>
-						</div>
-						<a href="/printers/jiddat-edu-maker" class="text-xs font-semibold text-filament hover:underline">Specs &rarr;</a>
-					</div>
-					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20order%20the%20Jiddat%20Edu-Maker%20V2%20(Rs%2098,000)." target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2.5 justify-center">
-						<svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-						<span>Order Custom Build</span>
-					</a>
-				</div>
-			</div>
-
-		</div>
-
-		<!-- Resin Development Banner -->
-		<div class="mt-8 p-5 rounded-nouveau-sm bg-white dark:bg-[#14181F] border border-[#7E22CE]/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs shadow-sm">
-			<div class="flex items-center gap-3">
-				<span class="text-2xl">🔬</span>
-				<div>
-					<strong class="text-parchment-ink dark:text-white font-semibold">Looking for Liquid UV Resin (SLA/MSLA)?</strong>
-					<span class="text-[#635D54] dark:text-[#9DA3AF] block mt-0.5">We currently offer FDM / FFM printing. Our ultra-high resolution stereolithography system is in active engineering development in our Karachi lab.</span>
-				</div>
-			</div>
-			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20join%20the%20waitlist%20for%20your%20Resin%203D%20Printer." target="_blank" rel="noopener noreferrer" class="btn-secondary text-xs py-2 px-3.5 whitespace-nowrap">
+			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20join%20the%20waitlist%20for%20your%20Resin%203D%20Printer." target="_blank" rel="noopener noreferrer" class="font-mono font-semibold text-gold-inv hover:underline whitespace-nowrap">
 				Join Resin Waitlist &rarr;
 			</a>
 		</div>
-
-
-
 	</div>
 </section>
 
-<!-- Memphis Squiggle Divider -->
-<div class="w-full text-filament/40 overflow-hidden" aria-hidden="true">
-	<svg class="w-full h-4" viewBox="0 0 1200 16" preserveAspectRatio="none" fill="none">
-		<path d="M0 8 Q 30 0, 60 8 T 120 8 T 180 8 T 240 8 T 300 8 T 360 8 T 420 8 T 480 8 T 540 8 T 600 8 T 660 8 T 720 8 T 780 8 T 840 8 T 900 8 T 960 8 T 1020 8 T 1080 8 T 1140 8 T 1200 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-	</svg>
-</div>
-
-<!-- Section 4: Schools & Universities Teaser -->
-<section class="py-20 bg-parchment-bg dark:bg-[#141820] border-b border-[#E2D7C7] dark:border-[#28303F] transition-colors">
+<!-- BAND 3: Full-Bleed Dusty Purple Brand Band with Burnished Gold Focal CTA -->
+<section class="py-20 md:py-24 bg-plum-deep text-[#F2EFE9] border-y border-plum-light/25">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-			
-			<div class="lg:col-span-6 space-y-6">
-				<span class="text-filament font-mono text-xs uppercase tracking-wider">STEAM Education in Pakistan</span>
-				<h2 class="font-display text-h2 font-bold text-parchment-ink dark:text-white tracking-tight leading-tight">
-					Your students make things.<br><span class="squiggle-underline">Not just read about them.</span>
+			<div class="lg:col-span-7 space-y-5">
+				<h2 class="font-display text-h1 font-extrabold leading-[1.02] tracking-tight">
+					Drop your CAD file.<br>
+					<span class="font-editorial-italic font-normal text-filament">See the rupee price instantly.</span>
 				</h2>
-				<p class="text-[#635D54] dark:text-[#9DA3AF] text-sm md:text-base leading-relaxed">
-					We set up the 3D printing lab, train your teachers from scratch, and deliver ready-to-teach bilingual lesson plans. Your school doesn't need prior 3D printing experts to launch a state-of-the-art makerspace.
+				<p class="text-base md:text-lg text-[#DDD7E4] max-w-xl leading-relaxed">
+					No waiting two days for a manual quote. Upload any <strong class="font-mono text-filament">.3MF</strong>, <strong class="font-mono text-filament">.OBJ</strong>, or <strong class="font-mono text-filament">.STL</strong> file—our server measures exact triangle volume, lets you compare PLA, PLA+, PETG, and TPU at 15%–100% infill, and prefills your WhatsApp print order.
 				</p>
-
-				<!-- 3 Step Roadmap with Calligraphic Numbers -->
-				<div class="space-y-4 pt-2">
-					<div class="flex items-start gap-4">
-						<div class="w-9 h-9 rounded-nouveau-sm bg-filament/20 text-filament font-calligraphic font-bold flex items-center justify-center shrink-0 border border-filament/40 text-base">1</div>
-						<div>
-							<h4 class="font-display font-semibold text-parchment-ink dark:text-white text-base">Printers Installed & Calibrated</h4>
-							<p class="text-xs text-[#635D54] dark:text-[#9DA3AF]">Safe, enclosed machines set up on your campus with safety checklist and Karachi spare parts kit.</p>
-						</div>
-					</div>
-					<div class="flex items-start gap-4">
-						<div class="w-9 h-9 rounded-nouveau-sm bg-teal/20 text-teal font-calligraphic font-bold flex items-center justify-center shrink-0 border border-teal/40 text-base">2</div>
-						<div>
-							<h4 class="font-display font-semibold text-parchment-ink dark:text-white text-base">Teachers Trained (<span class="font-numeral">2</span>-Day Workshop)</h4>
-							<p class="text-xs text-[#635D54] dark:text-[#9DA3AF]">Hands-on training for non-technical teachers. How to guide students, run slicing software, and clear clogs.</p>
-						</div>
-					</div>
-					<div class="flex items-start gap-4">
-						<div class="w-9 h-9 rounded-nouveau-sm bg-[#3DDC84]/20 text-[#3DDC84] font-calligraphic font-bold flex items-center justify-center shrink-0 border border-[#3DDC84]/40 text-base">3</div>
-						<div>
-							<h4 class="font-display font-semibold text-parchment-ink dark:text-white text-base">Students Start Making</h4>
-							<p class="text-xs text-[#635D54] dark:text-[#9DA3AF]">Curriculum-aligned projects for Grades 4 through A-Level/University. Plastic cost is only <span class="font-numeral-italic font-bold">Rs 35–50</span> per student project.</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="flex flex-wrap gap-4 pt-4">
-					<a href="/schools" class="btn-filament text-sm py-3 px-6">
-						<span>Explore School Packages</span>
+				<div class="pt-2 flex flex-wrap gap-3">
+					<a href="/instant-quote" class="btn-filament text-sm px-7 py-3.5">
+						<span>Launch Instant 3D Slicer</span>
+						<span aria-hidden="true">&rarr;</span>
 					</a>
-					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20We%20are%20interested%20in%20setting%20up%20a%203D%20printing%20lab%20at%20our%20institution.%20Can%20we%20schedule%20a%20demo%20day%3F" target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-sm py-3 px-5">
-						<span>Book a Free Demo Day</span>
+					<a href="/print-service" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-[6px] border border-[#DDD7E4]/40 text-[#F2EFE9] font-semibold text-sm hover:border-filament hover:text-filament transition-colors">
+						<span>FYP Print Clinic Details</span>
 					</a>
 				</div>
 			</div>
 
-			<!-- Right: Comparison / Package Snapshot -->
-			<div class="lg:col-span-6">
-				<div class="workshop-card p-6 bg-white dark:bg-[#1A1F29] border-2 border-[#E2D7C7] dark:border-[#28303F]">
-					<div class="flex items-center justify-between pb-4 border-b border-[#E2D7C7] dark:border-[#28303F]">
-						<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg">School Lab Packages</h3>
-						<span class="text-xs font-mono text-teal">All-Inclusive Setup</span>
+			<div class="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-plum-light/30 pt-8 lg:pt-0 lg:pl-10 space-y-6 font-mono text-xs">
+				<div class="flex items-start gap-4">
+					<span class="text-filament font-bold text-sm">01</span>
+					<div>
+						<div class="font-sans font-bold text-sm text-[#F2EFE9]">Preemptive Server Slicing</div>
+						<p class="font-sans text-[#CFC8DA] mt-0.5">Exact tetrahedral volume and surface-area calculation in Go the moment your file drops.</p>
 					</div>
-
-					<div class="divide-y divide-[#E2D7C7] dark:divide-[#28303F] text-xs">
-						<div class="py-4">
-							<div class="flex justify-between font-semibold text-sm mb-1">
-								<span class="text-parchment-ink dark:text-white">Starter Lab (<span class="font-numeral">1–2</span> Printers)</span>
-								<span class="text-filament font-numeral-italic font-bold">From Rs 350,000</span>
-							</div>
-							<p class="text-[#635D54] dark:text-[#9DA3AF]">For schools testing the waters. Includes 2 printers, 8 lesson plans, 1-day teacher workshop, and WhatsApp teacher hotline.</p>
-						</div>
-
-						<div class="py-4">
-							<div class="flex justify-between font-semibold text-sm mb-1">
-								<span class="text-parchment-ink dark:text-white">Classroom Lab (<span class="font-numeral">4–6</span> Printers)</span>
-								<span class="text-[#3DDC84] font-numeral-italic font-bold">From Rs 950,000</span>
-							</div>
-							<p class="text-[#635D54] dark:text-[#9DA3AF]">Full class periods. Multi-color capabilities, 24 structured project modules, 2-day on-campus training, and quarterly maintenance visits.</p>
-						</div>
-
-						<div class="py-4">
-							<div class="flex justify-between font-semibold text-sm mb-1">
-								<span class="text-parchment-ink dark:text-white">University & Tender Procurement</span>
-								<span class="text-accent-blue font-mono font-semibold">EPADS / PPRA Ready</span>
-							</div>
-							<p class="text-[#635D54] dark:text-[#9DA3AF]">GST/NTN invoices, brand authorization letters, official technical spec sheets, and formal quotation packets for department heads.</p>
-						</div>
+				</div>
+				<div class="flex items-start gap-4">
+					<span class="text-filament font-bold text-sm">02</span>
+					<div>
+						<div class="font-sans font-bold text-sm text-[#F2EFE9]">Transparent LayerInvoice Math</div>
+						<p class="font-sans text-[#CFC8DA] mt-0.5">Filament weight from Rs 8/g, machine hours, electricity, and quality assurance margin itemized clearly.</p>
 					</div>
-
-					<div class="mt-6 pt-4 border-t border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-between text-xs">
-						<span class="text-[#635D54] dark:text-[#9DA3AF]">Need an official quotation?</span>
-						<a href="/schools#tenders" class="text-filament font-bold hover:underline">Download Proposal Pack &rarr;</a>
+				</div>
+				<div class="flex items-start gap-4">
+					<span class="text-filament font-bold text-sm">03</span>
+					<div>
+						<div class="font-sans font-bold text-sm text-[#F2EFE9]">One-Click Karachi Dispatch</div>
+						<p class="font-sans text-[#CFC8DA] mt-0.5">Confirm dimensions, infill, and prepaid IBFT/Raast order straight with our lab engineers.</p>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </section>
 
-<!-- Memphis Squiggle Divider -->
-<div class="w-full text-filament/40 overflow-hidden" aria-hidden="true">
-	<svg class="w-full h-4" viewBox="0 0 1200 16" preserveAspectRatio="none" fill="none">
-		<path d="M0 8 Q 30 0, 60 8 T 120 8 T 180 8 T 240 8 T 300 8 T 360 8 T 420 8 T 480 8 T 540 8 T 600 8 T 660 8 T 720 8 T 780 8 T 840 8 T 900 8 T 960 8 T 1020 8 T 1080 8 T 1140 8 T 1200 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-	</svg>
-</div>
-
-<!-- Section 4.5: Engineering Innovation Lab & 100% Open Source Sovereignty -->
-<section class="py-20 bg-parchment-bg dark:bg-[#100D1A] border-b border-[#E2D7C7] dark:border-[#282236] transition-colors" id="engineering-innovation">
+<!-- BAND 4: Asymmetric Sticky Editorial Specimen Index — What Gets Built -->
+<section class="py-20 md:py-24 bg-parchment-bg dark:bg-workshop-bg border-b border-parchment-border dark:border-workshop-border transition-colors">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="text-center max-w-3xl mx-auto mb-16">
-			<div class="inline-flex items-center gap-2 px-3 py-1 bg-[#7E22CE]/10 border border-[#7E22CE]/30 rounded-nouveau-sm text-[#7E22CE] dark:text-[#C084FC] font-mono text-xs uppercase tracking-wider mb-3">
-				<span>Engineering Innovation Lab</span>
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+
+			<!-- Left Sticky Editorial Column -->
+			<div class="lg:col-span-4 lg:sticky lg:top-24 space-y-5">
+				<h2 class="font-display text-h2 font-extrabold text-parchment-ink dark:text-ink leading-tight">
+					Practical parts.<br>
+					<span class="font-editorial-italic font-normal text-gold-focal">Honest raw-plastic economics.</span>
+				</h2>
+				<p class="text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">
+					Typical applications across Pakistani homes, university engineering departments, and prototyping benches — showing indicative print duration and raw filament cost.
+				</p>
+				<div class="pt-2">
+					<a href="/gallery" class="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider font-semibold text-gold-focal hover:underline">
+						<span>Explore Part Gallery</span> &rarr;
+					</a>
+				</div>
 			</div>
-			<h2 class="font-display text-h2 font-bold text-parchment-ink dark:text-white">
-				<span class="squiggle-underline">Beyond 3D Printing: Sovereign Hardware</span>
+
+			<!-- Right 2-Column Architectural Ruled Index (no rainbow icon tiles!) -->
+			<div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-10">
+				<article class="pt-5 border-t border-plum/30 dark:border-plum-light/25 space-y-2">
+					<div class="flex items-center justify-between font-mono text-[11px] text-plum dark:text-plum-light">
+						<span>01 &middot; REPLACEMENT</span>
+						<span class="text-gold-focal font-semibold">~Rs 45 raw</span>
+					</div>
+					<h3 class="font-display font-bold text-lg text-parchment-ink dark:text-ink">Fix Broken Fixtures</h3>
+					<p class="text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">Fan regulator knobs, appliance clips, and snapped gears printed in heat-resistant PETG (~35 min, 14g) instead of replacing whole units.</p>
+				</article>
+
+				<article class="pt-5 border-t border-plum/30 dark:border-plum-light/25 space-y-2">
+					<div class="flex items-center justify-between font-mono text-[11px] text-plum dark:text-plum-light">
+						<span>02 &middot; ENGINEERING FYP</span>
+						<span class="text-gold-focal font-semibold">~Rs 480 raw</span>
+					</div>
+					<h3 class="font-display font-bold text-lg text-parchment-ink dark:text-ink">Working Structural Models</h3>
+					<p class="text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">Civil truss bridges, robotics gear trains, and mechanical test rigs iterated overnight in PLA+ (~9 hrs, 180g).</p>
+				</article>
+
+				<article class="pt-5 border-t border-plum/30 dark:border-plum-light/25 space-y-2">
+					<div class="flex items-center justify-between font-mono text-[11px] text-plum dark:text-plum-light">
+						<span>03 &middot; ENCLOSURES</span>
+						<span class="text-gold-focal font-semibold">~Rs 220 raw</span>
+					</div>
+					<h3 class="font-display font-bold text-lg text-parchment-ink dark:text-ink">IoT &amp; PCB Housings</h3>
+					<p class="text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">Ventilated ESP32 and solar-monitor cases with snap fits and screw standoffs (~3 hrs, 75g PETG) before committing to steel molds.</p>
+				</article>
+
+				<article class="pt-5 border-t border-plum/30 dark:border-plum-light/25 space-y-2">
+					<div class="flex items-center justify-between font-mono text-[11px] text-plum dark:text-plum-light">
+						<span>04 &middot; AUTOMOTIVE &amp; FPV</span>
+						<span class="text-gold-focal font-semibold">~Rs 140 raw</span>
+					</div>
+					<h3 class="font-display font-bold text-lg text-parchment-ink dark:text-ink">Tough ABS &amp; Flex TPU</h3>
+					<p class="text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">Motorcycle lever guards in enclosed ABS and vibration-dampening drone camera mounts in flexible TPU 95A (~1h 45m, 32g).</p>
+				</article>
+
+				<article class="pt-5 border-t border-plum/30 dark:border-plum-light/25 space-y-2">
+					<div class="flex items-center justify-between font-mono text-[11px] text-plum dark:text-plum-light">
+						<span>05 &middot; CUSTOM CRAFT</span>
+						<span class="text-gold-focal font-semibold">~Rs 130 raw</span>
+					</div>
+					<h3 class="font-display font-bold text-lg text-parchment-ink dark:text-ink">Urdu Relief &amp; Bespoke Gifts</h3>
+					<p class="text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">Dual-color Urdu calligraphy plaques, lithophane lamps, and custom trophies built on demand (~2 hrs, 48g PLA).</p>
+				</article>
+
+				<article class="pt-5 border-t border-plum/30 dark:border-plum-light/25 space-y-2">
+					<div class="flex items-center justify-between font-mono text-[11px] text-plum dark:text-plum-light">
+						<span>06 &middot; SMALL BATCH</span>
+						<span class="text-gold-focal font-semibold">1kg Spool</span>
+					</div>
+					<h3 class="font-display font-bold text-lg text-parchment-ink dark:text-ink">Micro-Manufacturing Runs</h3>
+					<p class="text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">Low-volume jigs, workshop fixtures, and custom consumer accessories at Rs 2.5–3.5/g in raw filament with 80–150W power draw.</p>
+				</article>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BAND 5: Open Source Manifesto & Accountability Comparison Ledger -->
+<section class="py-20 md:py-24 bg-parchment-subtle dark:bg-workshop-surface border-b border-parchment-border dark:border-workshop-border transition-colors" id="engineering-innovation">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+
+		<!-- Editorial Pledge -->
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+			<div class="lg:col-span-7">
+				<blockquote class="font-editorial-italic text-3xl sm:text-4xl md:text-5xl text-parchment-ink dark:text-ink leading-[1.12]">
+					&ldquo;If Jiddat3D ceases to exist tomorrow, your printer never becomes a paperweight.&rdquo;
+				</blockquote>
+			</div>
+			<div class="lg:col-span-5 space-y-5 text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">
+				<p>
+					Every Klipper profile, Marlin config, OrcaSlicer preset, wiring diagram, and printable bracket stays public. Every stepper, belt, bearing, and thermistor follows open industrial standards serviceable anywhere in Pakistan.
+				</p>
+				<div class="pt-4 border-t border-plum/30 dark:border-plum-light/25">
+					<div class="font-mono text-[10px] uppercase tracking-widest text-gold-focal mb-2">Lab Expansion Roadmap (In R&amp;D)</div>
+					<p class="text-xs">Rapid PCB prototyping &amp; stencils &middot; Desktop CNC milling machines &middot; Bespoke mechatronics fixtures for Pakistani research labs.</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Ruled Accountability Comparison Table -->
+		<div class="pt-12 border-t border-parchment-border dark:border-workshop-border">
+			<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+				<h2 class="font-display text-h2 font-extrabold text-parchment-ink dark:text-ink">
+					Jiddat3D Karachi vs. Grey-Market Sellers
+				</h2>
+				<span class="font-mono text-xs text-plum dark:text-plum-light">Engineering accountability ledger</span>
+			</div>
+
+			<div class="overflow-x-auto">
+				<table class="w-full text-left border-collapse text-xs md:text-sm">
+					<thead>
+						<tr class="border-y border-plum/40 dark:border-plum-light/30 font-mono text-[11px] uppercase tracking-wider">
+							<th class="py-3.5 pr-4 text-parchment-muted dark:text-ink-muted font-medium">Dimension</th>
+							<th class="py-3.5 px-4 text-gold-focal font-bold">Jiddat3D Karachi</th>
+							<th class="py-3.5 pl-4 text-parchment-muted dark:text-ink-muted font-medium">OLX / Grey-Market Imports</th>
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-parchment-border dark:divide-workshop-border">
+						<tr>
+							<td class="py-4 pr-4 font-semibold text-parchment-ink dark:text-ink">Warranty</td>
+							<td class="py-4 px-4 text-parchment-ink dark:text-ink">6-Month Working Warranty + STEAM Education Warranty</td>
+							<td class="py-4 pl-4 text-parchment-muted dark:text-ink-muted">&ldquo;Checking warranty&rdquo; or none</td>
+						</tr>
+						<tr>
+							<td class="py-4 pr-4 font-semibold text-parchment-ink dark:text-ink">Architecture</td>
+							<td class="py-4 px-4 text-parchment-ink dark:text-ink">100% open-source Marlin/Klipper &amp; public CAD</td>
+							<td class="py-4 pl-4 text-parchment-muted dark:text-ink-muted">Proprietary cloud accounts &amp; locked parts</td>
+						</tr>
+						<tr>
+							<td class="py-4 pr-4 font-semibold text-parchment-ink dark:text-ink">Spare Parts</td>
+							<td class="py-4 px-4 text-parchment-ink dark:text-ink">Stocked locally in Karachi (nozzles, belts, thermistors, hotends)</td>
+							<td class="py-4 pl-4 text-parchment-muted dark:text-ink-muted">4&ndash;6 week international wait</td>
+						</tr>
+						<tr>
+							<td class="py-4 pr-4 font-semibold text-parchment-ink dark:text-ink">Calibration</td>
+							<td class="py-4 px-4 text-parchment-ink dark:text-ink">Bench-assembled &amp; test-printed before dispatch</td>
+							<td class="py-4 pl-4 text-parchment-muted dark:text-ink-muted">Unchecked flat-pack courier boxes</td>
+						</tr>
+						<tr>
+							<td class="py-4 pr-4 font-semibold text-parchment-ink dark:text-ink">Billing &amp; Support</td>
+							<td class="py-4 px-4 text-parchment-ink dark:text-ink">Prepaid IBFT/Raast with NTN invoice &amp; engineer onboarding</td>
+							<td class="py-4 pl-4 text-parchment-muted dark:text-ink-muted">Informal cash sale, zero post-sale guidance</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BAND 6: Schools STEAM Split + Clean Hairline FAQ -->
+<section class="py-20 md:py-24 bg-parchment-bg dark:bg-workshop-bg border-b border-parchment-border dark:border-workshop-border transition-colors">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+
+		<!-- Schools & Universities Split -->
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+			<div class="lg:col-span-5 space-y-5">
+				<h2 class="font-display text-h2 font-extrabold text-parchment-ink dark:text-ink leading-tight">
+					Campus STEAM labs.<br>
+					<span class="font-editorial-italic font-normal text-gold-focal">Turn-key from day one.</span>
+				</h2>
+				<p class="text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">
+					We install enclosed machines, train non-technical faculty in a 2-day hands-on workshop, and supply curriculum-aligned projects for Grades 4 through University—complete with EPADS/PPRA tender packets and GST/NTN billing.
+				</p>
+				<div class="flex flex-wrap gap-3 pt-2">
+					<a href="/schools" class="btn-filament text-xs py-3 px-5">Explore Lab Packages &rarr;</a>
+					<a href="/schools#tenders" class="btn-secondary text-xs py-3 px-5">Tender Packet Info</a>
+				</div>
+			</div>
+
+			<div class="lg:col-span-7 divide-y divide-parchment-border dark:divide-workshop-border border-y border-plum/35 dark:border-plum-light/25">
+				<div class="py-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+					<div>
+						<h3 class="font-display font-bold text-base text-parchment-ink dark:text-ink">Starter Lab (1&ndash;2 Printers)</h3>
+						<p class="text-xs text-parchment-muted dark:text-ink-muted mt-1 max-w-md">2 calibrated machines, 8 lesson plans, 1-day teacher workshop, and direct WhatsApp teacher hotline.</p>
+					</div>
+					<span class="font-numeral text-sm font-bold text-gold-focal whitespace-nowrap">From Rs 350,000</span>
+				</div>
+				<div class="py-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+					<div>
+						<h3 class="font-display font-bold text-base text-parchment-ink dark:text-ink">Classroom Lab (4&ndash;6 Printers)</h3>
+						<p class="text-xs text-parchment-muted dark:text-ink-muted mt-1 max-w-md">Full class periods, 24 project modules, 2-day on-campus training, and quarterly Karachi lab maintenance.</p>
+					</div>
+					<span class="font-numeral text-sm font-bold text-gold-focal whitespace-nowrap">From Rs 950,000</span>
+				</div>
+				<div class="py-5 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+					<div>
+						<h3 class="font-display font-bold text-base text-parchment-ink dark:text-ink">University &amp; Tender Procurement</h3>
+						<p class="text-xs text-parchment-muted dark:text-ink-muted mt-1 max-w-md">GST/NTN invoices, formal technical spec sheets, and institutional quotation packets for department heads.</p>
+					</div>
+					<span class="font-mono text-xs font-semibold text-plum dark:text-plum-light whitespace-nowrap">EPADS / PPRA Ready</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Hairline FAQ Accordion -->
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start pt-16 border-t border-parchment-border dark:border-workshop-border">
+			<div class="lg:col-span-4 space-y-2">
+				<h2 class="font-display text-h2 font-extrabold text-parchment-ink dark:text-ink">Straight answers.</h2>
+				<p class="text-sm text-parchment-muted dark:text-ink-muted">Pricing, prepaid policy, load-shedding, and warranty terms without fine print.</p>
+			</div>
+
+			<div class="lg:col-span-8 divide-y divide-parchment-border dark:divide-workshop-border border-y border-plum/35 dark:border-plum-light/25" x-data="{ active: 1 }">
+				<div>
+					<button @click="active = (active === 1 ? null : 1)" class="w-full py-5 text-left flex justify-between items-center gap-4 focus:outline-none">
+						<span class="font-display font-bold text-parchment-ink dark:text-ink text-base">How much do Jiddat3D specialized printers cost?</span>
+						<span class="font-mono text-gold-focal text-lg shrink-0" x-text="active === 1 ? '−' : '+'"></span>
+					</button>
+					<div x-show="active === 1" class="pb-5 text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">
+						The open-source RepRap DIY kit starts at <strong class="font-numeral text-parchment-ink dark:text-ink">Rs 78,000</strong>. The student-safe Edu-Maker V2 is <strong class="font-numeral text-parchment-ink dark:text-ink">Rs 98,000</strong>, the Mark-1 Desktop is <strong class="font-numeral text-parchment-ink dark:text-ink">Rs 145,000</strong>, the enclosed Apex CoreXY is <strong class="font-numeral text-parchment-ink dark:text-ink">Rs 245,000</strong>, and the large-format L-500 is <strong class="font-numeral text-parchment-ink dark:text-ink">Rs 385,000</strong>.
+					</div>
+				</div>
+
+				<div>
+					<button @click="active = (active === 2 ? null : 2)" class="w-full py-5 text-left flex justify-between items-center gap-4 focus:outline-none">
+						<span class="font-display font-bold text-parchment-ink dark:text-ink text-base">Why are all builds 100% Prepaid (No COD)?</span>
+						<span class="font-mono text-gold-focal text-lg shrink-0" x-text="active === 2 ? '−' : '+'"></span>
+					</button>
+					<div x-show="active === 2" x-cloak class="pb-5 text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">
+						Every Jiddat machine is custom-assembled, wired, and bench test-printed specifically for your order in Karachi. Prepaid IBFT or Raast payment with official NTN invoicing funds dedicated component allocation and insured dispatch without courier return damage.
+					</div>
+				</div>
+
+				<div>
+					<button @click="active = (active === 3 ? null : 3)" class="w-full py-5 text-left flex justify-between items-center gap-4 focus:outline-none">
+						<span class="font-display font-bold text-parchment-ink dark:text-ink text-base">What warranty coverage is included?</span>
+						<span class="font-mono text-gold-focal text-lg shrink-0" x-text="active === 3 ? '−' : '+'"></span>
+					</button>
+					<div x-show="active === 3" x-cloak class="pb-5 text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">
+						All Jiddat3D machines carry a <strong>6-Month Working Warranty</strong> covering the controller board, stepper drivers, PSU, and frame alignment under clear bench claim terms. Partner schools and universities receive our extended <strong>STEAM Education Warranty</strong> with priority component swaps.
+					</div>
+				</div>
+
+				<div>
+					<button @click="active = (active === 4 ? null : 4)" class="w-full py-5 text-left flex justify-between items-center gap-4 focus:outline-none">
+						<span class="font-display font-bold text-parchment-ink dark:text-ink text-base">What happens when load-shedding strikes mid-print?</span>
+						<span class="font-mono text-gold-focal text-lg shrink-0" x-text="active === 4 ? '−' : '+'"></span>
+					</button>
+					<div x-show="active === 4" x-cloak class="pb-5 text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">
+						Our Klipper and Marlin configs include Power-Loss Resume so coordinates are saved on power cuts. For areas with unstable voltage, we recommend a 600VA&ndash;1000VA Pure Sine Wave UPS (the printer itself draws only 80W&ndash;150W).
+					</div>
+				</div>
+
+				<div>
+					<button @click="active = (active === 5 ? null : 5)" class="w-full py-5 text-left flex justify-between items-center gap-4 focus:outline-none">
+						<span class="font-display font-bold text-parchment-ink dark:text-ink text-base">What does raw filament cost per printed part?</span>
+						<span class="font-mono text-gold-focal text-lg shrink-0" x-text="active === 5 ? '−' : '+'"></span>
+					</button>
+					<div x-show="active === 5" x-cloak class="pb-5 text-sm text-parchment-muted dark:text-ink-muted leading-relaxed">
+						Standard 1 kg PLA/PETG spools run roughly <strong class="font-numeral text-parchment-ink dark:text-ink">Rs 2,500&ndash;3,500</strong> (about Rs 2.5&ndash;3.5 per gram of raw plastic). A 15g bracket uses ~Rs 45 of filament; a 150g university FYP part uses ~Rs 450. Use our <a href="/instant-quote" class="text-gold-focal underline">Instant 3D Slicer</a> for exact commercial print-service quotes.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- BAND 7: Direct Human Closing Band -->
+<section class="py-20 md:py-24 bg-parchment-subtle dark:bg-workshop-surface transition-colors">
+	<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-end justify-between gap-8">
+		<div class="space-y-3 max-w-2xl">
+			<h2 class="font-display text-h1 font-extrabold text-parchment-ink dark:text-ink leading-[1.03]">
+				Talk to an engineer in <span class="font-editorial-italic font-normal text-gold-focal">Karachi.</span>
 			</h2>
-			<p class="text-[#635D54] dark:text-[#9DA3AF] text-sm md:text-base mt-3 leading-relaxed">
-				Jiddat was founded on the belief that Pakistan should manufacture real machines — not just consume imported black boxes. All our software configs and CAD models are 100% open source.
+			<p class="text-base text-parchment-muted dark:text-ink-muted">
+				Choosing your first machine, pricing a final year project, or requesting a campus STEAM tender packet — message the lab directly.
 			</p>
 		</div>
 
-		<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-			<!-- Pillar 1: Open Source Freedom -->
-			<div class="workshop-card p-8 bg-white dark:bg-[#161222] border border-[#E2D7C7] dark:border-[#2D233D] space-y-4">
-				<div class="w-12 h-12 rounded-nouveau-sm bg-[#7E22CE]/10 text-[#7E22CE] dark:text-[#C084FC] flex items-center justify-center text-2xl">
-					🔓
-				</div>
-				<h3 class="font-display text-xl font-bold text-parchment-ink dark:text-white">
-					100% Open Source: If We Cease to Exist, You Still Win
-				</h3>
-				<p class="text-xs md:text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
-					This is our defining engineering commitment: if tomorrow Jiddat3D ceases to exist, your machine will <strong>never become a paperweight</strong>. All our Klipper profiles, Marlin firmware configs, OrcaSlicer presets, wiring schematics, and 3D printable replacement brackets are publicly hosted. Every component uses open industrial standards serviceable in Pakistani electronics markets. Zero proprietary lock-in.
-				</p>
-			</div>
-
-			<!-- Pillar 2: Engineering Innovation Roadmap -->
-			<div class="workshop-card p-8 bg-white dark:bg-[#161222] border border-[#E2D7C7] dark:border-[#2D233D] space-y-4">
-				<div class="w-12 h-12 rounded-nouveau-sm bg-teal/10 text-teal flex items-center justify-center text-2xl">
-					⚙️
-				</div>
-				<h3 class="font-display text-xl font-bold text-parchment-ink dark:text-white">
-					Engineering Innovation Roadmap (PCB & CNC Milling)
-				</h3>
-				<p class="text-xs md:text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
-					Additive manufacturing is only our first horizon. Our Karachi engineering lab is actively prototyping:
-				</p>
-				<ul class="space-y-2 text-xs text-[#635D54] dark:text-[#9DA3AF]">
-					<li class="flex items-center gap-2"><strong class="text-[#3DDC84]">⚡</strong> <strong>Rapid PCB Prototyping & Stencil Services:</strong> Fast turnaround printed circuit boards for local electrical engineers.</li>
-					<li class="flex items-center gap-2"><strong class="text-[#3DDC84]">⚡</strong> <strong>Desktop CNC Milling Machines:</strong> Precision subtractive aluminum, brass, and acrylic desktop machining.</li>
-					<li class="flex items-center gap-2"><strong class="text-[#3DDC84]">⚡</strong> <strong>Bespoke Mechatronics & Automation Tooling:</strong> Tailored test fixtures for Pakistani research labs.</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</section>
-
-<!-- Section 5: Why Buy from Jiddat3D vs Grey Market / OLX -->
-<section class="py-20 bg-parchment-subtle dark:bg-[#0C0E12] border-b border-[#E2D7C7] dark:border-[#28303F] transition-colors">
-	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="text-center max-w-3xl mx-auto mb-16">
-			<span class="text-filament font-mono text-xs uppercase tracking-wider">Unmatched Engineering Accountability</span>
-			<h2 class="font-display text-h2 font-bold text-parchment-ink dark:text-white mt-1">
-				<span class="squiggle-underline">Why buy from Jiddat3D vs grey market sellers</span>
-			</h2>
-			<p class="text-[#635D54] dark:text-[#9DA3AF] text-sm md:text-base mt-3">
-				A specialized 3D printer is a precision manufacturing tool. If it breaks, who will fix it?
-			</p>
-		</div>
-
-		<div class="overflow-x-auto workshop-card p-4 bg-white dark:bg-[#161B24]">
-			<table class="w-full text-left border-collapse text-xs md:text-sm">
-				<thead>
-					<tr class="border-b border-[#E2D7C7] dark:border-[#28303F] text-[#635D54] dark:text-[#9DA3AF]">
-						<th class="py-4 px-4 font-mono font-medium">FEATURE</th>
-						<th class="py-4 px-4 font-display font-bold text-filament text-base">Jiddat3D Karachi</th>
-						<th class="py-4 px-4 font-mono font-medium text-[#8A8175] dark:text-[#656D7D]">OLX / Grey-Market Sellers</th>
-					</tr>
-				</thead>
-				<tbody class="divide-y divide-[#E2D7C7] dark:divide-[#28303F]">
-					<tr>
-						<td class="py-4 px-4 text-parchment-ink dark:text-white font-medium">Warranty</td>
-						<td class="py-4 px-4 text-[#3DDC84] font-semibold"><span class="font-numeral">6</span>-Month Working Warranty & Specialized Education Warranty</td>
-						<td class="py-4 px-4 text-[#8A8175] dark:text-[#656D7D]">"Checking warranty" or none at all</td>
-					</tr>
-					<tr>
-						<td class="py-4 px-4 text-parchment-ink dark:text-white font-medium">Machine Architecture</td>
-						<td class="py-4 px-4 text-[#3DDC84] font-semibold">100% Open-Source standards (Marlin/Klipper, full schematics)</td>
-						<td class="py-4 px-4 text-[#8A8175] dark:text-[#656D7D]">Proprietary cloud lock-in with closed parts</td>
-					</tr>
-					<tr>
-						<td class="py-4 px-4 text-parchment-ink dark:text-white font-medium">Spare Parts Availability</td>
-						<td class="py-4 px-4 text-[#3DDC84] font-semibold">Hand-stocked in Karachi Lab (Nozzles, belts, thermistors, hotends)</td>
-						<td class="py-4 px-4 text-[#8A8175] dark:text-[#656D7D]">Must wait 4–6 weeks on AliExpress</td>
-					</tr>
-					<tr>
-						<td class="py-4 px-4 text-parchment-ink dark:text-white font-medium">Assembly & Calibration</td>
-						<td class="py-4 px-4 text-[#3DDC84] font-semibold">Individually bench-calibrated & test-printed before dispatch</td>
-						<td class="py-4 px-4 text-[#8A8175] dark:text-[#656D7D]">Unchecked boxes dropped in courier transit</td>
-					</tr>
-					<tr>
-						<td class="py-4 px-4 text-parchment-ink dark:text-white font-medium">Payment Model</td>
-						<td class="py-4 px-4 text-[#3DDC84] font-semibold">100% Prepaid with official bank invoices & verification</td>
-						<td class="py-4 px-4 text-[#8A8175] dark:text-[#656D7D]">Unverified cash or informal transactions</td>
-					</tr>
-					<tr>
-						<td class="py-4 px-4 text-parchment-ink dark:text-white font-medium">Initial Setup Help</td>
-						<td class="py-4 px-4 text-[#3DDC84] font-semibold">Direct Karachi engineer video call & WhatsApp onboarding</td>
-						<td class="py-4 px-4 text-[#8A8175] dark:text-[#656D7D]">You are completely on your own</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</section>
-
-<!-- Memphis Squiggle Divider -->
-<div class="w-full text-filament/40 overflow-hidden" aria-hidden="true">
-	<svg class="w-full h-4" viewBox="0 0 1200 16" preserveAspectRatio="none" fill="none">
-		<path d="M0 8 Q 30 0, 60 8 T 120 8 T 180 8 T 240 8 T 300 8 T 360 8 T 420 8 T 480 8 T 540 8 T 600 8 T 660 8 T 720 8 T 780 8 T 840 8 T 900 8 T 960 8 T 1020 8 T 1080 8 T 1140 8 T 1200 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
-	</svg>
-</div>
-
-<!-- Section 6: FAQ Bank -->
-<section class="py-20 bg-parchment-bg dark:bg-[#141820] border-b border-[#E2D7C7] dark:border-[#28303F] transition-colors">
-	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-		<div class="text-center mb-12">
-			<span class="text-teal font-mono text-xs uppercase tracking-wider">Clear & Honest Answers</span>
-			<h2 class="font-display text-h2 font-bold text-parchment-ink dark:text-white mt-1">
-				<span class="squiggle-underline-teal">Frequently asked questions</span>
-			</h2>
-		</div>
-
-		<div class="space-y-4" x-data="{ active: null }">
-			
-			<!-- FAQ 1 -->
-			<div class="workshop-card overflow-hidden">
-				<button @click="active = (active === 1 ? null : 1)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
-					<span class="font-display font-semibold text-parchment-ink dark:text-white text-base">How much do Jiddat3D specialized printers cost?</span>
-					<span class="text-filament font-bold text-xl font-calligraphic" x-text="active === 1 ? '−' : '+'"></span>
-				</button>
-				<div x-show="active === 1" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed border-t border-[#E2D7C7] dark:border-[#28303F] pt-4">
-					Our open-source RepRap assembly kit starts at <strong class="font-numeral-italic">Rs 78,000</strong>. The student-safe <strong class="font-numeral-italic">Jiddat Edu-Maker V2</strong> is priced at <strong class="font-numeral-italic">Rs 98,000</strong> with Education Warranty. Our flagship precision desktop <strong class="font-numeral-italic">Jiddat Mark-1</strong> is <strong class="font-numeral-italic">Rs 145,000</strong>, and the industrial high-temperature <strong class="font-numeral-italic">Jiddat Apex CoreXY</strong> is <strong class="font-numeral-italic">Rs 245,000</strong>. For large-scale manufacturing, our massive <strong class="font-numeral-italic">Jiddat L-500</strong> workstation is <strong class="font-numeral-italic">Rs 385,000</strong>. All machines are built to order in Karachi on a prepaid basis.
-				</div>
-			</div>
-
-			<!-- FAQ 2 -->
-			<div class="workshop-card overflow-hidden">
-				<button @click="active = (active === 2 ? null : 2)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
-					<span class="font-display font-semibold text-parchment-ink dark:text-white text-base">Why do you only accept Prepaid Orders (No COD)?</span>
-					<span class="text-filament font-bold text-xl font-calligraphic" x-text="active === 2 ? '−' : '+'"></span>
-				</button>
-				<div x-show="active === 2" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed border-t border-[#E2D7C7] dark:border-[#28303F] pt-4">
-					Because we do not sell disposable mass-market gadgets. Every Jiddat machine is an original, specialized piece of precision engineering, custom-assembled, wired, and test-printed on our Karachi bench specifically for you. Operating on a <strong>100% Prepaid Basis</strong> (Direct Bank Transfer via IBFT or Raast) ensures dedicated engineering allocation, high-grade component testing, official invoicing, and insured courier transport without the risk of delivery refusals or transport mishandling.
-				</div>
-			</div>
-
-			<!-- FAQ 3 -->
-			<div class="workshop-card overflow-hidden">
-				<button @click="active = (active === 3 ? null : 3)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
-					<span class="font-display font-semibold text-parchment-ink dark:text-white text-base">What happens if Jiddat3D ceases to exist tomorrow?</span>
-					<span class="text-filament font-bold text-xl font-calligraphic" x-text="active === 3 ? '−' : '+'"></span>
-				</button>
-				<div x-show="active === 3" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed border-t border-[#E2D7C7] dark:border-[#28303F] pt-4">
-					<strong>You still own a completely functional machine.</strong> We don't believe in proprietary cloud accounts, DRM chips, or vendor lock-in. All our machine profiles, Klipper/Marlin configurations, slicer presets, and CAD models are 100% open source. Every single motor, belt, bearing, and thermistor is an open industrial standard that you can purchase from local Pakistani electronics markets or repair yourself at any time.
-				</div>
-			</div>
-
-			<!-- FAQ 4 -->
-			<div class="workshop-card overflow-hidden">
-				<button @click="active = (active === 4 ? null : 4)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
-					<span class="font-display font-semibold text-parchment-ink dark:text-white text-base">What warranty coverage do you provide?</span>
-					<span class="text-filament font-bold text-xl font-calligraphic" x-text="active === 4 ? '−' : '+'"></span>
-				</button>
-				<div x-show="active === 4" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed border-t border-[#E2D7C7] dark:border-[#28303F] pt-4">
-					We offer a <strong>6-Month Working Warranty</strong> under clear claim terms and operational clauses for all machines designed and sold by Jiddat3D, covering the main controller board, stepper drivers, power supply (PSU), and mechanical frame alignment. For educational partners (schools, colleges, and university STEAM labs), we provide our extended <strong>Specialized Education Warranty</strong> including teacher training, curriculum alignment, and priority component swaps to guarantee classroom uptime.
-				</div>
-			</div>
-
-			<!-- FAQ 5 -->
-			<div class="workshop-card overflow-hidden">
-				<button @click="active = (active === 5 ? null : 5)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
-					<span class="font-display font-semibold text-parchment-ink dark:text-white text-base">What happens when load-shedding strikes?</span>
-					<span class="text-filament font-bold text-xl font-calligraphic" x-text="active === 5 ? '−' : '+'"></span>
-				</button>
-				<div x-show="active === 5" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed border-t border-[#E2D7C7] dark:border-[#28303F] pt-4">
-					All our Klipper and Marlin configurations feature <strong>Power-Loss Resume</strong>. When electricity cuts, coordinates are saved. When power restores, the printer prompts to resume. For areas with unstable voltage, we advise connecting the machine to a 600VA–1000VA Pure Sine Wave UPS.
-				</div>
-			</div>
-
-		</div>
-	</div>
-</section>
-
-			<!-- FAQ 5 -->
-			<div class="workshop-card overflow-hidden">
-				<button @click="active = (active === 5 ? null : 5)" class="w-full p-5 text-left flex justify-between items-center focus:outline-none">
-					<span class="font-display font-semibold text-parchment-ink dark:text-white text-base">What does it cost to actually print something?</span>
-					<span class="text-filament font-bold text-xl font-calligraphic" x-text="active === 5 ? '−' : '+'"></span>
-				</button>
-				<div x-show="active === 5" x-collapse class="px-5 pb-5 text-xs md:text-sm text-[#635D54] dark:text-[#9DA3AF] leading-relaxed border-t border-[#E2D7C7] dark:border-[#28303F] pt-4">
-					Plastic filament (PLA/PETG) costs between <strong class="font-numeral-italic font-bold">Rs 2,500 and Rs 3,500 per 1 kg spool</strong> (<span class="font-numeral">1,000 grams</span>). That means plastic costs about <strong class="font-numeral-italic font-bold">Rs 2.5 to Rs 3.5 per gram</strong>! A phone stand uses about 15 grams (<span class="font-numeral-italic font-bold">Rs 45</span>). A fan knob uses 12 grams (<span class="font-numeral-italic font-bold">Rs 35</span>). A large engineering FYP model uses 150 grams (<span class="font-numeral-italic font-bold">Rs 450</span>). Electricity consumption is around 80W–150W (about the same as a laptop or pedestal fan).
-				</div>
-			</div>
-
-		</div>
-	</div>
-</section>
-
-<!-- Final WhatsApp Conversion Banner with Art Nouveau curves -->
-<section class="py-20 bg-[#F0EAE1] dark:bg-gradient-to-r dark:from-[#14181F] dark:via-[#1E2532] dark:to-[#14181F] border-b border-[#E2D7C7] dark:border-[#28303F] text-center transition-colors">
-	<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-		<span class="w-3.5 h-3.5 rounded-sm bg-[#25D366] inline-block animate-pulse"></span>
-		<h2 class="font-display text-h2 font-bold text-parchment-ink dark:text-white tracking-tight">
-			Have a question? We reply like humans.
-		</h2>
-		<p class="text-base text-[#635D54] dark:text-[#9DA3AF] max-w-xl mx-auto leading-relaxed">
-			Whether you're picking your first machine, budgeting for a school STEAM lab, or need a fast price quotation for your department — message our Karachi lab team directly.
-		</p>
-		
-		<div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20have%20questions%20about%203D%20printers%20in%20Pakistan." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-base px-8 py-4 shadow-2xl">
-				<svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-				<span>WhatsApp: <span class="font-numeral">0300-1318112</span></span>
+		<div class="flex flex-col sm:flex-row gap-3 shrink-0">
+			<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20have%20questions%20about%20Jiddat3D%20printers%20and%20services." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-sm px-6 py-3.5">
+				<span>WhatsApp 0300-1318112</span>
 			</a>
-			<a href="tel:+923001318112" class="btn-secondary text-base px-6 py-4">
-				<span>Call Directly</span>
+			<a href="/instant-quote" class="btn-secondary text-sm px-6 py-3.5">
+				<span>Instant 3D Slicer</span>
 			</a>
 		</div>
-
-		<p class="text-xs text-[#8A8175] dark:text-[#656D7D] font-mono">
-			Karachi Lab &bull; Monday to Saturday, <span class="font-numeral">10am – 8pm</span> &bull; Replies within <span class="font-numeral">15</span> minutes
-		</p>
 	</div>
 </section>
 {{ end }}

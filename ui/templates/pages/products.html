@@ -41,7 +41,7 @@
 			</div>
 
 			<!-- Open Source & Prepaid Commitment Banner -->
-			<div class="mt-6 p-4 rounded-nouveau-sm bg-white dark:bg-[#14181F] border border-[#7E22CE]/30 flex items-start sm:items-center justify-between gap-3 text-xs shadow-sm">
+			<div class="mt-6 p-4 rounded-nouveau-sm bg-parchment-surface dark:bg-workshop-surface border border-filament/30 flex items-start sm:items-center justify-between gap-3 text-xs shadow-sm">
 				<div class="flex items-center gap-3">
 					<span class="text-xl shrink-0">🔓</span>
 					<div class="text-[#635D54] dark:text-[#9DA3AF] leading-relaxed">
@@ -64,19 +64,19 @@
 
 				<!-- Technology Filter Tabs -->
 				<div class="flex flex-wrap items-center gap-1.5 text-xs font-mono">
-					<button @click="category = 'all'" :class="category === 'all' ? 'bg-filament text-white' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
+					<button @click="category = 'all'" :class="category === 'all' ? 'bg-filament text-[#131217] font-bold' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
 						All Machines
 					</button>
-					<button @click="category = 'desktop'" :class="category === 'desktop' ? 'bg-filament text-white' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
+					<button @click="category = 'desktop'" :class="category === 'desktop' ? 'bg-filament text-[#131217] font-bold' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
 						Desktop FDM
 					</button>
-					<button @click="category = 'enclosed'" :class="category === 'enclosed' ? 'bg-filament text-white' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
+					<button @click="category = 'enclosed'" :class="category === 'enclosed' ? 'bg-filament text-[#131217] font-bold' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
 						Enclosed CoreXY
 					</button>
-					<button @click="category = 'classroom'" :class="category === 'classroom' ? 'bg-filament text-white' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
+					<button @click="category = 'classroom'" :class="category === 'classroom' ? 'bg-filament text-[#131217] font-bold' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
 						Classroom / STEM
 					</button>
-					<button @click="category = 'resin'" :class="category === 'resin' ? 'bg-[#7E22CE] text-white' : 'bg-parchment-subtle dark:bg-[#1A1F29] text-[#635D54] dark:text-[#9DA3AF] hover:text-[#7E22CE]'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
+					<button @click="category = 'resin'" :class="category === 'resin' ? 'bg-accent-gold text-[#141413] font-semibold' : 'bg-parchment-subtle dark:bg-workshop-card text-parchment-muted dark:text-ink-muted hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-parchment-border dark:border-workshop-border transition-colors">
 						Resin (In R&D)
 					</button>
 				</div>
@@ -202,7 +202,7 @@
 			<div x-show="matches('classroom', 'under100k', 'Jiddat Edu-Maker V2', 'classroom education school stem')" class="workshop-card p-6 flex flex-col justify-between group">
 				<div>
 					<div class="flex items-center justify-between mb-4">
-						<span class="px-2.5 py-1 rounded-nouveau-sm bg-[#7E22CE]/10 text-[#7E22CE] dark:text-[#C084FC] border border-[#7E22CE]/30 text-xs font-semibold uppercase tracking-wider">Classroom & STEM</span>
+						<span class="px-2.5 py-1 rounded-nouveau-sm bg-parchment-subtle dark:bg-workshop-card text-parchment-ink dark:text-ink border border-parchment-border dark:border-workshop-border text-xs font-semibold uppercase tracking-wider">Classroom &amp; STEM</span>
 						<span class="text-xs text-[#3DDC84] font-mono flex items-center gap-1 font-semibold">
 							<span class="w-2 h-2 rounded-sm bg-[#3DDC84]"></span> Built in Karachi
 						</span>
@@ -340,22 +340,21 @@
 			</div>
 
 			<!-- 6. Jiddat Precision Resin (MSLA) - In Development -->
-			<div x-show="matches('resin', '100k-250k', 'Jiddat Precision Resin', 'resin msla uv jewelry in development')" class="workshop-card p-6 flex flex-col justify-between group border-2 border-[#7E22CE]/40">
+			<div x-show="matches('resin', '100k-250k', 'Jiddat Precision Resin', 'resin msla uv jewelry in development')" class="workshop-card p-6 flex flex-col justify-between group border border-accent-gold/40">
 				<div>
 					<div class="flex items-center justify-between mb-4">
-						<span class="px-2.5 py-1 rounded-nouveau-sm bg-[#7E22CE]/15 text-[#7E22CE] dark:text-[#C084FC] border border-[#7E22CE]/40 text-xs font-semibold uppercase tracking-wider">In Engineering R&D</span>
-						<span class="text-xs text-amber-500 font-mono flex items-center gap-1 font-semibold">
-							<span class="w-2 h-2 rounded-sm bg-amber-500 animate-pulse"></span> Lab Testing
+						<span class="px-2.5 py-1 rounded-nouveau-sm bg-accent-gold/15 text-accent-gold border border-accent-gold/40 text-xs font-semibold uppercase tracking-wider">In Engineering R&amp;D</span>
+						<span class="text-xs text-accent-gold font-mono flex items-center gap-1 font-semibold">
+							<span class="w-2 h-2 rounded-sm bg-accent-gold"></span> Lab Testing
 						</span>
 					</div>
-					<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] flex items-center justify-center p-4 mb-4">
+					<div class="h-44 bg-parchment-subtle dark:bg-workshop-surface rounded-nouveau-sm border border-parchment-border dark:border-workshop-border flex items-center justify-center p-4 mb-4">
 						<div class="text-center">
-							<span class="text-4xl">🔬</span>
-							<span class="font-display font-bold text-parchment-ink dark:text-white text-base mt-2 block">Jiddat Precision Resin</span>
-							<p class="text-[11px] font-mono text-[#7E22CE] dark:text-[#C084FC]">In Engineering Development &bull; MSLA</p>
+							<span class="font-display font-bold text-parchment-ink dark:text-ink text-base block">Jiddat Precision Resin</span>
+							<p class="text-[11px] font-mono text-accent-gold mt-1">In Engineering Development &bull; MSLA</p>
 						</div>
 					</div>
-					<h3 class="font-display font-bold text-parchment-ink dark:text-white text-xl group-hover:text-[#7E22CE] transition-colors">Jiddat Precision Resin (MSLA)</h3>
+					<h3 class="font-display font-bold text-parchment-ink dark:text-ink text-xl group-hover:text-filament transition-colors">Jiddat Precision Resin (MSLA)</h3>
 					<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1.5 leading-relaxed">
 						We currently specialize in FDM/FFM printing. Our high-resolution stereolithography (Resin) machine for jewelry casting and dental molds is under active lab development in Karachi.
 					</p>
@@ -378,7 +377,7 @@
 							<span class="text-2xl font-numeral-italic font-bold text-parchment-ink dark:text-white">Rs 135,000</span>
 							<span class="text-[10px] text-amber-500 block font-mono font-semibold">Expected &bull; Waitlist Open</span>
 						</div>
-						<span class="text-xs font-semibold text-[#7E22CE] dark:text-[#C084FC]">R&D Preview</span>
+						<span class="text-xs font-semibold text-accent-gold">R&amp;D Preview</span>
 					</div>
 					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20want%20to%20register%20for%20updates%20on%20the%20Jiddat%20Precision%20Resin%20Printer." target="_blank" rel="noopener noreferrer" class="btn-secondary w-full text-xs py-2.5 justify-center">
 						<span>Join Resin Waitlist on WhatsApp</span>
