@@ -3,7 +3,7 @@
 	<form hx-post="/api/newsletter/subscribe" hx-target="#newsletter-form-container" hx-swap="outerHTML" class="flex flex-col sm:flex-row gap-2">
 		<input type="email" name="email" placeholder="Enter your email" required class="flex-grow px-3.5 py-2 rounded-[10px_2px_10px_2px] bg-parchment-bg dark:bg-[#14181F] border border-[#E2D7C7] dark:border-[#28303F] text-parchment-ink dark:text-white placeholder-[#8C827A] dark:placeholder-[#656D7D] focus:outline-none focus:border-filament transition-all text-xs">
 		<input type="hidden" name="source" value="footer">
-		<button type="submit" class="px-4 py-2 bg-filament hover:bg-[#FF8038] text-white font-semibold rounded-[10px_2px_10px_2px] transition-colors text-xs whitespace-nowrap shadow-md">Join Updates</button>
+		<button type="submit" class="px-4 py-2 bg-filament hover:bg-filament-hover text-[#131217] font-bold rounded-[6px] transition-colors text-xs whitespace-nowrap shadow-sm">Join Updates</button>
 	</form>
 </div>
 {{ end }}

@@ -25,21 +25,21 @@ func RegisterPublicRoutes(app core.App) {
 			source := strings.TrimSpace(c.Request.FormValue("source"))
 
 			if email == "" {
-				return c.HTML(http.StatusBadRequest, `<div class="text-[#FF6A1A] text-xs mt-2">Email is required.</div>`)
+				return c.HTML(http.StatusBadRequest, `<div class="text-red-400 text-xs mt-2">Email is required.</div>`)
 			}
 			parsed, err := mail.ParseAddress(email)
 			if err != nil || parsed.Address != email {
-				return c.HTML(http.StatusBadRequest, `<div class="text-[#FF6A1A] text-xs mt-2">Please enter a valid email address.</div>`)
+				return c.HTML(http.StatusBadRequest, `<div class="text-red-400 text-xs mt-2">Please enter a valid email address.</div>`)
 			}
 
 			if existing, _ := app.FindFirstRecordByFilter("subscribers", "email = {:email}", dbx.Params{"email": email}); existing != nil {
-				return c.HTML(http.StatusOK, `<div class="text-[#FFB400] text-xs mt-2 font-mono">You are already subscribed. Thanks!</div>`)
+				return c.HTML(http.StatusOK, `<div class="text-filament text-xs mt-2 font-mono">You are already subscribed. Thanks!</div>`)
 			}
 
 			collection, err := app.FindCollectionByNameOrId("subscribers")
 			if err != nil {
 				app.Logger().Error("Failed to find subscribers collection: " + err.Error())
-				return c.HTML(http.StatusInternalServerError, `<div class="text-[#FF6A1A] text-xs mt-2">Internal server error.</div>`)
+				return c.HTML(http.StatusInternalServerError, `<div class="text-red-400 text-xs mt-2">Internal server error.</div>`)
 			}
 
 			record := core.NewRecord(collection)
@@ -49,7 +49,7 @@ func RegisterPublicRoutes(app core.App) {
 
 			if err := app.Save(record); err != nil {
 				app.Logger().Error("Failed to save subscriber: " + err.Error())
-				return c.HTML(http.StatusInternalServerError, `<div class="text-[#FF6A1A] text-xs mt-2">Could not complete subscription. Please try again.</div>`)
+				return c.HTML(http.StatusInternalServerError, `<div class="text-red-400 text-xs mt-2">Could not complete subscription. Please try again.</div>`)
 			}
 
 			return c.HTML(http.StatusOK, `<div class="text-[#3DDC84] font-medium text-xs mt-2 font-mono">✓ Subscribed. We will keep you updated.</div>`)

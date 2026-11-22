@@ -6,288 +6,306 @@
 	html {
 		scroll-behavior: smooth;
 	}
-	
-	/* Light Mode (Artisan Parchment) */
+
+	/* Light Mode (Warm Stone-Ash & Charcoal Ink) */
 	html:not(.dark) {
-		background-color: #FAF7F2;
-		color: #1D1A16;
+		background-color: #F1EEEA;
+		color: #17151C;
 	}
 	html:not(.dark) body {
-		background-color: #FAF7F2;
-		color: #1D1A16;
+		background-color: #F1EEEA;
+		color: #17151C;
 	}
-	
-	/* Dark Mode (Modern Workshop Midnight) */
+
+	/* Dark Mode (Deep Charcoal & Dusty Purple Undercast) */
 	html.dark {
-		background-color: #0C0E12;
-		color: #F5F3EF;
+		background-color: #131217;
+		color: #F2EFE9;
 	}
 	html.dark body {
-		background-color: #0C0E12;
-		color: #F5F3EF;
+		background-color: #131217;
+		color: #F2EFE9;
 	}
 
 	body {
-		font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+		font-family: 'Figtree', system-ui, sans-serif;
 		overflow-x: hidden;
-		transition: background-color 0.3s ease, color 0.3s ease;
+		transition: background-color 0.25s ease, color 0.25s ease;
+		caret-color: #D4A843;
 	}
-	
-	/* Custom Art Nouveau / Workshop Scrollbars */
+
+	h1, h2, h3, .font-display {
+		font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+		letter-spacing: -0.028em;
+		text-wrap: balance;
+	}
+
+	:focus-visible {
+		outline: 2px solid #D4A843;
+		outline-offset: 2px;
+	}
+
+	/* Machined Charcoal & Gold Scrollbars */
 	::-webkit-scrollbar {
-		width: 9px;
-		height: 9px;
+		width: 8px;
+		height: 8px;
 	}
 	html:not(.dark) ::-webkit-scrollbar-track {
-		background: #F0EAE1;
+		background: #E8E3DC;
 	}
 	html:not(.dark) ::-webkit-scrollbar-thumb {
-		background: #D4C5B0;
+		background: #B5ACBD;
 		border-radius: 2px;
 	}
 	html:not(.dark) ::-webkit-scrollbar-thumb:hover {
-		background: #D9530F;
+		background: #9A7218;
 	}
 
 	html.dark ::-webkit-scrollbar-track {
-		background: #0C0E12;
+		background: #131217;
 	}
 	html.dark ::-webkit-scrollbar-thumb {
-		background: #2C3545;
+		background: #3E314A;
 		border-radius: 2px;
 	}
 	html.dark ::-webkit-scrollbar-thumb:hover {
-		background: #FF6A1A;
+		background: #D4A843;
 	}
 }
 
 @layer components {
-	/* Art Nouveau Whiplash Curve Cards - Replaces boring bubbly pills */
+	/* Architectural Workshop Surface */
 	.workshop-card,
 	.nouveau-card {
-		border-radius: 28px 4px 28px 4px;
-		transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+		border-radius: 8px;
+		transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease, box-shadow 0.22s ease;
 		position: relative;
 	}
-	
+
 	html:not(.dark) .workshop-card,
 	html:not(.dark) .nouveau-card {
-		background-color: #FFFFFF;
-		border: 1.5px solid #E2D7C7;
-		box-shadow: 0 4px 20px rgba(180, 150, 120, 0.12);
+		background-color: #FAF8F5;
+		border: 1px solid #D1C9C0;
+		box-shadow: 0 6px 20px -12px rgba(23, 21, 28, 0.12);
 	}
 	html.dark .workshop-card,
 	html.dark .nouveau-card {
-		background-color: #1B202A;
-		border: 1.5px solid #2C3545;
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+		background-color: #1B1921;
+		border: 1px solid #343040;
+		box-shadow: 0 10px 26px -14px rgba(0, 0, 0, 0.55);
 	}
-	
+
 	html:not(.dark) .workshop-card:hover,
 	html:not(.dark) .nouveau-card:hover {
-		border-color: #D9530F;
-		transform: translateY(-3px);
-		box-shadow: 0 12px 32px rgba(180, 150, 120, 0.22), 0 0 15px rgba(217, 83, 15, 0.18);
+		border-color: #5A4769;
+		transform: translateY(-2px);
 	}
 	html.dark .workshop-card:hover,
 	html.dark .nouveau-card:hover {
-		border-color: rgba(255, 106, 26, 0.55);
-		transform: translateY(-3px);
-		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 106, 26, 0.22);
+		border-color: rgba(212, 168, 67, 0.65);
+		transform: translateY(-2px);
 	}
 
-	/* Stepped Art Nouveau Arch */
-	.nouveau-arch {
-		border-radius: 36px 36px 4px 4px;
-	}
-
-	/* Memphis Geometric Chamfered Card */
-	.memphis-card {
-		clip-path: polygon(0 14px, 14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px));
-		transition: all 0.3s ease;
-	}
-
-	/* Art Nouveau Buttons - Sharp dynamic curves */
+	/* Primary Burnished Gold Focal CTA — deep charcoal ink for crisp 8.8:1 contrast */
 	.btn-filament {
-		background-color: #FF6A1A;
-		color: #FFFFFF;
-		font-weight: 600;
-		padding: 0.75rem 1.6rem;
-		border-radius: 16px 2px 16px 2px;
-		border: 1.5px solid #E0550B;
+		background-color: #D4A843;
+		color: #131217;
+		font-weight: 700;
+		padding: 0.78rem 1.5rem;
+		border-radius: 6px;
+		border: 1px solid #B58D2E;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
-		transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-		box-shadow: 0 4px 14px rgba(255, 106, 26, 0.35);
+		transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.18s ease, box-shadow 0.18s ease;
 	}
 	.btn-filament:hover {
-		background-color: #FF8038;
+		background-color: #E5BC5E;
 		transform: translateY(-2px);
-		border-radius: 4px 16px 4px 16px;
-		box-shadow: 0 8px 24px rgba(255, 106, 26, 0.55);
+		box-shadow: 0 10px 24px -10px rgba(212, 168, 67, 0.45);
 	}
-	
+	.btn-filament:active {
+		transform: translateY(0) scale(0.98);
+	}
+
+	/* Calmer WhatsApp Action Button */
 	.btn-whatsapp {
-		background-color: #25D366;
+		background-color: #1D8F4B;
 		color: #FFFFFF;
 		font-weight: 600;
-		padding: 0.75rem 1.6rem;
-		border-radius: 16px 2px 16px 2px;
-		border: 1.5px solid #128C7E;
+		padding: 0.78rem 1.5rem;
+		border-radius: 6px;
+		border: 1px solid #156E38;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
-		transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-		box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+		transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.18s ease;
 	}
 	.btn-whatsapp:hover {
-		background-color: #20BA5A;
+		background-color: #22A356;
 		transform: translateY(-2px);
-		border-radius: 4px 16px 4px 16px;
-		box-shadow: 0 8px 24px rgba(37, 211, 102, 0.55);
+	}
+	.btn-whatsapp:active {
+		transform: translateY(0) scale(0.98);
 	}
 
+	/* Secondary Dusty Purple / Charcoal Outline Button */
 	.btn-secondary {
 		font-weight: 600;
-		padding: 0.75rem 1.6rem;
-		border-radius: 16px 2px 16px 2px;
+		padding: 0.78rem 1.5rem;
+		border-radius: 6px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		gap: 0.5rem;
-		transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+		transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
 	}
 	html:not(.dark) .btn-secondary {
-		background-color: #F5EFEB;
-		color: #1D1A16;
-		border: 1.5px solid #E2D7C7;
+		background-color: transparent;
+		color: #17151C;
+		border: 1px solid #5A4769;
 	}
 	html:not(.dark) .btn-secondary:hover {
-		background-color: #EAE1D4;
-		border-color: #D9530F;
-		color: #D9530F;
+		background-color: #5A4769;
+		color: #FAF8F5;
 		transform: translateY(-2px);
-		border-radius: 4px 16px 4px 16px;
 	}
 	html.dark .btn-secondary {
-		background-color: #181E27;
-		color: #F5F3EF;
-		border: 1.5px solid #2C3545;
+		background-color: rgba(90, 71, 105, 0.16);
+		color: #F2EFE9;
+		border: 1px solid #5A4769;
 	}
 	html.dark .btn-secondary:hover {
-		background-color: #242B38;
-		border-color: #FF6A1A;
-		color: #FF6A1A;
+		border-color: #D4A843;
+		color: #E8C97A;
+		background-color: rgba(90, 71, 105, 0.28);
 		transform: translateY(-2px);
-		border-radius: 4px 16px 4px 16px;
+	}
+	.btn-secondary:active {
+		transform: translateY(0) scale(0.98);
 	}
 
-	/* Art Nouveau / Memphis Badges */
-	.nouveau-badge {
-		border-radius: 12px 2px 12px 2px;
-		padding: 0.25rem 0.75rem;
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.375rem;
-	}
-
-	/* Memphis Squiggle Underline for Section Titles */
-	.squiggle-underline {
-		background-repeat: repeat-x;
-		background-position: bottom;
-		background-size: 18px 6px;
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 6'%3E%3Cpath d='M0 3 Q 5 0, 10 3 T 20 3' fill='none' stroke='%23FF6A1A' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
-		padding-bottom: 6px;
-	}
+	/* Gold Accent Underline */
+	.squiggle-underline,
 	.squiggle-underline-teal {
-		background-repeat: repeat-x;
-		background-position: bottom;
-		background-size: 18px 6px;
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 6'%3E%3Cpath d='M0 3 Q 5 0, 10 3 T 20 3' fill='none' stroke='%2317C3B2' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
-		padding-bottom: 6px;
+		text-decoration: underline;
+		text-decoration-color: #D4A843;
+		text-decoration-thickness: 2px;
+		text-underline-offset: 6px;
 	}
 
-	/* Calligraphic Numerals & Figures */
+	/* Expressive Editorial Italic Serif & Tabular Monospace Figures */
+	.font-editorial-italic {
+		font-family: 'Instrument Serif', Georgia, serif;
+		font-style: italic;
+		font-weight: 400;
+		letter-spacing: -0.01em;
+	}
+
 	.font-calligraphic {
-		font-family: 'Cinzel Decorative', 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-		letter-spacing: 0.02em;
+		font-family: 'Instrument Serif', Georgia, serif;
+		letter-spacing: 0.01em;
 	}
 
 	.font-numeral {
-		font-family: 'Cormorant Garamond', 'Cinzel Decorative', 'Playfair Display', Georgia, serif;
+		font-family: 'Martian Mono', monospace;
 		font-variant-numeric: tabular-nums;
-		letter-spacing: 0.03em;
+		letter-spacing: -0.02em;
 	}
 
 	.font-numeral-italic {
-		font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-		font-style: italic;
-		font-weight: 700;
-		letter-spacing: 0.03em;
+		font-family: 'Martian Mono', monospace;
+		font-variant-numeric: tabular-nums;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+	}
+
+	/* High-contrast Gold text across both Light and Dark surfaces */
+	.text-gold-focal {
+		color: #9A7218;
+	}
+	html.dark .text-gold-focal {
+		color: #D4A843;
+	}
+
+	/* Contrasting Inverted Band — Charcoal in Light Mode, Warm Stone-Ash in Dark Mode */
+	html:not(.dark) .band-inverted {
+		background-color: #17151C;
+		color: #F2EFE9;
+	}
+	html.dark .band-inverted {
+		background-color: #ECE7E0;
+		color: #17151C;
+	}
+
+	/* Gold text inside inverted band flips to stay accessible */
+	html:not(.dark) .band-inverted .text-gold-inv {
+		color: #D4A843;
+	}
+	html.dark .band-inverted .text-gold-inv {
+		color: #8C6610;
+	}
+
+	/* Linked row subtle shift */
+	.ledger-row {
+		transition: background-color 0.18s ease, padding-left 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	.ledger-row:hover {
+		padding-left: 0.5rem;
 	}
 }
 
 @layer utilities {
-	.reveal-on-scroll {
-		opacity: 0;
-		transform: translateY(16px);
-		transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+	/* Collapse HTMX loading indicators when idle so adjacent columns stay top-aligned */
+	.htmx-indicator {
+		display: none;
 	}
-	.reveal-on-scroll.is-visible {
-		opacity: 1;
-		transform: translateY(0);
+	.htmx-request .htmx-indicator,
+	.htmx-request.htmx-indicator {
+		display: block;
 	}
 
-	/* Light & Dark Patterns */
+	/* Subtle Hero Entrance (plays once on load) */
+	[data-enter] {
+		animation: heroRise 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+	}
+	[data-enter-delay="1"] {
+		animation-delay: 80ms;
+	}
+	[data-enter-delay="2"] {
+		animation-delay: 160ms;
+	}
+
+	@keyframes heroRise {
+		from {
+			opacity: 0;
+			transform: translateY(14px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	/* Subtle drafting ruler grid — reserved for CAD/slicer panels only */
 	html:not(.dark) .bg-grid-pattern {
-		background-size: 32px 32px;
-		background-image: 
-			linear-gradient(to right, rgba(200, 180, 150, 0.18) 1px, transparent 1px),
-			linear-gradient(to bottom, rgba(200, 180, 150, 0.18) 1px, transparent 1px);
+		background-size: 28px 28px;
+		background-image:
+			linear-gradient(to right, rgba(90, 71, 105, 0.09) 1px, transparent 1px),
+			linear-gradient(to bottom, rgba(90, 71, 105, 0.09) 1px, transparent 1px);
 	}
 	html.dark .bg-grid-pattern {
-		background-size: 32px 32px;
-		background-image: 
-			linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-			linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-	}
-
-	html:not(.dark) .bg-dots-pattern {
-		background-size: 24px 24px;
-		background-image: radial-gradient(#D9530F 1.2px, transparent 1.2px);
-		opacity: 0.25;
-	}
-	html.dark .bg-dots-pattern {
-		background-size: 24px 24px;
-		background-image: radial-gradient(rgba(255, 106, 26, 0.15) 1px, transparent 1px);
-	}
-
-	.pulse-glow {
-		animation: pulseGlow 2s infinite alternate;
-	}
-
-	@keyframes pulseGlow {
-		0% {
-			box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
-		}
-		70% {
-			box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
-		}
-		100% {
-			box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-		}
+		background-size: 28px 28px;
+		background-image:
+			linear-gradient(to right, rgba(143, 124, 160, 0.09) 1px, transparent 1px),
+			linear-gradient(to bottom, rgba(143, 124, 160, 0.09) 1px, transparent 1px);
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.reveal-on-scroll {
-			transition: none !important;
+		[data-enter] {
+			animation: none !important;
 			opacity: 1 !important;
 			transform: none !important;
 		}
@@ -295,7 +313,6 @@
 			animation-duration: 0.01ms !important;
 			animation-iteration-count: 1 !important;
 			transition-duration: 0.01ms !important;
-			scroll-behavior: auto !important;
 		}
 	}
 }
