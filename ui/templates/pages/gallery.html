@@ -1,112 +1,493 @@
 {{ define "content" }}
-<div class="py-12 bg-parchment-bg dark:bg-[#0C0E12] text-parchment-ink dark:text-[#F4F1EA] min-h-screen transition-colors" x-data="{
-	activeFilter: 'all',
-	items: [
-		{ id: 1, category: 'fix', name: 'Pakistani Ceiling Fan Regulator Knob', desc: 'Exact replacement for brittle original knob. Features knurled grip and keyed D-shaft.', time: '35 mins', weight: '14g', plastic: 'PETG', cost: 'Rs 45', icon: '🎛️' },
-		{ id: 2, category: 'fyp', name: 'Civil Engineering Truss Bridge Model', desc: 'Deflection testing model for final year thesis. Survived 12 kg distributed load.', time: '9 hrs', weight: '180g', plastic: 'PLA+', cost: 'Rs 480', icon: '🌉' },
-		{ id: 3, category: 'gifts', name: 'Dual-Color Urdu Calligraphy Living Plate', desc: 'Custom 3D wall art plaque with raised Arabic lettering for Eid and wedding gift.', time: '2 hrs 10m', weight: '48g', plastic: 'PLA', cost: 'Rs 130', icon: '✨' },
-		{ id: 4, category: 'fix', name: 'Heavy-Duty 150cc Bike Lever Guard', desc: 'Impact-resistant motorcycle handlebar guard printed to survive drops and scratches.', time: '1 hr 20m', weight: '38g', plastic: 'ABS', cost: 'Rs 110', icon: '🏍️' },
-		{ id: 5, category: 'enclosures', name: 'Solar IoT Inverter Monitor Enclosure', desc: 'Custom snap-fit housing with ventilation slots, PCB standoffs, and cable gland ports.', time: '3 hrs 15m', weight: '75g', plastic: 'PETG', cost: 'Rs 220', icon: '📦' },
-		{ id: 6, category: 'robotics', name: 'Crash-Resistant FPV Drone GoPro Mount', desc: 'Flexible rubber action camera mount angled at 30 degrees for high-speed quadcopter.', time: '1 hr 45m', weight: '32g', plastic: 'TPU 95A', cost: 'Rs 140', icon: '🚁' },
-		{ id: 7, category: 'gifts', name: 'Lithophane Curved Photo Lamp', desc: 'Backlit translucent photo lamp that reveals family picture when LED light turns on.', time: '5 hrs', weight: '95g', plastic: 'White PLA', cost: 'Rs 260', icon: '💡' },
-		{ id: 8, category: 'fyp', name: 'Robotic Arm 3-Jaw Gripper Mechanism', desc: 'Geared claw for mechatronics pick-and-place FYP project driven by MG996R servo.', time: '4 hrs 20m', weight: '88g', plastic: 'PETG', cost: 'Rs 240', icon: '🦾' },
-		{ id: 9, category: 'fix', name: 'Split AC Remote Wall Cradle', desc: 'Sturdy wall bracket designed for Kenwood and Gree AC remotes with cable routing.', time: '50 mins', weight: '22g', plastic: 'PLA', cost: 'Rs 60', icon: '❄️' }
-	],
-	matches(cat) {
-		return this.activeFilter === 'all' || this.activeFilter === cat;
-	}
-}">
+<div
+	class="py-12 bg-parchment-bg dark:bg-workshop-bg text-parchment-ink dark:text-ink min-h-screen transition-colors"
+	x-data="{
+		activeFilter: 'all',
+		activeItem: null,
+		items: [
+			{
+				id: 1,
+				category: 'functional',
+				categoryLabel: 'Architecture & Functional',
+				name: '3D Architectural City Relief Map Tile',
+				tagline: 'Extruded urban topography tile with street grid, building blocks, and waterfront contour.',
+				plastic: 'Matte Black PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/city-relief-map.jpg',
+				whatItIs: 'A precision square 3D topographic relief tile printed in matte charcoal-black PLA. It captures dense extruded city building blocks, primary road corridors, coastal contour lines, and stepped terrain textures in a single rigid framed plaque.',
+				useCases: [
+					'Framed architectural wall art or executive desk display for urban planners, architects, and real-estate offices.',
+					'Custom city or campus keepsake gifts showcasing neighborhoods, coastal zones, or university layouts.',
+					'Tactile spatial-planning reference tiles for studio presentations and academic exhibitions.'
+				]
+			},
+			{
+				id: 2,
+				category: 'decor',
+				categoryLabel: 'Home & Desk Decor',
+				name: 'Sitting Cat Planter & Desk Organizer',
+				tagline: 'Stylized matte black cat figurine with an integrated hollow planter and desk catchall.',
+				plastic: 'Matte Black PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/cat-planter.jpg',
+				whatItIs: 'A one-piece sculpted matte black PLA cat with clean minimalist contours and a deep curved hollow basin integrated directly into its back. Printed with smooth outer perimeters for a ceramic-like matte finish without the fragility of porcelain.',
+				useCases: [
+					'Compact indoor planter for succulents, air plants, or faux greenery on study desks and bookshelves.',
+					'Everyday desk organizer for pens, markers, USB drives, earbuds, or keys.',
+					'Bespoke housewarming or birthday gift customizable in any filament color or scale.'
+				]
+			},
+			{
+				id: 3,
+				category: 'functional',
+				categoryLabel: 'Architecture & Functional',
+				name: 'Custom Multi-Port Sensor Enclosure',
+				tagline: 'Two-part industrial electronics housing with removable 3-boss mounting lid and curved lens/sensor cradle.',
+				plastic: 'Matte Black PLA / PETG',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/sensor-enclosure.jpg',
+				whatItIs: 'A functional two-piece enclosure consisting of a rigid rectangular housing with a precision semicircular front cutout and a removable flat lid featuring three raised geometric mounting collars (circular, hexagonal, and square) for captive hardware and pass-through ports.',
+				useCases: [
+					'Custom project housing for Arduino, ESP32, Raspberry Pi, and university FYP sensor modules.',
+					'Low-volume commercial electronics enclosures produced without paying for injection-molding tooling.',
+					'Protective benchtop jigs and fixture boxes for lab instrumentation, switches, and panel-mount connectors.'
+				]
+			},
+			{
+				id: 4,
+				category: 'decor',
+				categoryLabel: 'Home & Desk Decor',
+				name: 'Voronoi Teardrop Hanging Planter Pod',
+				tagline: 'Organic cellular Voronoi lattice basket with flat base, front cutout, and integrated hanging loop.',
+				plastic: 'Matte White PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/voronoi-hanging-pod.jpg',
+				whatItIs: 'An airy teardrop-shaped vessel built from an interconnected 3D Voronoi cellular mesh with a solid flat circular floor, a wide front showcase opening, and a reinforced top suspension ring — showcasing complex geometries impossible with traditional molding.',
+				useCases: [
+					'Hanging air-plant (Tillandsia) or trailing succulent pod for balconies, study corners, and cafes.',
+					'Decorative ambient lantern housing for battery-powered LED tea lights that cast geometric lattice shadows.',
+					'Lightweight boutique retail display or artistic gift piece.'
+				]
+			},
+			{
+				id: 5,
+				category: 'decor',
+				categoryLabel: 'Home & Desk Decor',
+				name: 'Peeking Cat & Paw-Print Bookmark',
+				tagline: 'Slim black bookmark topped with a sculpted 3D cat head and alternating cut-out paw prints.',
+				plastic: 'Matte Black PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/cat-bookmark.jpg',
+				whatItIs: 'A wafer-thin, flexible matte black PLA page marker combining a flat perforated blade with crisp cut-out paw prints and a 3D sculpted cat head and paws that hook neatly over the top edge of your book.',
+				useCases: [
+					'Durable everyday bookmark that sits flush between pages while the 3D cat peeks out from the spine.',
+					'Popular book-club, library, stationery-stall, and student gift item produced in custom color batches.',
+					'Event giveaways or branded literary merchandise with customizable silhouettes.'
+				]
+			},
+			{
+				id: 6,
+				category: 'figurines',
+				categoryLabel: 'Figurines & Gifts',
+				name: 'Low-Poly Sleeping Cat Figurine',
+				tagline: 'Geometric faceted curled-up cat sculpture with crisp polygonal planes.',
+				plastic: 'Matte White PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/lowpoly-sleeping-cat.jpg',
+				whatItIs: 'A modern low-poly geometric sculpture of a curled sleeping cat printed in matte ivory-white PLA. Its crisp triangular facets catch natural and desk lighting cleanly, giving it an architectural sculptural presence.',
+				useCases: [
+					'Minimalist shelf, nightstand, or workspace accent piece for modern interiors.',
+					'Paintable blank canvas for hobbyists and art students practicing acrylic shading or metallic finishes.',
+					'Thoughtful geometric gift for cat lovers, designers, and 3D-art enthusiasts.'
+				]
+			},
+			{
+				id: 7,
+				category: 'figurines',
+				categoryLabel: 'Figurines & Gifts',
+				name: 'Filigree Butterfly Wing Ornament',
+				tagline: 'Delicate openwork scrolling butterfly silhouette with fine extruded curves and spiral flourishes.',
+				plastic: 'Matte White PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/filigree-butterfly.jpg',
+				whatItIs: 'A fine-detail openwork ornament featuring sweeping butterfly wing veins, delicate spiral scrolls, and a curling antenna extruded with tight nozzle precision so thin walls stay crisp and lightweight.',
+				useCases: [
+					'Lightweight wearable ear cuff, hairpiece accent, or cosplay/fashion accessory.',
+					'Decorative embellishment for gift boxes, greeting cards, shadow boxes, and wedding/event favors.',
+					'Hanging window or wall filigree ornament that can be painted gold, pastel, or left crisp matte white.'
+				]
+			},
+			{
+				id: 8,
+				category: 'figurines',
+				categoryLabel: 'Figurines & Gifts',
+				name: 'Sculpted Songbird Figurine',
+				tagline: 'Detailed perched sparrow with layered sculpted wing and tail feather relief.',
+				plastic: 'Matte White PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/sculpted-songbird.jpg',
+				whatItIs: 'A realistic perched songbird sculpture printed at fine layer resolution to preserve the overlapping feather tiers along the wings and extended tail, standing stably on tucked feet.',
+				useCases: [
+					'Nature-inspired mantelpiece, bookshelf, or windowsill decorative sculpture.',
+					'Miniature painting model for artists and hobbyists.',
+					'Architectural diorama or tabletop display prop.'
+				]
+			},
+			{
+				id: 9,
+				category: 'figurines',
+				categoryLabel: 'Figurines & Gifts',
+				name: 'Smooth Sitting Cat Figurine',
+				tagline: 'Cute minimalist seated cat with perked ears, closed-eye smile, and curled tail.',
+				plastic: 'Matte White PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/sitting-cat-figurine.jpg',
+				whatItIs: 'A charming, smooth-contoured miniature seated cat printed in matte white PLA with soft organic curves, neat front paws, and a wrapped tail. Designed as a clean, tactile desk companion.',
+				useCases: [
+					'Cute desk companion for workstations, study tables, and monitor risers.',
+					'Cake topper, gift-box charm, or collectible figurine set.',
+					'Custom-scaled keepsake or paint-your-own workshop activity piece for schools and events.'
+				]
+			},
+			{
+				id: 10,
+				category: 'figurines',
+				categoryLabel: 'Figurines & Gifts',
+				name: 'Mini Sitting Penguin Figurine',
+				tagline: 'Chubby seated baby penguin figurine with outstretched flippers and webbed feet.',
+				plastic: 'Matte White PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/sitting-penguin.jpg',
+				whatItIs: 'A compact, rounded baby penguin figurine printed in matte white PLA with clean sculpted face contours, outward-angled flippers, and two webbed feet forming a steady base.',
+				useCases: [
+					'Pocket-sized desk buddy, keychain conversion, or stocking-stuffer gift.',
+					'Kid-friendly painting figurine for STEAM school workshops and craft booths.',
+					'Collectible miniature display piece or tabletop token.'
+				]
+			},
+			{
+				id: 11,
+				category: 'functional',
+				categoryLabel: 'Architecture & Functional',
+				name: '3DBenchy Calibration Tugboat',
+				tagline: 'Precision benchmark tugboat printed to verify overhang, bridging, and dimensional accuracy.',
+				plastic: 'Matte Black PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/benchy-tugboat.jpg',
+				whatItIs: 'The industry-standard 3D printing torture-test tugboat printed on our in-house Karachi machines. Its steep bow overhangs, arched cabin doorways, bridged roof, and cylindrical smokestack serve as physical proof of tuned extrusion and cooling.',
+				useCases: [
+					'Live quality-assurance proof piece handed to prospective printer buyers and school STEAM coordinators.',
+					'Fun maker desk trophy and conversation starter celebrating 3D printing craftsmanship.',
+					'Educational demo object used during workshops to teach overhang angles, layer heights, and bridging.'
+				]
+			}
+		],
+		get filteredItems() {
+			if (this.activeFilter === 'all') return this.items;
+			return this.items.filter(i => i.category === this.activeFilter);
+		},
+		countBy(cat) {
+			if (cat === 'all') return this.items.length;
+			return this.items.filter(i => i.category === cat).length;
+		},
+		open(item) {
+			this.activeItem = item;
+			document.body.style.overflow = 'hidden';
+		},
+		close() {
+			this.activeItem = null;
+			document.body.style.overflow = '';
+		},
+		next() {
+			if (!this.activeItem) return;
+			const list = this.filteredItems;
+			const idx = list.findIndex(i => i.id === this.activeItem.id);
+			this.activeItem = list[(idx + 1) % list.length];
+		},
+		prev() {
+			if (!this.activeItem) return;
+			const list = this.filteredItems;
+			const idx = list.findIndex(i => i.id === this.activeItem.id);
+			this.activeItem = list[(idx - 1 + list.length) % list.length];
+		}
+	}"
+	@keydown.escape.window="close()"
+	@keydown.arrow-right.window="next()"
+	@keydown.arrow-left.window="prev()"
+>
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-		
+
 		<!-- Breadcrumbs -->
-		<nav class="flex items-center gap-2 text-xs text-[#635D54] dark:text-[#9DA3AF] mb-8 font-mono">
-			<a href="/" class="hover:text-filament">Home</a>
+		<nav class="flex items-center gap-2 text-xs text-parchment-muted dark:text-ink-muted mb-8 font-mono">
+			<a href="/" class="hover:text-filament transition-colors">Home</a>
 			<span>/</span>
-			<span class="text-parchment-ink dark:text-white font-semibold">Print Gallery</span>
+			<span class="text-parchment-ink dark:text-ink font-semibold">Print Gallery</span>
 		</nav>
 
 		<!-- Header -->
-		<div class="border-b border-[#E2D7C7] dark:border-[#28303F] pb-12 mb-12">
+		<div class="border-b border-parchment-border dark:border-workshop-border pb-10 mb-10">
 			<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
 				<div>
-					<span class="text-filament font-mono text-xs uppercase tracking-wider">Authentic Lab Portfolio</span>
-					<h1 class="font-display text-h1 font-bold text-parchment-ink dark:text-white tracking-tight mt-1">
+					<span class="text-filament font-mono text-xs uppercase tracking-wider">Authentic Karachi Lab Portfolio</span>
+					<h1 class="font-display text-h1 font-bold text-parchment-ink dark:text-ink tracking-tight mt-1">
 						<span class="squiggle-underline">Things we've printed</span>
 					</h1>
-					<p class="text-[#635D54] dark:text-[#9DA3AF] text-sm md:text-base mt-3 max-w-2xl leading-relaxed">
-						Real jobs completed in our Karachi workshop. Each print showcases the exact print duration, material used, weight in grams, and raw rupee cost.
+					<p class="text-parchment-muted dark:text-ink-muted text-sm md:text-base mt-3 max-w-2xl leading-relaxed">
+						Every model below has been physically 3D-printed and batch-produced in our Karachi workshop — with <strong class="text-parchment-ink dark:text-ink font-semibold">around 20–40 units of each sold</strong> for real-life use cases across homes, desks, gifts, and custom engineering builds. Click any image to focus in and see what it is and how it's used.
 					</p>
 				</div>
-				<div class="shrink-0">
-					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20have%20a%20custom%20part%20I%20want%20printed." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-3 px-4 shadow-xl">
-						💬 Custom Print Order on WhatsApp
+				<div class="shrink-0 flex flex-wrap gap-3">
+					<a href="/instant-quote" class="btn-filament text-xs py-3 px-4">
+						Upload Your STL
+					</a>
+					<a href="https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20saw%20your%20Print%20Gallery%20and%20want%20to%20order%20a%20custom%20print." target="_blank" rel="noopener noreferrer" class="btn-whatsapp text-xs py-3 px-4 shadow-xl">
+						💬 Order on WhatsApp
 					</a>
 				</div>
 			</div>
 
+			<!-- Production Proof Strip -->
+			<div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 rounded-[8px] bg-parchment-surface dark:bg-workshop-surface border border-parchment-border dark:border-workshop-border text-xs font-mono">
+				<span class="inline-flex items-center gap-2 text-parchment-ink dark:text-ink font-semibold">
+					<span class="w-2 h-2 rounded-full bg-filament"></span>
+					Real Production Runs: ~20–40 units sold per design
+				</span>
+				<span class="text-parchment-muted dark:text-ink-muted">·</span>
+				<span class="text-parchment-muted dark:text-ink-muted">Printed in-house in Karachi (PLA / PETG)</span>
+				<span class="text-parchment-muted dark:text-ink-muted">·</span>
+				<span class="text-parchment-muted dark:text-ink-muted">Click any 3D model to inspect details &amp; use cases</span>
+			</div>
+
 			<!-- Category Filter Chips -->
-			<div class="flex flex-wrap items-center gap-2 mt-8 text-xs font-mono">
-				<button @click="activeFilter = 'all'" :class="activeFilter === 'all' ? 'bg-filament text-[#131217] font-bold' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
-					All Prints (<span class="font-numeral font-bold">9</span>)
+			<div class="flex flex-wrap items-center gap-2 mt-6 text-xs font-mono">
+				<button
+					type="button"
+					@click="activeFilter = 'all'"
+					:class="activeFilter === 'all' ? 'bg-filament text-[#131217] font-bold border-filament' : 'bg-parchment-surface dark:bg-workshop-surface text-parchment-muted dark:text-ink-muted hover:text-filament border-parchment-border dark:border-workshop-border'"
+					class="px-3.5 py-1.5 rounded-[6px] border transition-colors"
+				>
+					All Prints (<span class="font-numeral font-bold" x-text="countBy('all')"></span>)
 				</button>
-				<button @click="activeFilter = 'fix'" :class="activeFilter === 'fix' ? 'bg-filament text-[#131217] font-bold' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
-					Fix & Replace
+				<button
+					type="button"
+					@click="activeFilter = 'functional'"
+					:class="activeFilter === 'functional' ? 'bg-filament text-[#131217] font-bold border-filament' : 'bg-parchment-surface dark:bg-workshop-surface text-parchment-muted dark:text-ink-muted hover:text-filament border-parchment-border dark:border-workshop-border'"
+					class="px-3.5 py-1.5 rounded-[6px] border transition-colors"
+				>
+					Architecture &amp; Functional (<span class="font-numeral font-bold" x-text="countBy('functional')"></span>)
 				</button>
-				<button @click="activeFilter = 'fyp'" :class="activeFilter === 'fyp' ? 'bg-filament text-[#131217] font-bold' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
-					FYP & Engineering
+				<button
+					type="button"
+					@click="activeFilter = 'decor'"
+					:class="activeFilter === 'decor' ? 'bg-filament text-[#131217] font-bold border-filament' : 'bg-parchment-surface dark:bg-workshop-surface text-parchment-muted dark:text-ink-muted hover:text-filament border-parchment-border dark:border-workshop-border'"
+					class="px-3.5 py-1.5 rounded-[6px] border transition-colors"
+				>
+					Home &amp; Desk Decor (<span class="font-numeral font-bold" x-text="countBy('decor')"></span>)
 				</button>
-				<button @click="activeFilter = 'gifts'" :class="activeFilter === 'gifts' ? 'bg-filament text-[#131217] font-bold' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
-					Gifts & Urdu Art
-				</button>
-				<button @click="activeFilter = 'robotics'" :class="activeFilter === 'robotics' ? 'bg-filament text-[#131217] font-bold' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
-					Robotics & Drone
-				</button>
-				<button @click="activeFilter = 'enclosures'" :class="activeFilter === 'enclosures' ? 'bg-filament text-[#131217] font-bold' : 'bg-white dark:bg-[#14181F] text-[#635D54] dark:text-[#9DA3AF] hover:text-filament'" class="px-3 py-1.5 rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] transition-colors">
-					Enclosures & IoT
+				<button
+					type="button"
+					@click="activeFilter = 'figurines'"
+					:class="activeFilter === 'figurines' ? 'bg-filament text-[#131217] font-bold border-filament' : 'bg-parchment-surface dark:bg-workshop-surface text-parchment-muted dark:text-ink-muted hover:text-filament border-parchment-border dark:border-workshop-border'"
+					class="px-3.5 py-1.5 rounded-[6px] border transition-colors"
+				>
+					Figurines &amp; Gifts (<span class="font-numeral font-bold" x-text="countBy('figurines')"></span>)
 				</button>
 			</div>
 		</div>
 
 		<!-- Gallery Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-			<template x-for="item in items" :key="item.id">
-				<div x-show="matches(item.category)" x-transition class="workshop-card p-6 flex flex-col justify-between group">
+			<template x-for="item in filteredItems" :key="item.id">
+				<article class="workshop-card overflow-hidden flex flex-col justify-between group">
 					<div>
-						<!-- Part Mockup Card -->
-						<div class="h-44 bg-[#F2EDE4] dark:bg-[#14181F] rounded-nouveau-sm border border-[#E2D7C7] dark:border-[#28303F] flex flex-col items-center justify-center p-4 mb-4 relative overflow-hidden group-hover:border-filament/40 transition-colors">
-							<span class="text-5xl group-hover:scale-110 transition-transform duration-300" x-text="item.icon"></span>
-							<span class="absolute top-3 left-3 text-[10px] font-mono px-2 py-0.5 rounded-nouveau-sm bg-white dark:bg-[#1A1F29] border border-[#E2D7C7] dark:border-[#28303F] text-[#635D54] dark:text-[#9DA3AF]" x-text="item.plastic"></span>
-						</div>
+						<!-- Clickable 3D Model Image -->
+						<button
+							type="button"
+							@click="open(item)"
+							class="w-full aspect-[4/3] bg-[#23202B] relative overflow-hidden block text-left focus:outline-none cursor-zoom-in"
+							:aria-label="'Inspect ' + item.name"
+						>
+							<img
+								:src="item.image"
+								:alt="item.name + ' — 3D printed model by Jiddat3D'"
+								loading="lazy"
+								class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+							>
+							<!-- Top Badges -->
+							<span class="absolute top-3 left-3 text-[10px] font-mono px-2.5 py-1 rounded-[5px] bg-[#131217]/80 backdrop-blur-sm border border-white/15 text-[#F2EFE9]" x-text="item.plastic"></span>
+							<span class="absolute top-3 right-3 text-[10px] font-mono font-semibold px-2.5 py-1 rounded-[5px] bg-filament/95 text-[#131217]" x-text="item.soldBatch"></span>
+							<!-- Hover Focus Cue -->
+							<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 py-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+								<span class="text-[11px] font-mono text-[#F2EFE9] tracking-wide">Click to focus &amp; inspect</span>
+								<span class="text-xs font-mono text-filament font-bold">↗</span>
+							</div>
+						</button>
 
-						<h3 class="font-display font-bold text-parchment-ink dark:text-white text-lg group-hover:text-filament transition-colors" x-text="item.name"></h3>
-						<p class="text-xs text-[#635D54] dark:text-[#9DA3AF] mt-1.5 leading-relaxed" x-text="item.desc"></p>
+						<div class="p-5 pb-3">
+							<div class="text-[10px] font-mono uppercase tracking-wider text-plum dark:text-plum-light mb-1" x-text="item.categoryLabel"></div>
+							<h2 class="font-display font-bold text-parchment-ink dark:text-ink text-lg group-hover:text-filament transition-colors">
+								<button type="button" @click="open(item)" class="text-left hover:underline focus:outline-none" x-text="item.name"></button>
+							</h2>
+							<p class="text-xs text-parchment-muted dark:text-ink-muted mt-1.5 leading-relaxed" x-text="item.tagline"></p>
+						</div>
 					</div>
 
-					<!-- Bottom Part Metrics (Signature Proof with Calligraphic Numbers) -->
-					<div class="mt-6 pt-4 border-t border-[#E2D7C7] dark:border-[#28303F]">
-						<div class="grid grid-cols-3 gap-2 p-2.5 rounded-nouveau-sm bg-parchment-subtle dark:bg-[#14181F] border border-[#E2D7C7] dark:border-[#28303F] text-center text-[11px] mb-3">
-							<div>
-								<span class="text-[#8A8175] dark:text-[#656D7D] block text-[9px] font-mono">TIME</span>
-								<span class="text-parchment-ink dark:text-white font-numeral font-bold" x-text="item.time"></span>
-							</div>
-							<div>
-								<span class="text-[#8A8175] dark:text-[#656D7D] block text-[9px] font-mono">WEIGHT</span>
-								<span class="text-parchment-ink dark:text-white font-numeral font-bold" x-text="item.weight"></span>
-							</div>
-							<div>
-								<span class="text-[#8A8175] dark:text-[#656D7D] block text-[9px] font-mono">RAW COST</span>
-								<span class="text-filament font-numeral-italic font-bold" x-text="item.cost"></span>
-							</div>
-						</div>
-
-						<a :href="'https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20saw%20the%20' + encodeURIComponent(item.name) + '%20in%20your%20gallery.%20Can%20I%20order%20one%20like%20this%3F'" target="_blank" rel="noopener noreferrer" class="btn-whatsapp w-full text-xs py-2 justify-center">
-							<span>Order Similar on WhatsApp</span>
+					<!-- Bottom Actions -->
+					<div class="px-5 pb-5 pt-3 border-t border-parchment-border/70 dark:border-workshop-border/70 flex items-center gap-2.5">
+						<button
+							type="button"
+							@click="open(item)"
+							class="flex-1 text-xs font-mono font-semibold py-2 px-3 rounded-[6px] bg-parchment-subtle dark:bg-workshop-card border border-parchment-border dark:border-workshop-border text-parchment-ink dark:text-ink hover:border-filament hover:text-filament transition-colors"
+						>
+							Inspect Details
+						</button>
+						<a
+							:href="'https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20saw%20the%20' + encodeURIComponent(item.name) + '%20in%20your%20gallery.%20Can%20I%20order%20one%20or%20a%20custom%20batch%3F'"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="btn-whatsapp text-xs py-2 px-3.5 justify-center shrink-0"
+						>
+							Order
 						</a>
 					</div>
-				</div>
+				</article>
 			</template>
 		</div>
 
+	</div>
+
+	<!-- Click-to-Focus Lightbox Modal -->
+	<div
+		x-show="activeItem !== null"
+		x-cloak
+		x-transition:enter="transition ease-out duration-200"
+		x-transition:enter-start="opacity-0"
+		x-transition:enter-end="opacity-100"
+		x-transition:leave="transition ease-in duration-150"
+		x-transition:leave-start="opacity-100"
+		x-transition:leave-end="opacity-0"
+		@click.self="close()"
+		class="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 md:p-8 overflow-y-auto"
+		role="dialog"
+		aria-modal="true"
+		:aria-label="activeItem ? activeItem.name : 'Model preview'"
+	>
+		<template x-if="activeItem">
+			<div
+				x-transition:enter="transition ease-out duration-250"
+				x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+				x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+				x-transition:leave="transition ease-in duration-150"
+				x-transition:leave-start="opacity-100 scale-100"
+				x-transition:leave-end="opacity-0 scale-95"
+				class="relative w-full max-w-5xl rounded-[12px] bg-parchment-surface dark:bg-workshop-surface border border-parchment-border dark:border-workshop-border shadow-2xl overflow-hidden my-auto"
+				@click.stop
+			>
+				<!-- Close Button -->
+				<button
+					type="button"
+					@click="close()"
+					aria-label="Close preview"
+					class="absolute top-3.5 right-3.5 z-20 w-9 h-9 rounded-full bg-[#131217]/80 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors text-lg font-bold"
+				>
+					&times;
+				</button>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12">
+					<!-- Left: Focused 3D Model Image -->
+					<div class="lg:col-span-7 bg-[#23202B] relative flex items-center justify-center min-h-[260px] sm:min-h-[360px] lg:min-h-[500px]">
+						<img
+							:src="activeItem.image"
+							:alt="activeItem.name + ' — focused 3D model view'"
+							class="w-full h-full object-contain max-h-[75vh]"
+						>
+
+						<!-- Prev / Next Navigation -->
+						<button
+							type="button"
+							@click="prev()"
+							aria-label="Previous model"
+							class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#131217]/75 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors font-mono text-base"
+						>
+							&larr;
+						</button>
+						<button
+							type="button"
+							@click="next()"
+							aria-label="Next model"
+							class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#131217]/75 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors font-mono text-base"
+						>
+							&rarr;
+						</button>
+
+						<div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-[5px] bg-[#131217]/80 border border-white/10 text-[10px] font-mono text-[#CFC8DA]">
+							Use &larr; / &rarr; keys to browse &middot; Esc to close
+						</div>
+					</div>
+
+					<!-- Right: What It Is & Real-Life Use Cases -->
+					<div class="lg:col-span-5 p-6 sm:p-7 flex flex-col justify-between max-h-[80vh] overflow-y-auto">
+						<div class="space-y-5">
+							<!-- Badges -->
+							<div class="flex flex-wrap items-center gap-2 pr-8">
+								<span class="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-[5px] bg-plum/15 dark:bg-plum/30 text-plum dark:text-plum-mist font-semibold" x-text="activeItem.categoryLabel"></span>
+								<span class="text-[10px] font-mono px-2.5 py-1 rounded-[5px] bg-parchment-subtle dark:bg-workshop-card border border-parchment-border dark:border-workshop-border text-parchment-muted dark:text-ink-muted" x-text="activeItem.plastic"></span>
+								<span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-[5px] bg-filament/20 text-filament-dark dark:text-filament border border-filament/40">
+									20–40 Units Sold
+								</span>
+							</div>
+
+							<div>
+								<h2 class="font-display text-2xl font-bold text-parchment-ink dark:text-ink leading-tight" x-text="activeItem.name"></h2>
+							</div>
+
+							<!-- What It Is -->
+							<div>
+								<h3 class="font-mono text-[11px] uppercase tracking-wider text-filament-dark dark:text-filament font-bold mb-1.5">What It Is</h3>
+								<p class="text-sm text-parchment-muted dark:text-ink-muted leading-relaxed" x-text="activeItem.whatItIs"></p>
+							</div>
+
+							<!-- What It Can Be Used For -->
+							<div>
+								<h3 class="font-mono text-[11px] uppercase tracking-wider text-filament-dark dark:text-filament font-bold mb-2">Real-Life Use Cases</h3>
+								<ul class="space-y-2 text-sm text-parchment-ink dark:text-ink">
+									<template x-for="(use, idx) in activeItem.useCases" :key="idx">
+										<li class="flex items-start gap-2.5 leading-snug">
+											<span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-filament shrink-0"></span>
+											<span class="text-parchment-muted dark:text-ink-muted" x-text="use"></span>
+										</li>
+									</template>
+								</ul>
+							</div>
+
+							<!-- Production Proof Note -->
+							<div class="p-3.5 rounded-[8px] bg-parchment-subtle dark:bg-workshop-card border border-parchment-border dark:border-workshop-border text-xs text-parchment-muted dark:text-ink-muted leading-relaxed">
+								<strong class="text-parchment-ink dark:text-ink font-semibold">Produced in Karachi for real-world use:</strong>
+								Around 20–40 units of this design have been printed and sold by Jiddat3D. Available in custom colors, dimensions, or bulk batches on demand.
+							</div>
+						</div>
+
+						<!-- Modal CTAs -->
+						<div class="mt-6 pt-4 border-t border-parchment-border dark:border-workshop-border flex flex-col sm:flex-row gap-2.5">
+							<a
+								:href="'https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20was%20looking%20at%20the%20' + encodeURIComponent(activeItem.name) + '%20in%20your%20gallery.%20I%20would%20like%20to%20order%20one%20or%20discuss%20a%20custom%20batch.'"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="btn-whatsapp flex-1 text-xs py-2.5 px-4 justify-center"
+							>
+								💬 Order Similar on WhatsApp
+							</a>
+							<a
+								href="/instant-quote"
+								class="text-xs font-mono font-semibold py-2.5 px-4 rounded-[6px] border border-parchment-border dark:border-workshop-border text-center text-parchment-ink dark:text-ink hover:border-filament hover:text-filament transition-colors"
+							>
+								Quote Your STL
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</template>
 	</div>
 </div>
 {{ end }}

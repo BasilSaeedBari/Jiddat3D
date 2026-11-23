@@ -367,6 +367,249 @@
 	</div>
 </section>
 
+<!-- BAND 4B: Things We've Printed — Interactive Real Production Portfolio -->
+<section
+	class="py-20 md:py-24 bg-parchment-surface dark:bg-workshop-bg border-b border-parchment-border dark:border-workshop-border transition-colors"
+	x-data="{
+		activeItem: null,
+		items: [
+			{
+				id: 1,
+				categoryLabel: 'Architecture & Functional',
+				name: '3D Architectural City Relief Map Tile',
+				plastic: 'Matte Black PLA',
+				image: '/static/img/gallery/city-relief-map.jpg',
+				whatItIs: 'A precision square 3D topographic relief tile printed in matte charcoal-black PLA, capturing extruded city building blocks, primary road corridors, coastal contours, and stepped terrain.',
+				useCases: [
+					'Framed architectural wall art or executive desk display for urban planners and architects.',
+					'Custom city or campus keepsake gifts showcasing neighborhoods and landmarks.',
+					'Tactile spatial-planning reference tiles for studio presentations.'
+				]
+			},
+			{
+				id: 2,
+				categoryLabel: 'Home & Desk Decor',
+				name: 'Sitting Cat Planter & Desk Organizer',
+				plastic: 'Matte Black PLA',
+				image: '/static/img/gallery/cat-planter.jpg',
+				whatItIs: 'A one-piece sculpted matte black PLA cat with clean minimalist contours and a deep hollow basin integrated into its back for a ceramic-like matte finish without porcelain fragility.',
+				useCases: [
+					'Compact indoor planter for succulents, air plants, or faux greenery.',
+					'Everyday desk organizer for pens, markers, earbuds, or keys.',
+					'Bespoke gift customizable in any filament color or size.'
+				]
+			},
+			{
+				id: 3,
+				categoryLabel: 'Architecture & Functional',
+				name: 'Custom Multi-Port Sensor Enclosure',
+				plastic: 'Matte Black PLA / PETG',
+				image: '/static/img/gallery/sensor-enclosure.jpg',
+				whatItIs: 'A functional two-part enclosure featuring a rigid housing with a semicircular front cutout and a removable lid with three raised geometric mounting collars (circular, hexagonal, and square).',
+				useCases: [
+					'Custom housing for Arduino, ESP32, Raspberry Pi, and university FYP sensor builds.',
+					'Low-volume commercial electronics enclosures without injection-molding costs.',
+					'Protective benchtop fixture boxes for lab instrumentation and switches.'
+				]
+			},
+			{
+				id: 4,
+				categoryLabel: 'Home & Desk Decor',
+				name: 'Voronoi Teardrop Hanging Planter Pod',
+				plastic: 'Matte White PLA',
+				image: '/static/img/gallery/voronoi-hanging-pod.jpg',
+				whatItIs: 'An airy teardrop vessel built from an organic 3D Voronoi cellular mesh with a flat circular floor, wide front showcase opening, and integrated top suspension ring.',
+				useCases: [
+					'Hanging air-plant or trailing succulent pod for balconies, desks, and cafes.',
+					'Ambient decorative lantern for battery LED tea lights casting lattice shadows.',
+					'Lightweight boutique display or artistic gift piece.'
+				]
+			},
+			{
+				id: 5,
+				categoryLabel: 'Figurines & Gifts',
+				name: 'Low-Poly Sleeping Cat Figurine',
+				plastic: 'Matte White PLA',
+				image: '/static/img/gallery/lowpoly-sleeping-cat.jpg',
+				whatItIs: 'A modern low-poly geometric sculpture of a curled sleeping cat printed in matte ivory-white PLA with crisp triangular facets that catch natural desk lighting.',
+				useCases: [
+					'Minimalist shelf, nightstand, or workspace sculpture for modern interiors.',
+					'Paintable blank canvas for hobbyists and art students.',
+					'Thoughtful geometric gift for cat lovers and designers.'
+				]
+			},
+			{
+				id: 6,
+				categoryLabel: 'Home & Desk Decor',
+				name: 'Peeking Cat & Paw-Print Bookmark',
+				plastic: 'Matte Black PLA',
+				image: '/static/img/gallery/cat-bookmark.jpg',
+				whatItIs: 'A wafer-thin matte black PLA page marker combining a perforated blade with cut-out paw prints and a sculpted 3D cat head that peeks neatly over the top of your book.',
+				useCases: [
+					'Durable everyday bookmark that sits flush between pages.',
+					'Popular book-club, library, and student gift produced in custom color batches.',
+					'Event giveaways or branded literary merchandise.'
+				]
+			}
+		],
+		open(item) {
+			this.activeItem = item;
+			document.body.style.overflow = 'hidden';
+		},
+		close() {
+			this.activeItem = null;
+			document.body.style.overflow = '';
+		},
+		next() {
+			if (!this.activeItem) return;
+			const idx = this.items.findIndex(i => i.id === this.activeItem.id);
+			this.activeItem = this.items[(idx + 1) % this.items.length];
+		},
+		prev() {
+			if (!this.activeItem) return;
+			const idx = this.items.findIndex(i => i.id === this.activeItem.id);
+			this.activeItem = this.items[(idx - 1 + this.items.length) % this.items.length];
+		}
+	}"
+	@keydown.escape.window="close()"
+	@keydown.arrow-right.window="next()"
+	@keydown.arrow-left.window="prev()"
+>
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+			<div>
+				<span class="text-filament font-mono text-xs uppercase tracking-wider">Real Production Proof &middot; Karachi Lab</span>
+				<h2 class="font-display text-h2 font-extrabold text-parchment-ink dark:text-ink mt-1">
+					Things we&rsquo;ve printed &amp; <span class="font-editorial-italic font-normal text-gold-focal">produced.</span>
+				</h2>
+				<p class="text-sm text-parchment-muted dark:text-ink-muted mt-2 max-w-2xl leading-relaxed">
+					Every piece below was printed and batch-produced in our Karachi workshop — with <strong class="text-parchment-ink dark:text-ink font-semibold">around 20–40 units of each sold</strong> for real-life use cases. Click any image to focus in and see what it is and how it&rsquo;s used.
+				</p>
+			</div>
+			<a href="/gallery" class="btn-filament text-xs py-2.5 px-5 shrink-0 self-start md:self-auto">
+				View All 11 Prints &rarr;
+			</a>
+		</div>
+
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+			<template x-for="item in items" :key="item.id">
+				<article class="workshop-card overflow-hidden group flex flex-col">
+					<button
+						type="button"
+						@click="open(item)"
+						class="w-full aspect-[4/3] bg-[#23202B] relative overflow-hidden block text-left focus:outline-none cursor-zoom-in"
+						:aria-label="'Inspect ' + item.name"
+					>
+						<img
+							:src="item.image"
+							:alt="item.name + ' — 3D printed by Jiddat3D'"
+							loading="lazy"
+							class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+						>
+						<span class="absolute top-3 right-3 text-[10px] font-mono font-semibold px-2 py-0.5 rounded-[5px] bg-filament/95 text-[#131217]">20–40 sold</span>
+						<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 py-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+							<span class="text-[11px] font-mono text-[#F2EFE9]">Click to focus &amp; inspect</span>
+							<span class="text-xs font-mono text-filament font-bold">↗</span>
+						</div>
+					</button>
+					<div class="p-4 flex items-center justify-between gap-3">
+						<div>
+							<div class="text-[10px] font-mono uppercase tracking-wider text-plum dark:text-plum-light" x-text="item.plastic"></div>
+							<h3 class="font-display font-bold text-sm sm:text-base text-parchment-ink dark:text-ink group-hover:text-filament transition-colors">
+								<button type="button" @click="open(item)" class="text-left focus:outline-none" x-text="item.name"></button>
+							</h3>
+						</div>
+						<button type="button" @click="open(item)" class="text-xs font-mono text-gold-focal hover:underline shrink-0">Inspect</button>
+					</div>
+				</article>
+			</template>
+		</div>
+	</div>
+
+	<!-- Focus Lightbox Modal -->
+	<div
+		x-show="activeItem !== null"
+		x-cloak
+		x-transition:enter="transition ease-out duration-200"
+		x-transition:enter-start="opacity-0"
+		x-transition:enter-end="opacity-100"
+		x-transition:leave="transition ease-in duration-150"
+		x-transition:leave-start="opacity-100"
+		x-transition:leave-end="opacity-0"
+		@click.self="close()"
+		class="fixed inset-0 z-[100] bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 md:p-8 overflow-y-auto"
+		role="dialog"
+		aria-modal="true"
+		:aria-label="activeItem ? activeItem.name : 'Model preview'"
+	>
+		<template x-if="activeItem">
+			<div
+				x-transition:enter="transition ease-out duration-250"
+				x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+				x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+				x-transition:leave="transition ease-in duration-150"
+				x-transition:leave-start="opacity-100 scale-100"
+				x-transition:leave-end="opacity-0 scale-95"
+				class="relative w-full max-w-5xl rounded-[12px] bg-parchment-surface dark:bg-workshop-surface border border-parchment-border dark:border-workshop-border shadow-2xl overflow-hidden my-auto"
+				@click.stop
+			>
+				<button
+					type="button"
+					@click="close()"
+					aria-label="Close preview"
+					class="absolute top-3.5 right-3.5 z-20 w-9 h-9 rounded-full bg-[#131217]/80 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors text-lg font-bold"
+				>
+					&times;
+				</button>
+
+				<div class="grid grid-cols-1 lg:grid-cols-12">
+					<div class="lg:col-span-7 bg-[#23202B] relative flex items-center justify-center min-h-[260px] sm:min-h-[360px] lg:min-h-[480px]">
+						<img :src="activeItem.image" :alt="activeItem.name + ' — focused 3D model view'" class="w-full h-full object-contain max-h-[75vh]">
+						<button type="button" @click="prev()" aria-label="Previous model" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#131217]/75 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors font-mono text-base">&larr;</button>
+						<button type="button" @click="next()" aria-label="Next model" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#131217]/75 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors font-mono text-base">&rarr;</button>
+					</div>
+
+					<div class="lg:col-span-5 p-6 sm:p-7 flex flex-col justify-between max-h-[80vh] overflow-y-auto">
+						<div class="space-y-4">
+							<div class="flex flex-wrap items-center gap-2 pr-8">
+								<span class="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-[5px] bg-plum/15 dark:bg-plum/30 text-plum dark:text-plum-mist font-semibold" x-text="activeItem.categoryLabel"></span>
+								<span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-[5px] bg-filament/20 text-filament-dark dark:text-filament border border-filament/40">20–40 Units Sold</span>
+							</div>
+							<h3 class="font-display text-2xl font-bold text-parchment-ink dark:text-ink leading-tight" x-text="activeItem.name"></h3>
+							<div>
+								<h4 class="font-mono text-[11px] uppercase tracking-wider text-filament-dark dark:text-filament font-bold mb-1">What It Is</h4>
+								<p class="text-sm text-parchment-muted dark:text-ink-muted leading-relaxed" x-text="activeItem.whatItIs"></p>
+							</div>
+							<div>
+								<h4 class="font-mono text-[11px] uppercase tracking-wider text-filament-dark dark:text-filament font-bold mb-1.5">Real-Life Use Cases</h4>
+								<ul class="space-y-1.5 text-sm">
+									<template x-for="(use, idx) in activeItem.useCases" :key="idx">
+										<li class="flex items-start gap-2.5 leading-snug">
+											<span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-filament shrink-0"></span>
+											<span class="text-parchment-muted dark:text-ink-muted" x-text="use"></span>
+										</li>
+									</template>
+								</ul>
+							</div>
+							<div class="p-3 rounded-[8px] bg-parchment-subtle dark:bg-workshop-card border border-parchment-border dark:border-workshop-border text-xs text-parchment-muted dark:text-ink-muted leading-relaxed">
+								<strong class="text-parchment-ink dark:text-ink font-semibold">Produced in Karachi for real-world use:</strong> Around 20–40 units of this design have been printed and sold by Jiddat3D.
+							</div>
+						</div>
+						<div class="mt-5 pt-4 border-t border-parchment-border dark:border-workshop-border flex flex-col sm:flex-row gap-2.5">
+							<a :href="'https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20saw%20the%20' + encodeURIComponent(activeItem.name) + '%20on%20Jiddat3D.%20Can%20I%20order%20one%20or%20a%20batch%3F'" target="_blank" rel="noopener noreferrer" class="btn-whatsapp flex-1 text-xs py-2.5 px-4 justify-center">
+								💬 Order on WhatsApp
+							</a>
+							<a href="/gallery" class="text-xs font-mono font-semibold py-2.5 px-4 rounded-[6px] border border-parchment-border dark:border-workshop-border text-center text-parchment-ink dark:text-ink hover:border-filament hover:text-filament transition-colors">
+								All 11 Prints
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</template>
+	</div>
+</section>
+
 <!-- BAND 5: Open Source Manifesto & Accountability Comparison Ledger -->
 <section class="py-20 md:py-24 bg-parchment-subtle dark:bg-workshop-surface border-b border-parchment-border dark:border-workshop-border transition-colors" id="engineering-innovation">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
