@@ -180,6 +180,86 @@
 					'Fun maker desk trophy and conversation starter celebrating 3D printing craftsmanship.',
 					'Educational demo object used during workshops to teach overhang angles, layer heights, and bridging.'
 				]
+			},
+			{
+				id: 12,
+				category: 'functional',
+				categoryLabel: 'Architecture & Functional',
+				name: 'Rack-and-Pinion Gear & Guide Bracket Kit',
+				tagline: 'Precision mechanical actuator kit with 5 spur gears, 5 toothed racks, and 5 stepped guide housings.',
+				plastic: 'Matte Light Grey PLA / PETG',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/rack-pinion-kit.jpg',
+				whatItIs: 'A multi-part functional mechanical assembly printed with tight dimensional tolerances: five precision spur gears with center bores, three long gear racks, two short racks, and five stepped L-shaped linear guide brackets ready for servo or motor integration.',
+				useCases: [
+					'Linear actuators, robotic grippers, and automated sliding mechanisms for university FYP and robotics builds.',
+					'Classroom mechatronics teaching kits demonstrating gear ratios, backlash, and rack-and-pinion motion.',
+					'Rapid custom mechanical prototypes iterated overnight without CNC machining lead times.'
+				]
+			},
+			{
+				id: 13,
+				category: 'tabletop',
+				categoryLabel: 'Tabletop & Custom Cases',
+				name: 'Modular Folding Game Box & Organizer Case',
+				tagline: 'Hinged multi-panel folding storage case with recessed trays, 4 token wells, and thumb notches.',
+				plastic: 'Satin White PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/folding-game-box.jpg',
+				whatItIs: 'A custom-engineered folding tabletop organizer printed in satin ivory-white PLA. It combines interlocking flat panels with flush integrated hinges, two long recessed component trays, four circular token wells, and ergonomic thumb notches so it folds shut into a sleek travel case.',
+				useCases: [
+					'Custom board-game and tabletop prototype packaging for indie game designers and university thesis exhibitions.',
+					'Portable organizer case for dice, cards, tokens, or small electronics and workshop fasteners.',
+					'Bespoke presentation box customizable to exact internal tray dimensions.'
+				]
+			},
+			{
+				id: 14,
+				category: 'tabletop',
+				categoryLabel: 'Tabletop & Custom Cases',
+				name: 'Custom Embossed D20 Icosahedron Dice Set',
+				tagline: 'Pair of large geometric 20-sided polyhedral dice with custom raised face embossing.',
+				plastic: 'Matte White PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/custom-d20-dice.jpg',
+				whatItIs: 'Two crisp 20-sided icosahedral dice printed in matte ivory-white PLA with razor-clean triangular facets and custom raised lettering embossed directly onto the faces — demonstrating how custom typography or icons can be integrated into geometric tabletop pieces.',
+				useCases: [
+					'Custom-branded RPG and board-game dice featuring studio initials, symbols, or game-specific faces.',
+					'Tactile classroom probability and geometry teaching aids for mathematics and STEAM labs.',
+					'Collectible event tokens, tabletop trophies, or bespoke gamer gifts.'
+				]
+			},
+			{
+				id: 15,
+				category: 'functional',
+				categoryLabel: 'Architecture & Functional',
+				name: 'Geared Mechanical Rotary Tool / Caliper',
+				tagline: 'Articulated twin-rail toothed mechanism with knurled lock collar, mini spur gears, and rotary wheel.',
+				plastic: 'Matte Black PLA / PETG',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/geared-rotary-tool.jpg',
+				whatItIs: 'An intricate functional black PLA/PETG mechanism combining a serrated twin-rail body, a ribbed knurled sliding lock collar, twin exposed spur-gear thumbwheels, a precision tip, and a curved arm holding a circular metal-rimmed wheel.',
+				useCases: [
+					'Custom handheld workshop jigs, scoring/measuring wheels, and specialized craft or tailoring tools.',
+					'Functional mechanical proof-of-concept prototypes testing knurled grip, gear meshing, and hybrid metal-plastic inserts.',
+					'Low-volume replacement or custom-ergonomic tools built for niche industrial and studio workflows.'
+				]
+			},
+			{
+				id: 16,
+				category: 'tabletop',
+				categoryLabel: 'Tabletop & Custom Cases',
+				name: 'Balazaad Board Game Standee Pedestal Set',
+				tagline: 'Weighted white slotted card & character standee bases produced for the Balazaad exhibition.',
+				plastic: 'Matte White PLA',
+				soldBatch: '20–40 sold',
+				image: '/static/img/gallery/balazaad-standee-bases.jpg',
+				whatItIs: 'A matched batch of matte white 3D-printed tabletop standee pedestal bases featuring a wide stable foot, tapered stepped shoulders, and a precision central vertical slot calibrated to grip printed character and folklore creature standees upright — originally produced for the Balazaad Pakistani mythology board game exhibition.',
+				useCases: [
+					'Tabletop board-game character and creature standee holders for indie games and design thesis showcases.',
+					'Clean tabletop place-card, menu, or product-label stands for cafes, exhibitions, and retail counters.',
+					'Reusable photo, business-card, or miniature signage holders produced in custom slot widths and colors.'
+				]
 			}
 		],
 		get filteredItems() {
@@ -275,6 +355,14 @@
 					class="px-3.5 py-1.5 rounded-[6px] border transition-colors"
 				>
 					Architecture &amp; Functional (<span class="font-numeral font-bold" x-text="countBy('functional')"></span>)
+				</button>
+				<button
+					type="button"
+					@click="activeFilter = 'tabletop'"
+					:class="activeFilter === 'tabletop' ? 'bg-filament text-[#131217] font-bold border-filament' : 'bg-parchment-surface dark:bg-workshop-surface text-parchment-muted dark:text-ink-muted hover:text-filament border-parchment-border dark:border-workshop-border'"
+					class="px-3.5 py-1.5 rounded-[6px] border transition-colors"
+				>
+					Tabletop &amp; Custom Cases (<span class="font-numeral font-bold" x-text="countBy('tabletop')"></span>)
 				</button>
 				<button
 					type="button"
