@@ -255,6 +255,23 @@
 	.ledger-row:hover {
 		padding-left: 0.5rem;
 	}
+
+	/* Seamless Hero Timelapse Viewport Blending */
+	.hero-video-stage {
+		background-color: #131217;
+		position: relative;
+		overflow: hidden;
+	}
+	.hero-video-mask {
+		-webkit-mask-image: radial-gradient(ellipse 88% 84% at 50% 48%, #000 58%, rgba(0, 0, 0, 0.72) 80%, transparent 100%);
+		mask-image: radial-gradient(ellipse 88% 84% at 50% 48%, #000 58%, rgba(0, 0, 0, 0.72) 80%, transparent 100%);
+	}
+	html.dark .hero-video-shell {
+		background: radial-gradient(ellipse 80% 75% at 50% 50%, rgba(90, 71, 105, 0.22) 0%, #131217 72%);
+	}
+	html:not(.dark) .hero-video-shell {
+		background: radial-gradient(ellipse 85% 80% at 50% 50%, #1F1B28 0%, #141219 85%);
+	}
 }
 
 @layer utilities {

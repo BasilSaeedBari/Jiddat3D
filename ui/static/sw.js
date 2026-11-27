@@ -1,7 +1,7 @@
-const CACHE_NAME = 'jiddat3d-cache-v8';
+const CACHE_NAME = 'jiddat3d-cache-v10';
 
 const STATIC_ASSETS = [
-	'/static/css/output.css?v=9',
+	'/static/css/output.css?v=12',
 	'/static/js/htmx.min.js',
 	'/static/js/alpine.min.js',
 	'/static/js/scroll-reveal.js',
@@ -45,7 +45,12 @@ self.addEventListener('fetch', (event) => {
 		return;
 	}
 
-	// Static assets: Cache-first (only cache successful responses)
+	// Bypass video streams & HTTP Range requests (206 Partial Content cannot be cached by Cache API)
+	if (event.request.headers.has('range') || url.pathname.startsWith('/static/video/')) {
+		return;
+	}
+
+	// Static assets: Cache-first (only cache full 200 OK responses)
 	if (url.pathname.startsWith('/static/')) {
 		event.respondWith(
 			caches.match(event.request).then((cachedResponse) => {
@@ -53,7 +58,7 @@ self.addEventListener('fetch', (event) => {
 					return cachedResponse;
 				}
 				return fetch(event.request).then((networkResponse) => {
-					if (networkResponse && networkResponse.ok) {
+					if (networkResponse && networkResponse.status === 200) {
 						const copy = networkResponse.clone();
 						caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
 					}

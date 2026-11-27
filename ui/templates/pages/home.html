@@ -36,60 +36,87 @@
 				</p>
 			</div>
 
-			<!-- Right Column: Architectural Hardware Elevation Dossier -->
-			<div class="lg:col-span-5" data-enter data-enter-delay="2">
-				<div class="rounded-[8px] border border-plum/30 dark:border-plum/45 bg-parchment-surface dark:bg-workshop-surface overflow-hidden">
-					<!-- Dossier Header -->
-					<div class="px-5 py-3.5 bg-plum-mist/60 dark:bg-plum-dark/80 border-b border-plum/25 dark:border-plum/45 flex items-center justify-between text-[11px] font-mono">
-						<span class="uppercase tracking-widest text-parchment-ink dark:text-ink font-semibold">SPEC SHEET // JIDDAT-APEX</span>
-						<span class="text-gold-focal font-semibold">KARACHI LAB</span>
+			<!-- Right Column: Karachi Bench Auto-Playing Timelapse (Blended into Background) -->
+			<div class="lg:col-span-5" data-enter data-enter-delay="2"
+				x-data="{
+					playing: true,
+					init() {
+						const v = this.$refs.heroVid;
+						if (!v) return;
+						if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+							v.pause();
+							this.playing = false;
+						} else {
+							v.play().catch(() => { this.playing = false; });
+						}
+					},
+					togglePlay() {
+						const v = this.$refs.heroVid;
+						if (!v) return;
+						if (v.paused) {
+							v.play().then(() => { this.playing = true; }).catch(() => {});
+						} else {
+							v.pause();
+							this.playing = false;
+						}
+					}
+				}"
+			>
+				<div class="hero-video-shell rounded-[10px] border border-plum/30 dark:border-plum/40 overflow-hidden shadow-card">
+					<!-- Top Telemetry Strip -->
+					<div class="px-4 py-2.5 bg-[#131217]/90 border-b border-plum/25 flex items-center justify-between text-[10px] font-mono">
+						<span class="inline-flex items-center gap-2 uppercase tracking-widest text-[#F2EFE9] font-semibold">
+							<span class="w-2 h-2 rounded-full bg-filament"></span>
+							Karachi Lab &middot; Bench Capture
+						</span>
+						<span class="px-2 py-0.5 rounded-[4px] bg-filament/15 border border-filament/40 text-filament font-bold tracking-wider">250&times; SPEED</span>
 					</div>
 
-					<!-- Precision CAD Elevation Viewport -->
-					<div class="relative h-60 bg-parchment-subtle dark:bg-[#0F0E13] bg-grid-pattern border-b border-plum/20 dark:border-plum/35 p-5 flex flex-col justify-between">
-						<!-- Corner CAD crosshairs -->
-						<div class="flex items-center justify-between text-[10px] font-mono text-parchment-muted dark:text-ink-muted">
-							<span>X: 300 mm</span>
-							<span>Y: 300 mm</span>
-							<span>Z: 330 mm</span>
-						</div>
+					<!-- Seamless Edge-Feathered Mid-Print Video Stage -->
+					<div class="hero-video-stage aspect-[16/10] w-full flex items-center justify-center">
+						<video
+							x-ref="heroVid"
+							src="/static/video/voronoi-pod.mp4"
+							poster="/static/video/voronoi-pod-poster.jpg"
+							autoplay
+							muted
+							loop
+							playsinline
+							preload="auto"
+							aria-label="250x timelapse of Voronoi Teardrop Planter Pod printing on Jiddat3D printer in Karachi"
+							class="hero-video-mask w-full h-full object-cover"
+						></video>
 
-						<!-- Clean Technical Wireframe CoreXY Schematic SVG (Charcoal + Dusty Purple + Gold focal) -->
-						<div class="my-auto flex items-center justify-center">
-							<svg class="w-44 h-32 text-parchment-ink dark:text-ink" viewBox="0 0 220 150" fill="none" aria-label="Jiddat Apex CoreXY technical gantry schematic">
-								<!-- Outer Rigid Frame -->
-								<rect x="28" y="14" width="164" height="122" stroke="currentColor" stroke-width="1.5"/>
-								<rect x="38" y="24" width="144" height="102" stroke="#8F7CA0" stroke-opacity="0.45" stroke-dasharray="3 3" stroke-width="1"/>
-								<!-- Linear Rail Gantry (Burnished Gold) -->
-								<line x1="38" y1="54" x2="182" y2="54" stroke="#D4A843" stroke-width="2"/>
-								<!-- Printhead Carriage (Burnished Gold) -->
-								<rect x="96" y="42" width="28" height="24" rx="2" fill="#D4A843"/>
-								<path d="M107 66 L110 74 L113 66 Z" fill="#D4A843"/>
-								<!-- Heated Bed Platform -->
-								<line x1="56" y1="108" x2="164" y2="108" stroke="currentColor" stroke-width="2.5"/>
-								<!-- Printed Part Silhouette -->
-								<path d="M84 108 L84 82 L100 82 L100 92 L120 92 L120 78 L136 78 L136 108 Z" fill="#D4A843" fill-opacity="0.22" stroke="#D4A843" stroke-width="1.5"/>
-								<!-- Dimension Tick Marks -->
-								<line x1="16" y1="14" x2="16" y2="136" stroke="#8F7CA0" stroke-opacity="0.6" stroke-width="1"/>
-								<line x1="12" y1="14" x2="20" y2="14" stroke="#8F7CA0" stroke-opacity="0.6" stroke-width="1"/>
-								<line x1="12" y1="136" x2="20" y2="136" stroke="#8F7CA0" stroke-opacity="0.6" stroke-width="1"/>
-							</svg>
-						</div>
+						<!-- Subtle Edge Scrims Blending Video into Dark Charcoal Stage -->
+						<div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#131217] via-transparent to-[#131217]/55"></div>
+						<div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#131217]/45 via-transparent to-[#131217]/45"></div>
 
-						<div class="flex items-center justify-between text-[10px] font-mono text-parchment-muted dark:text-ink-muted">
-							<span>KLIPPER OS &middot; OPEN CAD</span>
-							<span class="text-gold-focal font-semibold">320&deg;C ALL-METAL</span>
+						<!-- Subtle Play/Pause Control -->
+						<button
+							type="button"
+							@click="togglePlay()"
+							:aria-label="playing ? 'Pause timelapse' : 'Play timelapse'"
+							class="absolute bottom-3 right-3 z-10 w-8 h-8 rounded-full bg-[#131217]/80 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors text-xs"
+							title="Pause / Play timelapse"
+						>
+							<span x-show="playing">&#10074;&#10074;</span>
+							<span x-show="!playing" x-cloak>&#9654;</span>
+						</button>
+
+						<!-- Bottom Integrated Caption Overlay -->
+						<div class="absolute bottom-3 left-4 right-14 z-10 pointer-events-none">
+							<div class="text-[10px] font-mono uppercase tracking-wider text-filament">Real Mid-Print Timelapse &middot; 250&times; Original Speed</div>
+							<div class="font-display font-bold text-sm sm:text-base text-[#F2EFE9] leading-tight mt-0.5">Voronoi Teardrop Pod &middot; Matte White PLA</div>
 						</div>
 					</div>
 
-					<!-- Dossier Footer -->
-					<div class="p-5 flex items-center justify-between gap-4">
-						<div>
-							<div class="font-display font-bold text-lg text-parchment-ink dark:text-ink leading-tight">Jiddat Apex CoreXY</div>
-							<div class="font-numeral text-sm text-gold-focal font-semibold mt-0.5">Rs 245,000 <span class="text-[11px] font-sans font-normal text-parchment-muted dark:text-ink-muted">&middot; Built to order</span></div>
+					<!-- Footer Strip linking to full per-model video archive in Gallery -->
+					<div class="px-4 py-3 bg-[#17151C] border-t border-plum/25 flex items-center justify-between gap-3">
+						<div class="text-[11px] font-mono text-[#A39DAE] leading-tight">
+							Real footage from our Karachi bench &mdash; <span class="text-[#F2EFE9]">no stock renders</span>
 						</div>
-						<a href="/printers/jiddat-apex-corexy" class="px-4 py-2 rounded-[6px] border border-plum/40 hover:border-filament text-xs font-semibold text-parchment-ink dark:text-ink hover:text-gold-focal transition-colors whitespace-nowrap">
-							Full Specs &rarr;
+						<a href="/gallery?filter=video" class="px-3 py-1.5 rounded-[6px] border border-filament/45 hover:bg-filament text-[11px] font-mono font-semibold text-filament hover:text-[#131217] transition-colors whitespace-nowrap shrink-0">
+							All 12 Print Clips &rarr;
 						</a>
 					</div>
 				</div>

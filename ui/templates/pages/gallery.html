@@ -4,6 +4,10 @@
 	x-data="{
 		activeFilter: 'all',
 		activeItem: null,
+		mediaMode: 'photo',
+		videoLoading: false,
+		prefetched: new Map(),
+		inflight: new Set(),
 		items: [
 			{
 				id: 1,
@@ -62,6 +66,10 @@
 				plastic: 'Matte White PLA',
 				soldBatch: '20–40 sold',
 				image: '/static/img/gallery/voronoi-hanging-pod.jpg',
+				video: '/static/video/voronoi-pod.mp4',
+				videoPoster: '/static/video/voronoi-pod-poster.jpg',
+				videoSpeed: '250×',
+				videoNote: 'Mid-to-late Karachi bench timelapse showing the delicate Voronoi arches curving inward and bridging cleanly into the top loop.',
 				whatItIs: 'An airy teardrop-shaped vessel built from an interconnected 3D Voronoi cellular mesh with a solid flat circular floor, a wide front showcase opening, and a reinforced top suspension ring — showcasing complex geometries impossible with traditional molding.',
 				useCases: [
 					'Hanging air-plant (Tillandsia) or trailing succulent pod for balconies, study corners, and cafes.',
@@ -94,6 +102,10 @@
 				plastic: 'Matte White PLA',
 				soldBatch: '20–40 sold',
 				image: '/static/img/gallery/lowpoly-sleeping-cat.jpg',
+				video: '/static/video/sleeping-cat.mp4',
+				videoPoster: '/static/video/sleeping-cat-poster.jpg',
+				videoSpeed: '200×',
+				videoNote: 'Mid-print bench timelapse capturing the faceted body planes rising cleanly into the curled head and pointed ears.',
 				whatItIs: 'A modern low-poly geometric sculpture of a curled sleeping cat printed in matte ivory-white PLA. Its crisp triangular facets catch natural and desk lighting cleanly, giving it an architectural sculptural presence.',
 				useCases: [
 					'Minimalist shelf, nightstand, or workspace accent piece for modern interiors.',
@@ -110,6 +122,10 @@
 				plastic: 'Matte White PLA',
 				soldBatch: '20–40 sold',
 				image: '/static/img/gallery/filigree-butterfly.jpg',
+				video: '/static/video/filigree-butterfly.mp4',
+				videoPoster: '/static/video/filigree-butterfly-poster.jpg',
+				videoSpeed: '200×',
+				videoNote: 'Mid-print capture of fine openwork spirals and delicate butterfly wing veins building on our glass bed.',
 				whatItIs: 'A fine-detail openwork ornament featuring sweeping butterfly wing veins, delicate spiral scrolls, and a curling antenna extruded with tight nozzle precision so thin walls stay crisp and lightweight.',
 				useCases: [
 					'Lightweight wearable ear cuff, hairpiece accent, or cosplay/fashion accessory.',
@@ -171,9 +187,13 @@
 				categoryLabel: 'Architecture & Functional',
 				name: '3DBenchy Calibration Tugboat',
 				tagline: 'Precision benchmark tugboat printed to verify overhang, bridging, and dimensional accuracy.',
-				plastic: 'Matte Black PLA',
+				plastic: 'Matte Black / White PLA',
 				soldBatch: '20–40 sold',
 				image: '/static/img/gallery/benchy-tugboat.jpg',
+				video: '/static/video/benchy-batch.mp4',
+				videoPoster: '/static/video/benchy-batch-poster.jpg',
+				videoSpeed: '250×',
+				videoNote: 'Multi-part Karachi bench batch printing the 3DBenchy cabin pillars and hull overhangs alongside an owl and sleeping cat.',
 				whatItIs: 'The industry-standard 3D printing torture-test tugboat printed on our in-house Karachi machines. Its steep bow overhangs, arched cabin doorways, bridged roof, and cylindrical smokestack serve as physical proof of tuned extrusion and cooling.',
 				useCases: [
 					'Live quality-assurance proof piece handed to prospective printer buyers and school STEAM coordinators.',
@@ -190,6 +210,10 @@
 				plastic: 'Matte Light Grey PLA / PETG',
 				soldBatch: '20–40 sold',
 				image: '/static/img/gallery/rack-pinion-kit.jpg',
+				video: '/static/video/rack-pinion-kit.mp4',
+				videoPoster: '/static/video/rack-pinion-kit-poster.jpg',
+				videoSpeed: '250×',
+				videoNote: 'Full-plate mechanical production run printing all 15 interlocking gears, toothed racks, and stepped guide housings in one synchronized batch.',
 				whatItIs: 'A multi-part functional mechanical assembly printed with tight dimensional tolerances: five precision spur gears with center bores, three long gear racks, two short racks, and five stepped L-shaped linear guide brackets ready for servo or motor integration.',
 				useCases: [
 					'Linear actuators, robotic grippers, and automated sliding mechanisms for university FYP and robotics builds.',
@@ -276,35 +300,270 @@
 					'Budget-friendly multicolor gifts where we print the crisp white 3D blank and you (or a gift recipient) personalize the colors.',
 					'Fun hands-on art, school STEAM workshop, or birthday activity pieces ready to color straight off the build plate.'
 				]
+			},
+			{
+				id: 18,
+				category: 'figurines',
+				categoryLabel: 'Figurines & Gifts',
+				name: 'Sculpted Owl Desk Figurine',
+				tagline: 'Detailed perched owl figurine with layered overlapping belly feathers, sculpted brow, and tufted ears.',
+				plastic: 'Matte White PLA',
+				soldBatch: 'Karachi Lab Print',
+				image: '/static/img/gallery/sculpted-owl-figurine.jpg',
+				video: '/static/video/sculpted-owl.mp4',
+				videoPoster: '/static/video/sculpted-owl-poster.jpg',
+				videoSpeed: '200×',
+				videoNote: 'Mid-print timelapse capturing the feathered chest transitioning cleanly into the sculpted brow ridge and expressive eyes.',
+				whatItIs: 'A compact, finely sculpted perched owl figurine printed in matte ivory-white PLA without messy external supports. Overlapping feather tiers across the chest and folded wings, deep-set round eyes, and subtle ear tufts demonstrate clean fine-layer overhang control.',
+				useCases: [
+					'Charming desk companion, bookshelf accent, or study-table mascot for students and book lovers.',
+					'Paint-ready matte blank for hobbyists, art classes, and custom gift sets.',
+					'Popular giveaway and demonstration piece during school STEAM makerspace sessions.'
+				]
+			},
+			{
+				id: 19,
+				category: 'functional',
+				categoryLabel: 'Architecture & Functional',
+				name: 'Dual Raspberry Pi Protective Enclosure',
+				tagline: 'Matched pair of chamfered matte white Raspberry Pi housings with clean port slots and top Pi vent cutout.',
+				plastic: 'Matte White PLA / PETG',
+				soldBatch: 'Karachi Lab Print',
+				image: '/static/img/gallery/raspberry-pi-case.jpg',
+				video: '/static/video/raspberry-pi-case.mp4',
+				videoPoster: '/static/video/raspberry-pi-case-poster.jpg',
+				videoSpeed: '250×',
+				videoNote: 'Overhead angled timelapse of two matched Raspberry Pi enclosures printing side-by-side with crisp Pi top cutouts.',
+				whatItIs: 'A matched pair of precision-fitted Raspberry Pi protective enclosures printed simultaneously on one build plate. Features beveled perimeter walls, exact side clearances for USB, Ethernet, HDMI, and power ports, and a crisp top-lid Pi branding cutout for passive airflow.',
+				useCases: [
+					'Protective benchtop housing for Raspberry Pi OctoPrint/Klipper servers, home automation hubs, and IoT gateways.',
+					'Clean presentation enclosures for university Computer Science and Electrical Engineering FYP demos.',
+					'Custom-vented or logo-embossed electronics cases printed in small batches without mold costs.'
+				]
+			},
+			{
+				id: 20,
+				category: 'functional',
+				categoryLabel: 'Architecture & Functional',
+				name: 'Geared Mechanical Keychain Fidget',
+				tagline: 'Compact circular spoked keyring frame paired with two meshing mechanical spur gears.',
+				plastic: 'Matte White PLA',
+				soldBatch: 'Karachi Lab Print',
+				image: '/static/img/gallery/geared-keychain-fidget.jpg',
+				video: '/static/video/geared-keychain.mp4',
+				videoPoster: '/static/video/geared-keychain-poster.jpg',
+				videoSpeed: '200×',
+				videoNote: 'Overhead top-down gantry timelapse capturing the circular keyring frame and meshing spur gears forming under the belts.',
+				whatItIs: 'A pocket-sized mechanical fidget and keychain assembly combining an outer spoked circular frame with an integrated keyring eyelet alongside precision-toothed meshing spur gears calibrated for smooth hand-spun clearance right off the build plate.',
+				useCases: [
+					'Tactile engineering keychain and desk fidget for makers, mechanical students, and workshop giveaways.',
+					'Live dimensional-tolerance demo proving gear tooth clearances without post-print filing.',
+					'Custom-branded corporate or university tech-society event merchandise.'
+				]
+			},
+			{
+				id: 21,
+				category: 'functional',
+				categoryLabel: 'Architecture & Functional',
+				name: 'Interlocking Spur Gear & Baseplate Demo Kit',
+				tagline: 'Teardrop mounting baseplate with twin cylindrical axle pins and two meshing precision involute spur gears.',
+				plastic: 'Matte White PLA',
+				soldBatch: 'Karachi Lab Print',
+				image: '/static/img/gallery/spur-gear-cam-demo.jpg',
+				video: '/static/video/spur-gear-demo.mp4',
+				videoPoster: '/static/video/spur-gear-demo-poster.jpg',
+				videoSpeed: '250×',
+				videoNote: 'Side-profile timelapse showing the smooth teardrop baseplate and twin involute spur gears extruding cleanly together.',
+				whatItIs: 'A clean mechanical gear-train teaching and demonstration assembly consisting of a rounded teardrop baseplate with two integrated axle bosses paired with two meshing involute spur gears printed in matte ivory-white PLA for low-friction rotation.',
+				useCases: [
+					'Hands-on STEAM classroom demonstrator for teaching gear ratios, center distance, and rotational direction.',
+					'Rapid mechanical prototyping reference for validating tooth pitch and axle clearances before larger builds.',
+					'Satisfying mechanical desk fidget and maker workshop proof sample.'
+				]
+			},
+			{
+				id: 22,
+				category: 'decor',
+				categoryLabel: 'Home & Desk Decor',
+				name: 'Branching Earring Tree & Ghost Charm Set',
+				tagline: 'Flat-printed interlocking silhouette jewelry & earring organizer tree paired with a cute minimalist ghost charm.',
+				plastic: 'Matte White PLA',
+				soldBatch: 'Karachi Lab Print',
+				image: '/static/img/gallery/earring-tree-stand.jpg',
+				video: '/static/video/earring-tree-stand.mp4',
+				videoPoster: '/static/video/earring-tree-stand-poster.jpg',
+				videoSpeed: '200×',
+				videoNote: 'Mid-print capture of the flat-pack branching tree silhouette and companion ghost charm printing together on the glass plate.',
+				whatItIs: 'A clever flat-pack jewelry organizer printed as crisp interlocking panels that slot together into a free-standing branching earring tree with notched limbs for hooks and studs — printed alongside a playful minimalist ghost figurine.',
+				useCases: [
+					'Dresser-top earring, ring, and necklace organizer that ships completely flat and snaps together in seconds.',
+					'Boutique craft-stall display stand for handmade jewelry makers and small businesses.',
+					'Personalized gift set customizable in height, branch count, and filament color.'
+				]
+			},
+			{
+				id: 23,
+				category: 'decor',
+				categoryLabel: 'Home & Desk Decor',
+				name: 'Open-Lattice Ribbed Architectural Vessel',
+				tagline: 'Airy sculptural wireframe vase built from intersecting vertical meridian ribs and thin horizontal rings.',
+				plastic: 'Satin Pearl-White PLA',
+				soldBatch: 'Karachi Lab Print',
+				image: '/static/img/gallery/lattice-mesh-vessel.jpg',
+				video: '/static/video/lattice-vessel.mp4',
+				videoPoster: '/static/video/lattice-vessel-poster.jpg',
+				videoSpeed: '200×',
+				videoNote: 'Mid-print bench timelapse capturing dozens of fine open-lattice ribs and horizontal bridges stacking smoothly without collapse.',
+				whatItIs: 'An architectural hollow vessel formed entirely from slender intersecting meridian ribs and thin concentric horizontal rings. Printing crisp open bridges across every lattice cell without sagging requires tightly tuned part cooling and retraction.',
+				useCases: [
+					'Modern sculptural centerpiece for dried florals, studio shelves, or minimalist desk decor.',
+					'Ambient LED tealight shade casting radial geometric lattice shadows across walls and tables.',
+					'Bridging and retraction showcase piece demonstrating fine-feature FDM calibration.'
+				]
+			},
+			{
+				id: 24,
+				category: 'tabletop',
+				categoryLabel: 'Tabletop & Custom Cases',
+				name: 'Custom Arched-Notch Benchtop Organizer Tray',
+				tagline: 'Deep rigid rectangular storage tray with straight vertical walls, chamfered rim, and arched thumb/cable cutout.',
+				plastic: 'Matte Off-White PLA',
+				soldBatch: 'Karachi Lab Print',
+				image: '/static/img/gallery/slotted-organizer-tray.jpg',
+				video: '/static/video/organizer-tray.mp4',
+				videoPoster: '/static/video/organizer-tray-poster.jpg',
+				videoSpeed: '200×',
+				videoNote: 'Mid-print timelapse showing straight rigid tray walls and the clean centered arched thumb-access cutout forming layer by layer.',
+				whatItIs: 'A heavy-duty custom-dimensioned rectangular organizer tray printed with thick perimeter walls, clean square inner corners, a chamfered top lip, and a smooth semicircular arched notch on the rear wall for easy finger pull or charging-cable pass-through.',
+				useCases: [
+					'Bespoke drawer dividers and electronics workbench bins sized to exact millimeter compartments.',
+					'Card, deck, or board-game tray with ergonomic thumb cutout for quick retrieval.',
+					'Clean desktop charging caddy routing USB cables neatly through the rear arch.'
+				]
 			}
 		],
+		init() {
+			try {
+				const params = new URLSearchParams(window.location.search);
+				const f = params.get('filter');
+				if (f && ['all', 'video', 'functional', 'tabletop', 'decor', 'figurines'].includes(f)) {
+					this.activeFilter = f;
+				}
+			} catch (e) {}
+		},
 		get filteredItems() {
 			if (this.activeFilter === 'all') return this.items;
+			if (this.activeFilter === 'video') return this.items.filter(i => !!i.video);
 			return this.items.filter(i => i.category === this.activeFilter);
 		},
 		countBy(cat) {
 			if (cat === 'all') return this.items.length;
+			if (cat === 'video') return this.items.filter(i => !!i.video).length;
 			return this.items.filter(i => i.category === cat).length;
 		},
-		open(item) {
+		warmVideo(url) {
+			if (!url || this.prefetched.has(url) || this.inflight.has(url)) return;
+			if (navigator.connection && navigator.connection.saveData) return;
+			this.inflight.add(url);
+			fetch(url)
+				.then(res => (res.ok ? res.blob() : null))
+				.then(blob => {
+					if (!blob) return;
+					if (this.prefetched.size >= 6) {
+						const oldestKey = this.prefetched.keys().next().value;
+						const oldestObj = this.prefetched.get(oldestKey);
+						if (oldestObj) URL.revokeObjectURL(oldestObj);
+						this.prefetched.delete(oldestKey);
+					}
+					this.prefetched.set(url, URL.createObjectURL(blob));
+				})
+				.catch(() => {})
+				.finally(() => {
+					this.inflight.delete(url);
+				});
+		},
+		getVideoSrc(url) {
+			if (!url) return '';
+			return this.prefetched.get(url) || url;
+		},
+		warmAdjacentVideos(currentItem) {
+			if (!currentItem) return;
+			if (currentItem.video) this.warmVideo(currentItem.video);
+			const list = this.filteredItems;
+			const idx = list.findIndex(i => i.id === currentItem.id);
+			if (idx === -1) return;
+			const nextItem = list[(idx + 1) % list.length];
+			if (nextItem && nextItem.video) this.warmVideo(nextItem.video);
+		},
+		stopActiveVideo() {
+			const v = this.$refs.modalVideo;
+			if (v) {
+				v.pause();
+				try { v.currentTime = 0; } catch (e) {}
+			}
+		},
+		syncActiveVideo() {
+			this.$nextTick(() => {
+				const v = this.$refs.modalVideo;
+				if (!v) return;
+				if (this.activeItem && this.activeItem.video && this.mediaMode === 'video') {
+					this.videoLoading = true;
+					v.pause();
+					v.load();
+					v.play()
+						.then(() => { this.videoLoading = false; })
+						.catch(() => { this.videoLoading = false; });
+				} else {
+					v.pause();
+				}
+			});
+		},
+		open(item, mode = 'photo') {
+			this.stopActiveVideo();
 			this.activeItem = item;
+			this.mediaMode = (mode === 'video' && item.video) ? 'video' : 'photo';
 			document.body.style.overflow = 'hidden';
+			this.warmAdjacentVideos(item);
+			this.syncActiveVideo();
+		},
+		setMediaMode(mode) {
+			if (!this.activeItem) return;
+			if (mode === 'video' && !this.activeItem.video) return;
+			if (this.mediaMode === mode) return;
+			this.stopActiveVideo();
+			this.mediaMode = mode;
+			this.syncActiveVideo();
 		},
 		close() {
+			this.stopActiveVideo();
 			this.activeItem = null;
+			this.mediaMode = 'photo';
+			this.videoLoading = false;
 			document.body.style.overflow = '';
 		},
 		next() {
 			if (!this.activeItem) return;
+			const wasVideo = this.mediaMode === 'video';
+			this.stopActiveVideo();
 			const list = this.filteredItems;
 			const idx = list.findIndex(i => i.id === this.activeItem.id);
-			this.activeItem = list[(idx + 1) % list.length];
+			const nextItem = list[(idx + 1) % list.length];
+			this.activeItem = nextItem;
+			this.mediaMode = (wasVideo && nextItem.video) ? 'video' : 'photo';
+			this.warmAdjacentVideos(nextItem);
+			this.syncActiveVideo();
 		},
 		prev() {
 			if (!this.activeItem) return;
+			const wasVideo = this.mediaMode === 'video';
+			this.stopActiveVideo();
 			const list = this.filteredItems;
 			const idx = list.findIndex(i => i.id === this.activeItem.id);
-			this.activeItem = list[(idx - 1 + list.length) % list.length];
+			const prevItem = list[(idx - 1 + list.length) % list.length];
+			this.activeItem = prevItem;
+			this.mediaMode = (wasVideo && prevItem.video) ? 'video' : 'photo';
+			this.warmAdjacentVideos(prevItem);
+			this.syncActiveVideo();
 		}
 	}"
 	@keydown.escape.window="close()"
@@ -329,7 +588,7 @@
 						<span class="squiggle-underline">Things we've printed</span>
 					</h1>
 					<p class="text-parchment-muted dark:text-ink-muted text-sm md:text-base mt-3 max-w-2xl leading-relaxed">
-						Every model below has been physically 3D-printed and batch-produced in our Karachi workshop — with <strong class="text-parchment-ink dark:text-ink font-semibold">around 20–40 units of each sold</strong> for real-life use cases across homes, desks, gifts, and custom engineering builds. Click any image to focus in and see what it is and how it's used.
+						Every model below was physically 3D-printed in our Karachi workshop — with studio showcase views plus <strong class="text-parchment-ink dark:text-ink font-semibold">real sped-up Karachi bench print timelapses</strong> on models marked <span class="font-mono text-gold-focal font-semibold">&#9654; Timelapse</span>. Click any piece to inspect details or watch its print timelapse.
 					</p>
 				</div>
 				<div class="shrink-0 flex flex-wrap gap-3">
@@ -346,12 +605,12 @@
 			<div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 rounded-[8px] bg-parchment-surface dark:bg-workshop-surface border border-parchment-border dark:border-workshop-border text-xs font-mono">
 				<span class="inline-flex items-center gap-2 text-parchment-ink dark:text-ink font-semibold">
 					<span class="w-2 h-2 rounded-full bg-filament"></span>
-					Real Production Runs: ~20–40 units sold per design
+					<span x-text="countBy('video')"></span> Real Printer Timelapses Attached
 				</span>
 				<span class="text-parchment-muted dark:text-ink-muted">·</span>
 				<span class="text-parchment-muted dark:text-ink-muted">Printed in-house in Karachi (PLA / PETG)</span>
 				<span class="text-parchment-muted dark:text-ink-muted">·</span>
-				<span class="text-parchment-muted dark:text-ink-muted">Click any 3D model to inspect details &amp; use cases</span>
+				<span class="text-parchment-muted dark:text-ink-muted">Click any model to toggle Studio Photo &amp; Print Timelapse</span>
 			</div>
 
 			<!-- Category Filter Chips -->
@@ -363,6 +622,15 @@
 					class="px-3.5 py-1.5 rounded-[6px] border transition-colors"
 				>
 					All Prints (<span class="font-numeral font-bold" x-text="countBy('all')"></span>)
+				</button>
+				<button
+					type="button"
+					@click="activeFilter = 'video'"
+					:class="activeFilter === 'video' ? 'bg-filament !text-[#131217] font-bold border-filament' : 'bg-plum/15 dark:bg-plum/30 text-gold-focal hover:border-filament border-filament/40 font-semibold'"
+					class="px-3.5 py-1.5 rounded-[6px] border transition-colors inline-flex items-center gap-1.5"
+				>
+					<span aria-hidden="true">&#9654;</span>
+					<span>With Print Timelapse (<span class="font-numeral font-bold" x-text="countBy('video')"></span>)</span>
 				</button>
 				<button
 					type="button"
@@ -402,49 +670,82 @@
 		<!-- Gallery Grid -->
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 			<template x-for="item in filteredItems" :key="item.id">
-				<article class="workshop-card overflow-hidden flex flex-col justify-between group">
+				<article
+					class="workshop-card overflow-hidden flex flex-col justify-between group"
+					@mouseenter="if (item.video) warmVideo(item.video)"
+					@focusin="if (item.video) warmVideo(item.video)"
+				>
 					<div>
 						<!-- Clickable 3D Model Image -->
-						<button
-							type="button"
-							@click="open(item)"
-							class="w-full aspect-[4/3] bg-[#23202B] relative overflow-hidden block text-left focus:outline-none cursor-zoom-in"
-							:aria-label="'Inspect ' + item.name"
-						>
-							<img
-								:src="item.image"
-								:alt="item.name + ' — 3D printed model by Jiddat3D'"
-								loading="lazy"
-								class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+						<div class="w-full aspect-[4/3] bg-[#23202B] relative overflow-hidden">
+							<button
+								type="button"
+								@click="open(item, 'photo')"
+								class="w-full h-full block text-left focus:outline-none cursor-zoom-in"
+								:aria-label="'Inspect ' + item.name"
 							>
+								<img
+									:src="item.image"
+									:alt="item.name + ' — 3D printed model by Jiddat3D'"
+									loading="lazy"
+									class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+								>
+							</button>
+
 							<!-- Top Badges -->
-							<span class="absolute top-3 left-3 text-[10px] font-mono px-2.5 py-1 rounded-[5px] bg-[#131217]/80 backdrop-blur-sm border border-white/15 text-[#F2EFE9]" x-text="item.plastic"></span>
-							<span class="absolute top-3 right-3 text-[10px] font-mono font-semibold px-2.5 py-1 rounded-[5px] bg-filament/95 text-[#131217]" x-text="item.soldBatch"></span>
-							<!-- Hover Focus Cue -->
-							<div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 py-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-								<span class="text-[11px] font-mono text-[#F2EFE9] tracking-wide">Click to focus &amp; inspect</span>
-								<span class="text-xs font-mono text-filament font-bold">↗</span>
-							</div>
-						</button>
+							<span class="pointer-events-none absolute top-3 left-3 text-[10px] font-mono px-2.5 py-1 rounded-[5px] bg-[#131217]/80 backdrop-blur-sm border border-white/15 text-[#F2EFE9]" x-text="item.plastic"></span>
+							<span class="pointer-events-none absolute top-3 right-3 text-[10px] font-mono font-semibold px-2.5 py-1 rounded-[5px] bg-filament/95 text-[#131217]" x-text="item.soldBatch"></span>
+
+							<!-- Direct Timelapse Launch Pill (Only on Video-Backed Items) -->
+							<template x-if="item.video">
+								<button
+									type="button"
+									@click.stop="open(item, 'video')"
+									class="absolute bottom-3 left-3 z-10 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[5px] bg-[#131217]/90 hover:bg-filament text-filament hover:text-[#131217] border border-filament/55 backdrop-blur-sm text-[10px] font-mono font-bold tracking-wide transition-colors shadow-lg"
+									:aria-label="'Watch ' + item.name + ' printing timelapse'"
+								>
+									<span aria-hidden="true">&#9654;</span>
+									<span>Watch Print &middot; <span x-text="item.videoSpeed"></span></span>
+								</button>
+							</template>
+
+							<!-- Hover Focus Cue (Only on Photo-Only Items so it never collides with Timelapse Pill) -->
+							<template x-if="!item.video">
+								<div class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 py-3 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+									<span class="text-[11px] font-mono text-[#F2EFE9] tracking-wide">Click to focus &amp; inspect</span>
+									<span class="text-xs font-mono text-filament font-bold">↗</span>
+								</div>
+							</template>
+						</div>
 
 						<div class="p-5 pb-3">
 							<div class="text-[10px] font-mono uppercase tracking-wider text-plum dark:text-plum-light mb-1" x-text="item.categoryLabel"></div>
 							<h2 class="font-display font-bold text-parchment-ink dark:text-ink text-lg group-hover:text-filament transition-colors">
-								<button type="button" @click="open(item)" class="text-left hover:underline focus:outline-none" x-text="item.name"></button>
+								<button type="button" @click="open(item, 'photo')" class="text-left hover:underline focus:outline-none" x-text="item.name"></button>
 							</h2>
 							<p class="text-xs text-parchment-muted dark:text-ink-muted mt-1.5 leading-relaxed" x-text="item.tagline"></p>
 						</div>
 					</div>
 
 					<!-- Bottom Actions -->
-					<div class="px-5 pb-5 pt-3 border-t border-parchment-border/70 dark:border-workshop-border/70 flex items-center gap-2.5">
+					<div class="px-5 pb-5 pt-3 border-t border-parchment-border/70 dark:border-workshop-border/70 flex items-center gap-2">
 						<button
 							type="button"
-							@click="open(item)"
+							@click="open(item, 'photo')"
 							class="flex-1 text-xs font-mono font-semibold py-2 px-3 rounded-[6px] bg-parchment-subtle dark:bg-workshop-card border border-parchment-border dark:border-workshop-border text-parchment-ink dark:text-ink hover:border-filament hover:text-filament transition-colors"
 						>
-							Inspect Details
+							Inspect
 						</button>
+						<template x-if="item.video">
+							<button
+								type="button"
+								@click="open(item, 'video')"
+								class="text-xs font-mono font-bold py-2 px-3 rounded-[6px] bg-plum/15 dark:bg-plum/30 border border-filament/45 text-gold-focal hover:bg-filament hover:text-[#131217] transition-colors shrink-0 inline-flex items-center gap-1"
+							>
+								<span aria-hidden="true">&#9654;</span>
+								<span>Video</span>
+							</button>
+						</template>
 						<a
 							:href="'https://wa.me/923001318112?text=Assalam%20o%20Alaikum.%20I%20saw%20the%20' + encodeURIComponent(item.name) + '%20in%20your%20gallery.%20Can%20I%20order%20one%20or%20a%20custom%20batch%3F'"
 							target="_blank"
@@ -460,7 +761,7 @@
 
 	</div>
 
-	<!-- Click-to-Focus Lightbox Modal -->
+	<!-- Click-to-Focus Lightbox Modal (Single Active Video Player + Photo/Video Toggle) -->
 	<div
 		x-show="activeItem !== null"
 		x-cloak
@@ -492,40 +793,107 @@
 					type="button"
 					@click="close()"
 					aria-label="Close preview"
-					class="absolute top-3.5 right-3.5 z-20 w-9 h-9 rounded-full bg-[#131217]/80 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors text-lg font-bold"
+					class="absolute top-3.5 right-3.5 z-30 w-9 h-9 rounded-full bg-[#131217]/80 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors text-lg font-bold"
 				>
 					&times;
 				</button>
 
 				<div class="grid grid-cols-1 lg:grid-cols-12">
-					<!-- Left: Focused 3D Model Image -->
-					<div class="lg:col-span-7 bg-[#23202B] relative flex items-center justify-center min-h-[260px] sm:min-h-[360px] lg:min-h-[500px]">
-						<img
-							:src="activeItem.image"
-							:alt="activeItem.name + ' — focused 3D model view'"
-							class="w-full h-full object-contain max-h-[75vh]"
-						>
+					<!-- Left: Focused 3D Model Photo OR Single Active Print Timelapse -->
+					<div class="lg:col-span-7 bg-[#15131B] relative flex flex-col justify-between min-h-[280px] sm:min-h-[380px] lg:min-h-[520px]">
 
-						<!-- Prev / Next Navigation -->
-						<button
-							type="button"
-							@click="prev()"
-							aria-label="Previous model"
-							class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#131217]/75 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors font-mono text-base"
-						>
-							&larr;
-						</button>
-						<button
-							type="button"
-							@click="next()"
-							aria-label="Next model"
-							class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#131217]/75 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors font-mono text-base"
-						>
-							&rarr;
-						</button>
+						<!-- Top Photo / Timelapse Switcher Bar (Shown whenever model has real footage) -->
+						<template x-if="activeItem.video">
+							<div class="relative z-20 px-4 pt-3.5 pb-2 flex flex-wrap items-center justify-between gap-2 bg-gradient-to-b from-[#131217]/95 to-transparent">
+								<div class="inline-flex rounded-[6px] p-0.5 bg-[#131217]/90 border border-white/15 font-mono text-[11px]">
+									<button
+										type="button"
+										@click="setMediaMode('photo')"
+										:class="mediaMode === 'photo' ? 'bg-filament text-[#131217] font-bold' : 'text-[#CFC8DA] hover:text-white'"
+										class="px-3 py-1 rounded-[4px] transition-colors"
+									>
+										Studio Photo
+									</button>
+									<button
+										type="button"
+										@click="setMediaMode('video')"
+										:class="mediaMode === 'video' ? 'bg-filament text-[#131217] font-bold' : 'text-[#CFC8DA] hover:text-white'"
+										class="px-3 py-1 rounded-[4px] transition-colors inline-flex items-center gap-1.5"
+									>
+										<span aria-hidden="true">&#9654;</span>
+										<span>Watch Print (<span x-text="activeItem.videoSpeed"></span>)</span>
+									</button>
+								</div>
+								<span
+									x-show="mediaMode === 'video'"
+									class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-[4px] bg-filament/15 border border-filament/40 text-filament font-bold"
+								>
+									<span x-text="activeItem.videoSpeed"></span> Original Speed
+								</span>
+							</div>
+						</template>
 
-						<div class="absolute bottom-3 left-3 px-2.5 py-1 rounded-[5px] bg-[#131217]/80 border border-white/10 text-[10px] font-mono text-[#CFC8DA]">
-							Use &larr; / &rarr; keys to browse &middot; Esc to close
+						<!-- Main Media Viewport -->
+						<div class="relative flex-1 flex items-center justify-center overflow-hidden px-2 py-2">
+							<!-- Studio Photo -->
+							<img
+								x-show="mediaMode === 'photo' || !activeItem.video"
+								:src="activeItem.image"
+								:alt="activeItem.name + ' — focused 3D model view'"
+								class="w-full h-full object-contain max-h-[68vh]"
+							>
+
+							<!-- Single Active Print Timelapse Video Player -->
+							<div
+								x-show="mediaMode === 'video' && activeItem.video"
+								class="w-full h-full flex flex-col items-center justify-center relative"
+							>
+								<video
+									x-ref="modalVideo"
+									:src="mediaMode === 'video' && activeItem.video ? getVideoSrc(activeItem.video) : ''"
+									:poster="activeItem.videoPoster || activeItem.image"
+									controls
+									autoplay
+									muted
+									loop
+									playsinline
+									preload="auto"
+									@playing="videoLoading = false"
+									@canplay="videoLoading = false"
+									class="w-full max-h-[62vh] rounded-[6px] bg-[#0F0E13] object-contain shadow-2xl"
+								></video>
+								<div
+									x-show="videoLoading"
+									class="pointer-events-none absolute inset-0 flex items-center justify-center"
+								>
+									<span class="px-3 py-1.5 rounded-[6px] bg-[#131217]/85 border border-filament/40 text-[11px] font-mono text-filament">Loading timelapse&hellip;</span>
+								</div>
+							</div>
+
+							<!-- Prev / Next Navigation -->
+							<button
+								type="button"
+								@click="prev()"
+								aria-label="Previous model"
+								class="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#131217]/75 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors font-mono text-base"
+							>
+								&larr;
+							</button>
+							<button
+								type="button"
+								@click="next()"
+								aria-label="Next model"
+								class="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#131217]/75 hover:bg-filament text-[#F2EFE9] hover:text-[#131217] border border-white/15 flex items-center justify-center transition-colors font-mono text-base"
+							>
+								&rarr;
+							</button>
+						</div>
+
+						<!-- Bottom Caption Strip -->
+						<div class="px-4 py-2.5 bg-[#131217]/90 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-[#CFC8DA]">
+							<span x-show="mediaMode === 'video' && activeItem.videoNote" x-text="activeItem.videoNote" class="text-[#F2EFE9]"></span>
+							<span x-show="mediaMode !== 'video' || !activeItem.videoNote">Use &larr; / &rarr; keys to browse &middot; Esc to close</span>
+							<span x-show="mediaMode === 'video' && activeItem.video" class="text-filament font-semibold shrink-0">Karachi Lab Cam &middot; <span x-text="activeItem.videoSpeed"></span> Timelapse</span>
 						</div>
 					</div>
 
@@ -536,14 +904,30 @@
 							<div class="flex flex-wrap items-center gap-2 pr-8">
 								<span class="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-[5px] bg-plum/15 dark:bg-plum/30 text-plum dark:text-plum-mist font-semibold" x-text="activeItem.categoryLabel"></span>
 								<span class="text-[10px] font-mono px-2.5 py-1 rounded-[5px] bg-parchment-subtle dark:bg-workshop-card border border-parchment-border dark:border-workshop-border text-parchment-muted dark:text-ink-muted" x-text="activeItem.plastic"></span>
-								<span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-[5px] bg-filament/20 text-filament-dark dark:text-filament border border-filament/40">
-									20–40 Units Sold
-								</span>
+								<span class="text-[10px] font-mono font-bold px-2.5 py-1 rounded-[5px] bg-filament/20 text-filament-dark dark:text-filament border border-filament/40" x-text="activeItem.soldBatch"></span>
 							</div>
 
 							<div>
 								<h2 class="font-display text-2xl font-bold text-parchment-ink dark:text-ink leading-tight" x-text="activeItem.name"></h2>
 							</div>
+
+							<!-- Quick Switch Banner if Model has Real Footage & Currently on Photo -->
+							<template x-if="activeItem.video && mediaMode === 'photo'">
+								<button
+									type="button"
+									@click="setMediaMode('video')"
+									class="w-full p-3 rounded-[8px] bg-plum/15 dark:bg-plum/25 border border-filament/45 hover:border-filament flex items-center justify-between gap-3 text-left transition-colors group"
+								>
+									<div class="flex items-center gap-2.5">
+										<span class="w-8 h-8 rounded-full bg-filament text-[#131217] flex items-center justify-center text-xs font-bold shrink-0">&#9654;</span>
+										<div>
+											<div class="text-xs font-display font-bold text-parchment-ink dark:text-ink group-hover:text-filament transition-colors">Watch this exact part printing</div>
+											<div class="text-[11px] font-mono text-parchment-muted dark:text-ink-muted">Real Karachi printer clip &middot; <span class="text-gold-focal font-semibold" x-text="activeItem.videoSpeed + ' timelapse'"></span></div>
+										</div>
+									</div>
+									<span class="font-mono text-xs text-gold-focal font-bold shrink-0">&rarr;</span>
+								</button>
+							</template>
 
 							<!-- What It Is -->
 							<div>
@@ -567,7 +951,7 @@
 							<!-- Production Proof Note -->
 							<div class="p-3.5 rounded-[8px] bg-parchment-subtle dark:bg-workshop-card border border-parchment-border dark:border-workshop-border text-xs text-parchment-muted dark:text-ink-muted leading-relaxed">
 								<strong class="text-parchment-ink dark:text-ink font-semibold">Produced in Karachi for real-world use:</strong>
-								Around 20–40 units of this design have been printed and sold by Jiddat3D. Available in custom colors, dimensions, or bulk batches on demand.
+								Printed in-house on Jiddat3D machines. Available in custom colors, dimensions, or bulk batches on demand.
 							</div>
 						</div>
 
